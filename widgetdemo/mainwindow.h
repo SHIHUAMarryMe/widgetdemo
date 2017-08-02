@@ -8,15 +8,36 @@
 
 #include <QWidget>
 
-class QListView;
-class QRectF;
+
+
+class QPoint;
+class QMouseEvent;
+
 
 
 class MainWindow : public QWidget
 {
     Q_OBJECT
 
+private:
+    enum class CursorPosition{
+        Up = 0,
+        Down,
+        Left,
+        Right,
+        LeftTop,
+        LeftBottom,
+        RightTop,
+        RightBottom,
+        None
+    };
+
+public:
     MainWindow(QWidget* parent = nullptr);
+
+    virtual ~MainWindow()=default;
+
+
     MainWindow(const MainWindow&)=delete;
     MainWindow(MainWindow&&)=delete;
 
@@ -24,12 +45,24 @@ class MainWindow : public QWidget
     MainWindow& operator=(MainWindow&&)=delete;
 
 
-private:
-    QListView* m_LeftListView{nullptr};
-    QListView* m_TopListView{nullptr};
+protected:
+    virtual void mousePressEvent(QMouseEvent* event)override;
+    virtual void mouseMoveEvent(QMouseEvent* event)override;
+    virtual void mouseReleaseEvent(QMouseEvent* event)override;
 
-    std::unique_ptr<QRectF> m_TopRect;
-    std::unique_ptr<QRectF> m_LeftRect;
+
+private:
+
+    void checkDragPosition(const QPoint& globalPoint)noexcept;
+
+
+    std::size_t m_TheWidth{0};
+    std::size_t m_TheHeight{0};
+    bool m_IsPressed{false};
+    QPoint m_DragPoint{0, 0};
+
+    CursorPosition m_CursorDir{CursorPosition::None};
+    constexpr static std::size_t padding{2};
 };
 
 #endif // MAINWINDOW_H
