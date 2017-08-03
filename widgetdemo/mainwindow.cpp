@@ -32,7 +32,7 @@ MainWindow::MainWindow(std::size_t minimumWidth, std::size_t minimumHeight, QWid
 void MainWindow::initResource()
 {
     std::size_t index{0};
-    for(; index != 3; ++index){
+    for(; index != 6; ++index){
         m_Widgets.append(new QWidget{});
     }
 
@@ -50,6 +50,8 @@ void MainWindow::initResource()
     m_Widgets[0]->setMinimumSize(m_TheWidth, (m_TheHeight/8)*1);
     m_Widgets[1]->setMinimumSize(m_TheWidth, (m_TheHeight/8)*6);
     m_Widgets[2]->setMinimumSize(m_TheWidth, (m_TheHeight/8)*1);
+    m_Widgets[3]->setMinimumSize(m_TheWidth/4, (m_TheHeight/8)*6);
+    m_Widgets[4]->setMinimumSize((m_TheWidth/4)*3, (m_TheHeight/8)*6);
 
 
 
