@@ -8,6 +8,7 @@
 #include <QLabel>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QListView>
 
 #include "mainwindow.h"
 #include "utilities.h"
@@ -31,29 +32,16 @@ MainWindow::MainWindow(std::size_t minimumWidth, std::size_t minimumHeight, QWid
 
 void MainWindow::initResource()
 {
+
     std::size_t index{0};
     for(; index != 6; ++index){
-        m_Widgets.append(new QWidget{});
+        m_Buttons.append(new QPushButton{});
     }
 
     index = 0;
     for(; index != 3; ++index){
         m_HLayouts.append(new QHBoxLayout{});
     }
-
-
-    index = 0;
-    for(; index != 6; ++index){
-        m_Buttons.append(new QPushButton{});
-    }
-
-    m_Widgets[0]->setMinimumSize(m_TheWidth, (m_TheHeight/8)*1);
-    m_Widgets[1]->setMinimumSize(m_TheWidth, (m_TheHeight/8)*6);
-    m_Widgets[2]->setMinimumSize(m_TheWidth, (m_TheHeight/8)*1);
-    m_Widgets[3]->setMinimumSize(m_TheWidth/4, (m_TheHeight/8)*6);
-    m_Widgets[4]->setMinimumSize((m_TheWidth/4)*3, (m_TheHeight/8)*6);
-
-
 
     m_TotalLayout = new QVBoxLayout{this};
 }
@@ -62,19 +50,23 @@ void MainWindow::initResource()
 void MainWindow::layoutItems()noexcept
 {
 
-    m_HLayouts[0]->setAlignment(Qt::AlignBottom | Qt::AlignHCenter);
-    m_HLayouts[0]->setSizeConstraint(QLayout::SetMinimumSize);
+    m_HLayouts[0]->addStretch();
     std::size_t index{0};
     for(; index != 3; ++index){
         m_Buttons[index]->setMaximumSize(m_TheWidth/7, ((m_TheHeight/7)*2)/3);
         m_HLayouts[0]->addWidget(m_Buttons[index]);
+
+        if(index != 2){
+            m_HLayouts[0]->addSpacing(10);
+        }
     }
-    m_Widgets[0]->setLayout(m_HLayouts[0]);
+    m_HLayouts[0]->addStretch();
 
 
-    m_TotalLayout->addWidget(m_Widgets[0]);
-    m_TotalLayout->addWidget(m_Widgets[1]);
-    m_TotalLayout->addWidget(m_Widgets[2]);
+    index = 0;
+    for(; index != 3; ++index){
+        m_TotalLayout->addLayout(m_HLayouts[index]);
+    }
 
     this->setLayout(m_TotalLayout);
 }

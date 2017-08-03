@@ -18,6 +18,8 @@ class QPushButton;
 class QLabel;
 class QPoint;
 class QMouseEvent;
+class QPair;
+class QListView;
 
 
 
@@ -65,11 +67,9 @@ private:
 //    void checkDragPosition(const QPoint& globalPoint)noexcept;
 
 
-
-    QQueue<QWidget*> m_Widgets{};
+    QPair<QListView*, QListView*> m_ListViews{nullptr, nullptr};
     QQueue<QPushButton*> m_Buttons{};
     QQueue<QHBoxLayout*> m_HLayouts{};
-
     QVBoxLayout* m_TotalLayout{nullptr};
 
 
