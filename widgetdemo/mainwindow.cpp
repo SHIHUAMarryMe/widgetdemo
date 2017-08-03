@@ -1,9 +1,10 @@
 
 
 #include <iostream>
+#include "utilities.h"
+
 
 #include <QMouseEvent>
-#include <QDebug>
 
 #include "mainwindow.h"
 
@@ -20,6 +21,10 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::checkDragPosition(const QPoint &globalPoint)noexcept
 {
+
+
+    std::cout << "check the global=============" << std::endl;
+
     QRect rect{this->rect()};
     QPoint topLeftPoint{this->mapToGlobal(rect.topLeft())};
     QPoint bottomRightPoint{this->mapToGlobal(rect.bottomRight())};
@@ -99,6 +104,7 @@ void MainWindow::checkDragPosition(const QPoint &globalPoint)noexcept
 
         return;
 
+     //no direction
     }else{
         m_CursorDir = CursorPosition::None;
         this->setCursor(QCursor{Qt::ArrowCursor});
@@ -115,10 +121,13 @@ void MainWindow::mousePressEvent(QMouseEvent* event)
         event->accept();
         m_IsPressed = true;
 
+        TT::LOG("mousePress============");
+
         if(m_CursorDir != CursorPosition::None){
             this->mouseGrabber();
 
         }else{
+            TT::LOG("get the dragPoint=============");
             m_DragPoint = event->globalPos() - this->frameGeometry().topLeft();
         }
 
@@ -140,9 +149,7 @@ void MainWindow::mousePressEvent(QMouseEvent* event)
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event)
 {
-
-    qDebug() << "mouseMove==================";
-    std::cout << "mouseMove=================" << std::endl;
+    TT::LOG("mouseMove===========");
 
     QPoint globalPoint{event->globalPos()};
     QRect rect{this->rect()};
