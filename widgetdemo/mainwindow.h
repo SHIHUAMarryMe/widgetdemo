@@ -2,16 +2,20 @@
 #define MAINWINDOW_H
 
 
-#include <new>
-#include <memory>
-#include <ctime>
+
+
+
+#include <QQueue>
 
 
 
 #include <QWidget>
 
 
-
+class QVBoxLayout;
+class QHBoxLayout;
+class QPushButton;
+class QLabel;
 class QPoint;
 class QMouseEvent;
 
@@ -35,7 +39,7 @@ private:
     };
 
 public:
-    MainWindow(QWidget* parent = nullptr);
+    MainWindow(std::size_t minimumWidth, std::size_t minimumHeight, QWidget* parent = nullptr);
 
     virtual ~MainWindow()=default;
 
@@ -48,23 +52,34 @@ public:
 
 
 protected:
-    virtual void mousePressEvent(QMouseEvent* event)override;
-    virtual void mouseMoveEvent(QMouseEvent* event)override;
-    virtual void mouseReleaseEvent(QMouseEvent* event)override;
+//    virtual void mousePressEvent(QMouseEvent* event)override;
+//    virtual void mouseMoveEvent(QMouseEvent* event)override;
+//    virtual void mouseReleaseEvent(QMouseEvent* event)override;
 
 
 private:
 
-    void checkDragPosition(const QPoint& globalPoint)noexcept;
+    void initResource();// new may be throw.
+    void layoutItems()noexcept;
+
+//    void checkDragPosition(const QPoint& globalPoint)noexcept;
+
+
+
+    QQueue<QWidget*> m_Widgets{};
+    QQueue<QPushButton*> m_Buttons{};
+    QQueue<QHBoxLayout*> m_HLayouts{};
+
+    QVBoxLayout* m_TotalLayout{nullptr};
 
 
     std::size_t m_TheWidth{0};
     std::size_t m_TheHeight{0};
     bool m_IsPressed{false};
-    QPoint m_DragPoint{0, 0};
+//    QPoint m_DragPoint{0, 0};
 
     CursorPosition m_CursorDir{CursorPosition::None};
-    constexpr static std::size_t padding{2};
+//    constexpr static std::size_t padding{2};
 };
 
 #endif // MAINWINDOW_H
