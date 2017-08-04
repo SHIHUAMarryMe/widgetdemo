@@ -1,0 +1,15 @@
+
+
+QPushButton:checked{
+    background-color: rgb(34, 44, 56);
+    color: white;
+}
+
+QPushButton:pressed{
+    background-color: rgb(34, 44, 56);
+    color: white;
+}
+
+QPushButton:disabled{
+    background-color: gray;
+}

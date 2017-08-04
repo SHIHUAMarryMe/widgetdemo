@@ -6,10 +6,8 @@
 
 
 #include <QQueue>
-
-
-
 #include <QWidget>
+#include <QSharedPointer>
 
 
 class QVBoxLayout;
@@ -18,7 +16,6 @@ class QPushButton;
 class QLabel;
 class QPoint;
 class QMouseEvent;
-class QPair;
 class QListView;
 
 
@@ -67,15 +64,19 @@ private:
 //    void checkDragPosition(const QPoint& globalPoint)noexcept;
 
 
-    QPair<QListView*, QListView*> m_ListViews{nullptr, nullptr};
     QQueue<QPushButton*> m_Buttons{};
     QQueue<QHBoxLayout*> m_HLayouts{};
+    QQueue<QSharedPointer<QWidget>> m_Widgets{};
+    QVBoxLayout* m_LeftVLayout{nullptr};
     QVBoxLayout* m_TotalLayout{nullptr};
+    QWidget* m_LeftWidget{nullptr};
+    QWidget* m_BottomWidget{nullptr};
+
 
 
     std::size_t m_TheWidth{0};
     std::size_t m_TheHeight{0};
-    bool m_IsPressed{false};
+//    bool m_IsPressed{false};
 //    QPoint m_DragPoint{0, 0};
 
     CursorPosition m_CursorDir{CursorPosition::None};

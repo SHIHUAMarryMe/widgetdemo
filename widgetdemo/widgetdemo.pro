@@ -20,3 +20,8 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     utilities.h
+
+DISTFILES +=
+
+RESOURCES += \
+    src.qrc

@@ -9,6 +9,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QListView>
+#include <QSpacerItem>
 
 #include "mainwindow.h"
 #include "utilities.h"
@@ -33,14 +34,29 @@ MainWindow::MainWindow(std::size_t minimumWidth, std::size_t minimumHeight, QWid
 void MainWindow::initResource()
 {
 
+    m_LeftWidget = new QWidget{};
+    m_BottomWidget = new QWidget{};
+
+
+    m_LeftVLayout = new QVBoxLayout{};
+
+
     std::size_t index{0};
     for(; index != 6; ++index){
         m_Buttons.append(new QPushButton{});
+        m_Buttons[0]->setFlat(true);
     }
 
     index = 0;
     for(; index != 3; ++index){
         m_HLayouts.append(new QHBoxLayout{});
+        m_HLayouts[index]->setSpacing(0);
+        m_HLayouts[index]->setMargin(0);
+    }
+
+    index = 0;
+    for(; index != 3; ++index){
+        m_Widgets.append(QSharedPointer<QWidget>{new QWidget});
     }
 
     m_TotalLayout = new QVBoxLayout{this};
@@ -50,18 +66,40 @@ void MainWindow::initResource()
 void MainWindow::layoutItems()noexcept
 {
 
+    m_LeftWidget->setMinimumSize((m_TheWidth/10)*1, (m_TheHeight/10)*8);
+    m_BottomWidget->setMinimumSize(m_TheWidth, (m_TheHeight/10)*1);
+
     m_HLayouts[0]->addStretch();
     std::size_t index{0};
     for(; index != 3; ++index){
-        m_Buttons[index]->setMaximumSize(m_TheWidth/7, ((m_TheHeight/7)*2)/3);
+        m_Buttons[index]->setMaximumSize(m_TheWidth/5, ((m_TheHeight/10)*1)/1);
         m_HLayouts[0]->addWidget(m_Buttons[index]);
-
-        if(index != 2){
-            m_HLayouts[0]->addSpacing(10);
-        }
     }
     m_HLayouts[0]->addStretch();
 
+
+    index = 0;
+    for(; index != 3; ++index){
+        m_Widgets[index]->setMinimumSize((m_TheWidth/10)*9, (m_TheHeight/10)*8);
+    }
+
+
+    m_LeftVLayout->setSpacing(0);
+    m_LeftVLayout->setMargin(0);
+    m_LeftVLayout->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    m_LeftVLayout->addStretch();
+    index = 3;
+    for(; index != 6; ++index){
+        m_Buttons[index]->setMinimumSize((m_TheWidth/10), (m_TheHeight/20));
+        m_LeftVLayout->addWidget(m_Buttons[index]);
+    }
+    m_LeftVLayout->addStretch();
+
+    m_LeftWidget->setLayout(m_LeftVLayout);
+
+    m_HLayouts[1]->addWidget(m_LeftWidget);
+    m_HLayouts[1]->addWidget(m_Widgets[0].data());
+    m_HLayouts[2]->addWidget(m_BottomWidget);
 
     index = 0;
     for(; index != 3; ++index){
