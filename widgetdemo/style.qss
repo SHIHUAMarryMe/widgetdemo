@@ -1,15 +1,43 @@
 
 
-QPushButton:checked{
-    background-color: rgb(34, 44, 56);
-    color: white;
+/*
+QPushButton:hover{
+    background-color: black;
+    border-style: outset;
+    border-width: 2px;
+    border-color: beige;
+}*/
+
+
+QPushButton {
+    background: white;
+    border: 1px solid rgb(41, 57, 85);
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background: lightgray;
 }
 
 QPushButton:pressed{
-    background-color: rgb(34, 44, 56);
-    color: white;
+    background-color: black;
 }
 
-QPushButton:disabled{
-    background-color: gray;
+
+
+/*
+QFrame{
+    border: 2px solid green;
+    border-radius: 4px;
+    padding: 2px;
+}
+*/
+
+
+QLabel{
+    text-align: center;
+    border: 2px solid red;
+    padding: 2px;
+
 }

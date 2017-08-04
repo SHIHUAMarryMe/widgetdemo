@@ -6,8 +6,8 @@
 
 
 #include <QQueue>
-#include <QWidget>
-#include <QSharedPointer>
+#include <QFrame>
+#include <QPair>
 
 
 class QVBoxLayout;
@@ -17,10 +17,13 @@ class QLabel;
 class QPoint;
 class QMouseEvent;
 class QListView;
+class QSplitter;
+class QStackedWidget;
+class QBoxLayout;
 
 
 
-class MainWindow : public QWidget
+class MainWindow : public QFrame
 {
     Q_OBJECT
 
@@ -38,11 +41,9 @@ private:
     };
 
 public:
-    MainWindow(std::size_t minimumWidth, std::size_t minimumHeight, QWidget* parent = nullptr);
+    MainWindow(std::size_t minimumWidth, std::size_t minimumHeight, QFrame* parent = nullptr);
 
     virtual ~MainWindow()=default;
-
-
     MainWindow(const MainWindow&)=delete;
     MainWindow(MainWindow&&)=delete;
 
@@ -58,6 +59,8 @@ protected:
 
 private:
 
+    void connectSignalSlot()noexcept;
+
     void initResource();// new may be throw.
     void layoutItems()noexcept;
 
@@ -66,11 +69,21 @@ private:
 
     QQueue<QPushButton*> m_Buttons{};
     QQueue<QHBoxLayout*> m_HLayouts{};
-    QQueue<QSharedPointer<QWidget>> m_Widgets{};
+    QQueue<QFrame*> m_Widgets{};
+
+
     QVBoxLayout* m_LeftVLayout{nullptr};
     QVBoxLayout* m_TotalLayout{nullptr};
-    QWidget* m_LeftWidget{nullptr};
-    QWidget* m_BottomWidget{nullptr};
+
+
+    QStackedWidget* m_StackedWidget{nullptr};
+
+
+    QFrame* m_LeftWidget{nullptr};
+    QFrame* m_BottomWidget{nullptr};
+
+
+    QQueue<QLabel*> m_StakedWigContent{};
 
 
 
