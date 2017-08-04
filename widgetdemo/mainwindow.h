@@ -65,24 +65,8 @@ private:
     void layoutItems()noexcept;
     void checkDragPosition(const QPoint& globalPoint)noexcept;
 
-
-    QQueue<QPushButton*> m_Buttons{};
+    QQueue<QFrame*> m_BackGroundFrame{};
     QQueue<QHBoxLayout*> m_HLayouts{};
-    QQueue<QFrame*> m_Widgets{};
-
-
-    QVBoxLayout* m_LeftVLayout{nullptr};
-    QVBoxLayout* m_TotalLayout{nullptr};
-
-
-    QStackedWidget* m_StackedWidget{nullptr};
-
-
-    QFrame* m_LeftWidget{nullptr};
-    QFrame* m_BottomWidget{nullptr};
-
-
-    QQueue<QLabel*> m_StakedWigContent{};
 
 
 
