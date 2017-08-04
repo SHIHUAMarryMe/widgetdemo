@@ -25,6 +25,7 @@ MainWindow::MainWindow(std::size_t minimumWidth, std::size_t minimumHeight, QFra
             m_TheHeight{minimumHeight}
 {
     this->setMinimumSize(minimumWidth, minimumHeight);
+    this->setWindowFlags(Qt::CustomizeWindowHint);
     this->setMouseTracking(true);
 
 
@@ -44,11 +45,14 @@ void MainWindow::initResource()
     m_StackedWidget = new QStackedWidget{};
 
 
+
     std::size_t index{0};
     for(; index != 6; ++index){
         m_Buttons.append(new QPushButton{});
         m_Buttons[index]->setFocusPolicy(Qt::NoFocus);
     }
+
+
 
     index = 0;
     for(; index != 3; ++index){
@@ -57,23 +61,22 @@ void MainWindow::initResource()
         m_HLayouts[index]->setSpacing(0);
     }
 
-//    index = 0;
-//    for(; index != 3; ++index){
-//        m_Widgets.append(new QFrame{});
-//    }
+
 
     index = 0;
     for(; index != 3; ++index){
-        m_StakedWigContent.append(new QLabel);
+        m_StakedWigContent.append(new QLabel{});
     }
 
+
     m_TotalLayout = new QVBoxLayout{this};
+
 }
 
 
 void MainWindow::layoutItems()noexcept
 {
-
+    m_TotalLayout->setContentsMargins(10, 50, 70, 100);
     m_LeftWidget->setMinimumSize((m_TheWidth/10)*1, (m_TheHeight/10)*8);
     m_BottomWidget->setMinimumSize(m_TheWidth, (m_TheHeight/10)*1);
 
@@ -82,6 +85,7 @@ void MainWindow::layoutItems()noexcept
     for(; index != 3; ++index){
         m_Buttons[index]->setMinimumSize(m_TheWidth/5, ((m_TheHeight/10)*1)/1);
         m_HLayouts[0]->addWidget(m_Buttons[index]);
+
     }
     m_HLayouts[0]->addStretch();
 
@@ -129,6 +133,11 @@ void MainWindow::layoutItems()noexcept
     index = 0;
     for(; index != 3; ++index){
         m_TotalLayout->addLayout(m_HLayouts[index]);
+
+        if(index != 2){
+            m_TotalLayout->addSpacing(30);
+        }
+
     }
 
     this->setLayout(m_TotalLayout);
@@ -140,9 +149,9 @@ void MainWindow::connectSignalSlot()noexcept
     std::size_t index{3};
     std::size_t index2{0};
     for(; index != 6 && index2 != 3; ++index, ++index2){
-        QObject::connect(m_Buttons[index], &QPushButton::clicked, [this, index2]{
-                                                                  (this->m_StackedWidget)->setCurrentIndex(index2);
-                                                                  qDebug() << "index2: " << index2;});
+        QObject::connect(m_Buttons[index], &QPushButton::clicked,
+                         [this, index2]{ (this->m_StackedWidget)->setCurrentIndex(index2);
+                                          qDebug() << "index2: " << index2;});
     }
 }
 

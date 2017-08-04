@@ -6,9 +6,10 @@
 
 
 
-struct CommonHelper
+class CommonHelper
 {
-    static void setStyle(const QString &style)
+public:
+    static void setStyle(const QString &style)noexcept
     {
         QFile qss(style);
         qss.open(QFile::ReadOnly);
@@ -28,7 +29,6 @@ int main(int argc, char *argv[])
 
     MainWindow m{800, 600};
     m.show();
-
 
     return a.exec();
 }

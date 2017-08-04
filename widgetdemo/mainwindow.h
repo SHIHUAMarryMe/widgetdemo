@@ -61,10 +61,9 @@ private:
 
     void connectSignalSlot()noexcept;
 
-    void initResource();// new may be throw.
+    void initResource();
     void layoutItems()noexcept;
-
-//    void checkDragPosition(const QPoint& globalPoint)noexcept;
+    void checkDragPosition(const QPoint& globalPoint)noexcept;
 
 
     QQueue<QPushButton*> m_Buttons{};
@@ -89,11 +88,11 @@ private:
 
     std::size_t m_TheWidth{0};
     std::size_t m_TheHeight{0};
-//    bool m_IsPressed{false};
-//    QPoint m_DragPoint{0, 0};
+    bool m_IsPressed{false};
+    QPoint m_DragPoint{0, 0};
 
     CursorPosition m_CursorDir{CursorPosition::None};
-//    constexpr static std::size_t padding{2};
+    constexpr static std::size_t padding{2};
 };
 
 #endif // MAINWINDOW_H
