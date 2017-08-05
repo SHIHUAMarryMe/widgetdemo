@@ -19,6 +19,7 @@ class QMouseEvent;
 class QListView;
 class QSplitter;
 class QStackedWidget;
+class QStackedLayout;
 class QBoxLayout;
 
 
@@ -67,6 +68,10 @@ private:
 
     QQueue<QFrame*> m_BackGroundFrame{};
     QQueue<QHBoxLayout*> m_HLayouts{};
+
+
+    QStackedWidget* m_StackedWidget{nullptr};
+    QStackedLayout* m_StackedLayout{nullptr};
 
 
 
