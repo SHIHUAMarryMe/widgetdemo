@@ -10,10 +10,12 @@ QPushButton:hover{
 
 
 QPushButton {
-    background: white;
-    border: 1px solid rgb(41, 57, 85);
-    border-radius: 5px;
+    /*background: white;*/
+    /*border: 1px solid rgb(41, 57, 85);*/
+    /*border-radius: 5px;*/
     font-weight: bold;
+    /*border-style: inset;*/
+    border-left-width: 2px solid rgb(41, 57, 85);
 }
 
 QPushButton:hover {
@@ -21,7 +23,7 @@ QPushButton:hover {
 }
 
 QPushButton:pressed{
-    background-color: black;
+    background-color: dark;
 }
 
 
@@ -32,6 +34,7 @@ QFrame{
     border-radius: 4px;
     padding: 2px;
 }
+
 
 
 

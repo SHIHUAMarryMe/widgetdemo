@@ -2,12 +2,13 @@
 #define MAINWINDOW_H
 
 
-
-
-
+#include <utility>
+#include <tuple>
+#include <map>
 #include <QQueue>
 #include <QFrame>
 #include <QPair>
+//#include <QMap>
 
 
 class QVBoxLayout;
@@ -29,6 +30,10 @@ class MainWindow : public QFrame
     Q_OBJECT
 
 private:
+
+    template<typename... Types>
+    using QTuple = std::tuple<Types...>;
+
     enum class CursorPosition{
         Up = 0,
         Down,
@@ -58,21 +63,37 @@ protected:
 //    virtual void mouseReleaseEvent(QMouseEvent* event)override;
 
 
+signals:
+    void closeWindow();
+
+
 private:
-
-    void connectSignalSlot()noexcept;
-
     void initResource();
     void layoutItems()noexcept;
-    void checkDragPosition(const QPoint& globalPoint)noexcept;
-
-    QQueue<QFrame*> m_BackGroundFrame{};
-    QQueue<QHBoxLayout*> m_HLayouts{};
+    void connectSignalSlot()noexcept;
+    void setItemsIco()noexcept;
 
 
-    QStackedWidget* m_StackedWidget{nullptr};
-    QStackedLayout* m_StackedLayout{nullptr};
+//    void checkDragPosition(const QPoint& globalPoint)noexcept;
 
+
+
+    QPair<QFrame*, QFrame*> m_TopAndBtmFrames{};
+    QTuple<QVBoxLayout*, QHBoxLayout*, QHBoxLayout*> m_TopLayouts{};
+    QQueue<QPushButton*> m_TopItems{};
+
+
+
+    QStackedWidget* m_CentralStackedWgt{nullptr};
+    QQueue<QFrame*> m_CentralWidgets{};
+    QQueue<QHBoxLayout*> m_CentralWigsLayouts{};
+    QQueue<QFrame*> m_CentralLeftWidgets{};
+    std::map<QVBoxLayout*, QQueue<QPushButton*>> m_CentralLeftWigsSubItems{};
+    std::map<QStackedWidget*, QQueue<QFrame*>> m_CentralRightWidgets{};
+
+
+
+    QVBoxLayout* m_MainLayout{nullptr};
 
 
     std::size_t m_TheWidth{0};

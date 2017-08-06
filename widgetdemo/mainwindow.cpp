@@ -1,8 +1,6 @@
 
 
 #include <QDebug>
-
-
 #include <QPushButton>
 #include <QMouseEvent>
 #include <QLabel>
@@ -29,130 +27,260 @@ MainWindow::MainWindow(std::size_t minimumWidth, std::size_t minimumHeight, QFra
     this->setMouseTracking(true);
 
 
+
     this->initResource();
     this->layoutItems();
     this->connectSignalSlot();
-
+    this->setItemsIco();
 }
 
 
 void MainWindow::initResource()
 {
-
-    m_LeftWidget = new QFrame{};
-    m_BottomWidget = new QFrame{};
-    m_LeftVLayout = new QVBoxLayout{};
-    m_StackedWidget = new QStackedWidget{};
-
-
-
     std::size_t index{0};
+    m_TopAndBtmFrames = QPair<QFrame*, QFrame*>{new QFrame{}, new QFrame{}};
+
+    m_TopLayouts = std::make_tuple(new QVBoxLayout{},
+                                   new QHBoxLayout{},
+                                   new QHBoxLayout{});
+
+
+
+    index = 0;
     for(; index != 6; ++index){
-        m_Buttons.append(new QPushButton{});
-        m_Buttons[index]->setFocusPolicy(Qt::NoFocus);
+        m_TopItems.append(new QPushButton{});
     }
 
+
+    m_CentralStackedWgt = new  QStackedWidget{};
+
+    index = 0;
+    for(; index != 3; ++index){
+        m_CentralWidgets.append(new QFrame{});
+    }
 
 
     index = 0;
     for(; index != 3; ++index){
-        m_HLayouts.append(new QHBoxLayout{});
-        m_HLayouts[index]->setMargin(0);
-        m_HLayouts[index]->setSpacing(0);
+        m_CentralLeftWidgets.append(new QFrame{});
     }
-
-
 
     index = 0;
     for(; index != 3; ++index){
-        m_StakedWigContent.append(new QLabel{});
+
+        QQueue<QPushButton*> tempQue;
+        for(std::size_t index2 = 0; index2 != 3; ++index2){
+            tempQue.append(new QPushButton{});
+        }
+
+        m_CentralLeftWigsSubItems.insert(
+          std::pair<QVBoxLayout*, QQueue<QPushButton*>>{new QVBoxLayout{}, tempQue}
+                                         );
+    }
+
+    index = 0;
+    for(; index != 9; ++index){
+        QQueue<QFrame*> tempQue;
+        for(std::size_t internalI = 0; internalI != 3; ++internalI){
+            tempQue.append(new QFrame{});
+        }
+        m_CentralRightWidgets.insert(std::make_pair(new QStackedWidget{}, tempQue));
+    }
+
+    index = 0;
+    for(; index != 3; ++index){
+        m_CentralWigsLayouts.append(new QHBoxLayout{});
     }
 
 
-    m_TotalLayout = new QVBoxLayout{this};
 
+    m_MainLayout = new QVBoxLayout{this};
 }
 
 
 void MainWindow::layoutItems()noexcept
 {
-    m_TotalLayout->setContentsMargins(10, 50, 70, 100);
-    m_LeftWidget->setMinimumSize((m_TheWidth/10)*1, (m_TheHeight/10)*8);
-    m_BottomWidget->setMinimumSize(m_TheWidth, (m_TheHeight/10)*1);
 
-    m_HLayouts[0]->addStretch();
+//    static int number{0};
+
     std::size_t index{0};
+
+    //set the size of top of frame.
+    m_TopAndBtmFrames.first->setMinimumSize(m_TheWidth, (m_TheHeight/10)*2);
+
+
+
+    QHBoxLayout* topHLayout1{std::get<1>(m_TopLayouts)};
+    topHLayout1->setSpacing(0);
+    topHLayout1->setMargin(0);
+    topHLayout1->setAlignment(Qt::AlignRight | Qt::AlignTop);
+    topHLayout1->addStretch();
     for(; index != 3; ++index){
-        m_Buttons[index]->setMinimumSize(m_TheWidth/5, ((m_TheHeight/10)*1)/1);
-        m_HLayouts[0]->addWidget(m_Buttons[index]);
-
+        m_TopItems[index]->setMinimumSize((m_TheWidth/10)*1/10, (m_TheHeight/10)*2/5*3/5);
+        m_TopItems[index]->setFocusPolicy(Qt::NoFocus);
+        topHLayout1->addWidget(m_TopItems[index]);
     }
-    m_HLayouts[0]->addStretch();
 
 
-//    index = 0;
-//    for(; index != 3; ++index){
-//        m_Widgets[index]->setMinimumSize((m_TheWidth/10)*9, (m_TheHeight/10)*8);
-//    }
-
-
-    m_LeftVLayout->setSpacing(0);
-    m_LeftVLayout->setMargin(0);
-    m_LeftVLayout->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-    m_LeftVLayout->addStretch();
+    QHBoxLayout* topHLayout2{std::get<2>(m_TopLayouts)};
+    topHLayout2->setSpacing(0);
+    topHLayout2->setMargin(0);
+    topHLayout2->setAlignment(Qt::AlignHCenter | Qt::AlignBottom);
+    topHLayout2->addStretch();
     index = 3;
     for(; index != 6; ++index){
-        m_Buttons[index]->setMinimumSize((m_TheWidth/10), (m_TheHeight/20));
-        m_LeftVLayout->addWidget(m_Buttons[index]);
+        m_TopItems[index]->setMinimumSize((m_TheWidth/10)*1, (m_TheHeight/10)*2/5*3);
+        m_TopItems[index]->setFocusPolicy(Qt::NoFocus);
+        topHLayout2->addWidget(m_TopItems[index]);
     }
-    m_LeftVLayout->addStretch();
+    topHLayout2->addStretch();
+
+
+    QVBoxLayout* topVLayout{std::get<0>(m_TopLayouts)};
+    topVLayout->setSpacing(0);
+    topVLayout->setMargin(0);
+    topVLayout->addLayout(topHLayout1);
+    topVLayout->addLayout(topHLayout2);
+    m_TopAndBtmFrames.first->setLayout(topVLayout);
 
 
     index = 0;
     for(; index != 3; ++index){
-        m_StakedWigContent[index]->setText(std::to_string(index).c_str()+QString{"======================================"});
-        m_StakedWigContent[index]->setMinimumSize((m_TheWidth/10)*9, (m_TheHeight/10)*8);
-        m_StakedWigContent[index]->setAlignment(Qt::AlignCenter);
-    }
 
-
-    index = 0;
-    for(; index != 3; ++index){
-        m_StackedWidget->addWidget(m_StakedWigContent[index]);
-    }
-   // m_StackedWidget->setCurrentIndex(0);
-
-
-
-    m_LeftWidget->setLayout(m_LeftVLayout);
-
-    m_HLayouts[1]->addWidget(m_LeftWidget);
-    m_HLayouts[1]->addWidget(m_StackedWidget);
-    m_HLayouts[2]->addWidget(m_BottomWidget);
-
-    index = 0;
-    for(; index != 3; ++index){
-        m_TotalLayout->addLayout(m_HLayouts[index]);
-
-        if(index != 2){
-            m_TotalLayout->addSpacing(30);
+        //for test.
+        if(index == 0){
+            m_CentralWidgets[index]->setStyleSheet(QString{"background-color: red"});
         }
 
+        if(index == 1){
+            m_CentralWidgets[index]->setStyleSheet(QString{"background-color: yellow"});
+        }
+
+        if(index == 2){
+            m_CentralWidgets[index]->setStyleSheet(QString{"background-color: blue"});
+        }
+        //for test.
+
+
+        m_CentralStackedWgt->addWidget(m_CentralWidgets[index]);
     }
 
-    this->setLayout(m_TotalLayout);
+    index = 0;
+    for(; index != 3; ++index){
+        m_CentralWidgets[index]->setLayout( m_CentralWigsLayouts[index] );
+    }
+
+    index= 0;
+    std::map<QStackedWidget*, QQueue<QFrame*>>::iterator beg = m_CentralRightWidgets.begin();
+    std::map<QStackedWidget*, QQueue<QFrame*>>::iterator end = m_CentralRightWidgets.end();
+    for(; index != 3 && beg != end; ++index,++beg){
+        m_CentralWigsLayouts[index]->setSpacing(0);
+        m_CentralWigsLayouts[index]->setMargin(0);
+        m_CentralWigsLayouts[index]->addWidget(m_CentralLeftWidgets[index]);
+        m_CentralWigsLayouts[index]->addWidget(beg->first);
+    }
+
+
+
+    //left-center.
+    index = 0;
+    std::map<QVBoxLayout*, QQueue<QPushButton*>>::iterator beg_1 = m_CentralLeftWigsSubItems.begin();
+    std::map<QVBoxLayout*, QQueue<QPushButton*>>::iterator end_1 = m_CentralLeftWigsSubItems.end();
+    for(;index != 3 && beg_1 != end_1; ++index, ++beg_1){
+        m_CentralLeftWidgets[index]->setMinimumSize((m_TheWidth/5)*1, (m_TheHeight/10)*7);
+        m_CentralLeftWidgets[index]->setLayout(beg_1->first);
+    }
+
+
+    beg_1 = m_CentralLeftWigsSubItems.begin();
+    for(; beg_1 != end_1; ++beg_1){
+
+        QQueue<QPushButton*>::iterator beg_2 = beg_1->second.begin();
+        QQueue<QPushButton*>::iterator end_2 = beg_1->second.end();
+        for(; beg_2 != end_2; ++beg_2){
+            (*beg_2)->setMinimumSize((m_TheWidth/5)*1, (m_TheHeight/10)*7/8);
+            (*beg_2)->setFocusPolicy(Qt::NoFocus);
+            beg_1->first->addWidget(*beg_2);
+        }
+
+        beg_1->first->setSpacing(0);
+        beg_1->first->setMargin(0);
+        beg_1->first->setAlignment(Qt::AlignTop);
+    }
+
+
+    //right-center
+    beg = m_CentralRightWidgets.begin();
+    for(; beg != end; ++beg){
+
+        QQueue<QFrame*>::iterator beg_3 = beg->second.begin();
+        QQueue<QFrame*>::iterator end_3 = beg->second.end();
+        for(; beg_3 != end_3; ++beg_3){
+            (*beg_3)->setMinimumSize((m_TheWidth/5)*1, (m_TheHeight/10)*7/8);
+            beg->first->addWidget(*beg_3);
+        }
+    }
+
+
+
+    m_CentralStackedWgt->setMinimumSize(m_TheWidth, (m_TheHeight/10)*7);
+    m_CentralStackedWgt->setCurrentIndex(0);
+    m_TopAndBtmFrames.second->setMinimumSize(m_TheWidth, (m_TheHeight/10)*1);
+
+
+    m_MainLayout->setSpacing(0);
+    m_MainLayout->setMargin(0);
+    m_MainLayout->addWidget(m_TopAndBtmFrames.first);
+    m_MainLayout->addWidget(m_CentralStackedWgt);
+    m_MainLayout->addWidget(m_TopAndBtmFrames.second);
+
+
+    topHLayout1 = nullptr;
+    topHLayout2 = nullptr;
 }
 
 
 void MainWindow::connectSignalSlot()noexcept
 {
     std::size_t index{3};
-    std::size_t index2{0};
-    for(; index != 6 && index2 != 3; ++index, ++index2){
-        QObject::connect(m_Buttons[index], &QPushButton::clicked,
-                         [this, index2]{ (this->m_StackedWidget)->setCurrentIndex(index2);
-                                          qDebug() << "index2: " << index2;});
+    for(; index != 6; ++index){
+        QObject::connect(m_TopItems[index], &QPushButton::clicked,
+                         [this, index]{
+                         (this->m_CentralStackedWgt)->setCurrentIndex(index-3);
+                         });
     }
+
+    std::map<QStackedWidget*, QQueue<QFrame*>>::iterator beg = m_CentralRightWidgets.begin();
+    std::map<QStackedWidget*, QQueue<QFrame*>>::iterator end = m_CentralRightWidgets.end();
+    std::map<QVBoxLayout*, QQueue<QPushButton*>>::iterator buttons_beg = m_CentralLeftWigsSubItems.begin();
+    std::map<QVBoxLayout*, QQueue<QPushButton*>>::iterator buttons_end = m_CentralLeftWigsSubItems.end();
+    for(; buttons_beg != buttons_end && beg != end; ++buttons_beg, ++beg){
+        std::size_t index2{0};
+        for(auto button : buttons_beg->second){
+            QObject::connect(button, &QPushButton::clicked,
+                             [=]{
+                                 beg->first->setCurrentIndex(index);
+                                }
+                            );
+
+            ++index2;
+        }
+    }
+
+
+
+    //close window event.
+    index = 2;
+    QObject::connect(m_TopItems[index], &QPushButton::clicked,
+                     [this]{this->close();}
+                    );
+
+}
+
+
+void MainWindow::setItemsIco()noexcept
+{
+    m_TopItems[2]->setIcon(QIcon{":/styles/img/close.ico"});
 }
 
 
