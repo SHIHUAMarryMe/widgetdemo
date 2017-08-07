@@ -1,8 +1,9 @@
 <RCC>
     <qresource prefix="/styles">
         <file>style.qss</file>
-        <file>img/page2.ico</file>
-        <file>img/page1.ico</file>
         <file>img/home.png</file>
+        <file>img/page2.png</file>
+        <file>img/page1.png</file>
+        <file>img/close.png</file>
     </qresource>
 </RCC>

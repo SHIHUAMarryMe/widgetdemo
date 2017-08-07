@@ -12,6 +12,7 @@
 #include <QStackedWidget>
 #include <QBoxLayout>
 #include <QToolButton>
+#include <QCalendarWidget>
 
 #include "mainwindow.h"
 #include "utilities.h"
@@ -34,6 +35,7 @@ MainWindow::MainWindow(std::size_t minimumWidth, std::size_t minimumHeight, QFra
     this->connectSignalSlot();
     this->setObjectsName();
     this->setWidgetContent();
+    this->setItemsIcon();
 }
 
 
@@ -95,6 +97,12 @@ void MainWindow::initResource()
     }
 
 
+    m_CentralRightSubWigs.insert(std::pair<QBoxLayout*, QQueue<QWidget*>>{new QBoxLayout{QBoxLayout::LeftToRight}, QQueue<QWidget*>{}});
+    std::map<QBoxLayout*, QQueue<QWidget*>>::iterator beg = m_CentralRightSubWigs.begin();
+//    std::map<QBoxLayout*, QQueue<QWidget*>>::iterator end = m_CentralRightSubWigs.end();
+    beg->second.append(new QCalendarWidget{});
+
+
 
     m_MainLayout = new QVBoxLayout{this};
 }
@@ -112,7 +120,7 @@ void MainWindow::layoutItems()noexcept
 
     QHBoxLayout* topHLayout1{std::get<1>(m_TopLayouts)};
     topHLayout1->setSpacing(0);
-//    topHLayout1->setMargin(0);
+    topHLayout1->setContentsMargins(0, 5, 5, 0);
     topHLayout1->setAlignment(Qt::AlignRight /*| Qt::AlignTop*/);
     topHLayout1->addStretch();
     for(; index != 3; ++index){
@@ -184,7 +192,7 @@ void MainWindow::layoutItems()noexcept
 
 
 
-    //left-center.
+    //left-center subitem.
     index = 0;
     std::map<QVBoxLayout*, QQueue<QPushButton*>>::iterator beg_1 = m_CentralLeftWigsSubItems.begin();
     std::map<QVBoxLayout*, QQueue<QPushButton*>>::iterator end_1 = m_CentralLeftWigsSubItems.end();
@@ -211,19 +219,29 @@ void MainWindow::layoutItems()noexcept
     }
 
 
-    index = 1;
-    //right-center
+    //right-center QStackedWidget subitem
     beg = m_CentralRightWidgets.begin();
     for(; beg != end; ++beg){
 
         QQueue<QFrame*>::iterator beg_3 = beg->second.begin();
         QQueue<QFrame*>::iterator end_3 = beg->second.end();
         for(; beg_3 != end_3; ++beg_3){
-            qDebug() << index << "-----------------";
-            ++index;
             beg->first->addWidget(*beg_3);
         }
     }
+
+
+
+
+    //subitem of right-center of subitems of QStacked's subitems.
+    beg = m_CentralRightWidgets.begin();
+    std::map<QBoxLayout*, QQueue<QWidget*>>::iterator beg_4 = m_CentralRightSubWigs.begin();
+    QQueue<QFrame*>::iterator beg_5 = beg->second.begin();
+    QQueue<QWidget*>::iterator beg_6 = beg_4->second.begin();
+    beg_4->first->setAlignment(Qt::AlignCenter);
+    beg_4->first->addWidget(*beg_6);
+    (*beg_5)->setLayout(beg_4->first);
+
 
 
 
@@ -252,16 +270,13 @@ void MainWindow::connectSignalSlot()noexcept
                          [this, index]
                          {
                             (this->m_CentralStackedWgt)->setCurrentIndex(index-3);
-//                             if(index == 4){
-//                                 m_TopItems[3]->setChecked(false);
-//                             }
+                            emit changeMenuButtonChckState(index);
                          }
                          );
     }
 
 
     std::map<QStackedWidget*, QQueue<QFrame*>>::iterator beg = m_CentralRightWidgets.begin();
-//    std::map<QStackedWidget*, QQueue<QFrame*>>::iterator end = m_CentralRightWidgets.end();
     std::map<QVBoxLayout*, QQueue<QPushButton*>>::iterator buttons_beg = m_CentralLeftWigsSubItems.begin();
     std::map<QVBoxLayout*, QQueue<QPushButton*>>::iterator buttons_end = m_CentralLeftWigsSubItems.end();
     for(; buttons_beg != buttons_end /*&& beg != end*/; ++buttons_beg, ++beg){
@@ -285,11 +300,19 @@ void MainWindow::connectSignalSlot()noexcept
                      [this]{this->close();}
                     );
 
+    QObject::connect(this, &MainWindow::changeMenuButtonChckState, this, &MainWindow::changeButtonCheckState);
+
 }
 
 
 void MainWindow::setObjectsName()noexcept
 {
+
+    std::size_t index{0};
+    for(; index != 3; ++index){
+        m_TopItems[index]->setObjectName("OperatorWindow");
+    }
+
     m_TopItems[3]->setObjectName(QString{"HomeButton"});
     m_TopItems[4]->setObjectName(QString{"Page1Button"});
     m_TopItems[5]->setObjectName(QString{"Page2Button"});
@@ -298,7 +321,40 @@ void MainWindow::setObjectsName()noexcept
 
 void MainWindow::setWidgetContent()noexcept
 {
-    m_TopItems[3]->setText(QString{"Home"});
+    m_TopItems[3]->setText(tr("Home"));
+    m_TopItems[4]->setText(tr("Page1"));
+    m_TopItems[5]->setText(tr("Page2"));
+
+    std::map<QVBoxLayout*, QQueue<QPushButton*>>::iterator beg_1 = m_CentralLeftWigsSubItems.begin();
+    QQueue<QPushButton*>::iterator beg_2 = beg_1->second.begin();
+
+    (*beg_2)->setText(tr("calendar"));
+
+}
+
+void MainWindow::setItemsIcon()noexcept
+{
+    m_TopItems[2]->setIcon(QIcon{":/styles/img/close.png"});
+}
+
+
+void MainWindow::changeButtonCheckState(std::size_t index)noexcept
+{
+    if(index == 3){
+        m_TopItems[4]->setChecked(false);
+        m_TopItems[5]->setChecked(false);
+        return;
+    }
+
+    if(index == 4){
+        m_TopItems[3]->setChecked(false);
+        m_TopItems[5]->setChecked(false);
+    }
+
+    if(index == 5){
+        m_TopItems[3]->setChecked(false);
+        m_TopItems[4]->setChecked(false);
+    }
 }
 
 

@@ -65,7 +65,12 @@ protected:
 
 
 signals:
-    void closeWindow();
+    void changeMenuButtonChckState(std::size_t index);
+
+
+
+private slots:
+    void changeButtonCheckState(std::size_t index)noexcept;
 
 
 private:
@@ -74,6 +79,7 @@ private:
     void connectSignalSlot()noexcept;
     void setObjectsName()noexcept;
     void setWidgetContent()noexcept;
+    void setItemsIcon()noexcept;
 
 
 //    void checkDragPosition(const QPoint& globalPoint)noexcept;
@@ -92,6 +98,7 @@ private:
     QQueue<QFrame*> m_CentralLeftWidgets{};
     std::map<QVBoxLayout*, QQueue<QPushButton*>> m_CentralLeftWigsSubItems{};
     std::map<QStackedWidget*, QQueue<QFrame*>> m_CentralRightWidgets{};
+    std::map<QBoxLayout*, QQueue<QWidget*>> m_CentralRightSubWigs{};
 
 
 

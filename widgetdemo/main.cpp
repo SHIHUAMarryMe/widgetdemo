@@ -5,7 +5,6 @@
 #include "mainwindow.h"
 
 
-
 class CommonHelper
 {
 public:
