@@ -11,6 +11,7 @@
 #include <QSplitter>
 #include <QStackedWidget>
 #include <QBoxLayout>
+#include <QToolButton>
 
 #include "mainwindow.h"
 #include "utilities.h"
@@ -24,14 +25,15 @@ MainWindow::MainWindow(std::size_t minimumWidth, std::size_t minimumHeight, QFra
 {
     this->setMinimumSize(minimumWidth, minimumHeight);
     this->setWindowFlags(Qt::CustomizeWindowHint);
-    this->setMouseTracking(true);
+//    this->setMouseTracking(true);
 
 
 
     this->initResource();
     this->layoutItems();
     this->connectSignalSlot();
-    this->setItemsIco();
+    this->setObjectsName();
+    this->setWidgetContent();
 }
 
 
@@ -79,7 +81,7 @@ void MainWindow::initResource()
     }
 
     index = 0;
-    for(; index != 9; ++index){
+    for(; index != 3; ++index){
         QQueue<QFrame*> tempQue;
         for(std::size_t internalI = 0; internalI != 3; ++internalI){
             tempQue.append(new QFrame{});
@@ -101,8 +103,6 @@ void MainWindow::initResource()
 void MainWindow::layoutItems()noexcept
 {
 
-//    static int number{0};
-
     std::size_t index{0};
 
     //set the size of top of frame.
@@ -112,12 +112,13 @@ void MainWindow::layoutItems()noexcept
 
     QHBoxLayout* topHLayout1{std::get<1>(m_TopLayouts)};
     topHLayout1->setSpacing(0);
-    topHLayout1->setMargin(0);
-    topHLayout1->setAlignment(Qt::AlignRight | Qt::AlignTop);
+//    topHLayout1->setMargin(0);
+    topHLayout1->setAlignment(Qt::AlignRight /*| Qt::AlignTop*/);
     topHLayout1->addStretch();
     for(; index != 3; ++index){
         m_TopItems[index]->setMinimumSize((m_TheWidth/10)*1/10, (m_TheHeight/10)*2/5*3/5);
         m_TopItems[index]->setFocusPolicy(Qt::NoFocus);
+        m_TopItems[index]->setCheckable(true);
         topHLayout1->addWidget(m_TopItems[index]);
     }
 
@@ -131,6 +132,7 @@ void MainWindow::layoutItems()noexcept
     for(; index != 6; ++index){
         m_TopItems[index]->setMinimumSize((m_TheWidth/10)*1, (m_TheHeight/10)*2/5*3);
         m_TopItems[index]->setFocusPolicy(Qt::NoFocus);
+        m_TopItems[index]->setCheckable(true);
         topHLayout2->addWidget(m_TopItems[index]);
     }
     topHLayout2->addStretch();
@@ -148,17 +150,17 @@ void MainWindow::layoutItems()noexcept
     for(; index != 3; ++index){
 
         //for test.
-        if(index == 0){
-            m_CentralWidgets[index]->setStyleSheet(QString{"background-color: red"});
-        }
+//        if(index == 0){
+//            m_CentralWidgets[index]->setStyleSheet(QString{"background-color: red"});
+//        }
 
-        if(index == 1){
-            m_CentralWidgets[index]->setStyleSheet(QString{"background-color: yellow"});
-        }
+//        if(index == 1){
+//            m_CentralWidgets[index]->setStyleSheet(QString{"background-color: yellow"});
+//        }
 
-        if(index == 2){
-            m_CentralWidgets[index]->setStyleSheet(QString{"background-color: blue"});
-        }
+//        if(index == 2){
+//            m_CentralWidgets[index]->setStyleSheet(QString{"background-color: blue"});
+//        }
         //for test.
 
 
@@ -167,7 +169,7 @@ void MainWindow::layoutItems()noexcept
 
     index = 0;
     for(; index != 3; ++index){
-        m_CentralWidgets[index]->setLayout( m_CentralWigsLayouts[index] );
+        m_CentralWidgets[index]->setLayout(m_CentralWigsLayouts[index]);
     }
 
     index= 0;
@@ -209,6 +211,7 @@ void MainWindow::layoutItems()noexcept
     }
 
 
+    index = 1;
     //right-center
     beg = m_CentralRightWidgets.begin();
     for(; beg != end; ++beg){
@@ -216,7 +219,8 @@ void MainWindow::layoutItems()noexcept
         QQueue<QFrame*>::iterator beg_3 = beg->second.begin();
         QQueue<QFrame*>::iterator end_3 = beg->second.end();
         for(; beg_3 != end_3; ++beg_3){
-            (*beg_3)->setMinimumSize((m_TheWidth/5)*1, (m_TheHeight/10)*7/8);
+            qDebug() << index << "-----------------";
+            ++index;
             beg->first->addWidget(*beg_3);
         }
     }
@@ -245,21 +249,27 @@ void MainWindow::connectSignalSlot()noexcept
     std::size_t index{3};
     for(; index != 6; ++index){
         QObject::connect(m_TopItems[index], &QPushButton::clicked,
-                         [this, index]{
-                         (this->m_CentralStackedWgt)->setCurrentIndex(index-3);
-                         });
+                         [this, index]
+                         {
+                            (this->m_CentralStackedWgt)->setCurrentIndex(index-3);
+//                             if(index == 4){
+//                                 m_TopItems[3]->setChecked(false);
+//                             }
+                         }
+                         );
     }
 
+
     std::map<QStackedWidget*, QQueue<QFrame*>>::iterator beg = m_CentralRightWidgets.begin();
-    std::map<QStackedWidget*, QQueue<QFrame*>>::iterator end = m_CentralRightWidgets.end();
+//    std::map<QStackedWidget*, QQueue<QFrame*>>::iterator end = m_CentralRightWidgets.end();
     std::map<QVBoxLayout*, QQueue<QPushButton*>>::iterator buttons_beg = m_CentralLeftWigsSubItems.begin();
     std::map<QVBoxLayout*, QQueue<QPushButton*>>::iterator buttons_end = m_CentralLeftWigsSubItems.end();
-    for(; buttons_beg != buttons_end && beg != end; ++buttons_beg, ++beg){
+    for(; buttons_beg != buttons_end /*&& beg != end*/; ++buttons_beg, ++beg){
         std::size_t index2{0};
         for(auto button : buttons_beg->second){
             QObject::connect(button, &QPushButton::clicked,
                              [=]{
-                                 beg->first->setCurrentIndex(index);
+                                 beg->first->setCurrentIndex(index2);
                                 }
                             );
 
@@ -278,9 +288,17 @@ void MainWindow::connectSignalSlot()noexcept
 }
 
 
-void MainWindow::setItemsIco()noexcept
+void MainWindow::setObjectsName()noexcept
 {
-    m_TopItems[2]->setIcon(QIcon{":/styles/img/close.ico"});
+    m_TopItems[3]->setObjectName(QString{"HomeButton"});
+    m_TopItems[4]->setObjectName(QString{"Page1Button"});
+    m_TopItems[5]->setObjectName(QString{"Page2Button"});
+}
+
+
+void MainWindow::setWidgetContent()noexcept
+{
+    m_TopItems[3]->setText(QString{"Home"});
 }
 
 

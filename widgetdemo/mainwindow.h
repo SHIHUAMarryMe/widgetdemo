@@ -22,6 +22,7 @@ class QSplitter;
 class QStackedWidget;
 class QStackedLayout;
 class QBoxLayout;
+class QToolButton;
 
 
 
@@ -71,7 +72,8 @@ private:
     void initResource();
     void layoutItems()noexcept;
     void connectSignalSlot()noexcept;
-    void setItemsIco()noexcept;
+    void setObjectsName()noexcept;
+    void setWidgetContent()noexcept;
 
 
 //    void checkDragPosition(const QPoint& globalPoint)noexcept;

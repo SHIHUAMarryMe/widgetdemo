@@ -1,46 +1,67 @@
 
-
-/*
-QPushButton:hover{
-    background-color: black;
-    border-style: outset;
-    border-width: 2px;
-    border-color: beige;
-}*/
-
-
-QPushButton {
-    /*background: white;*/
-    /*border: 1px solid rgb(41, 57, 85);*/
-    /*border-radius: 5px;*/
-    font-weight: bold;
-    /*border-style: inset;*/
-    border-left-width: 2px solid rgb(41, 57, 85);
+QPushButton#HomeButton{
+    background-image: url(:/styles/img/home.png);
+    background-repeat:no-repeat;
+    background-position: center top;
+    background-color: rgba(0, 211, 197, 255);
+    color: black;
+    text-align: center bottom;
+    padding-bottom: 2px;
 }
 
-QPushButton:hover {
-    background: lightgray;
+QPushButton#HomeButton:hover{
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 82, 112, 255), stop:0.5 rgba(0, 211, 197, 255), stop:1 rgba(0, 82, 112, 255));
+    color: white;
+    border: 0px solid rgb(255, 127, 39);
 }
 
-QPushButton:pressed{
-    background-color: dark;
+
+
+
+
+QPushButton#HomeButton:checked{
+   background-color: transparent;
 }
+
+QPushButton#HomeButton:flat{
+    border: none;
+}
+
+
+
+
+QPushButton#Page1Button{
+    background-image: url(:/styles/img/home.png);
+    background-repeat:no-repeat;
+    background-position: center top;
+    background-color: rgba(0, 211, 197, 255);
+    color: black;
+    text-align: center bottom;
+    padding-bottom: 2px;
+}
+
+QPushButton#Page1Button:hover{
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 82, 112, 255), stop:0.5 rgba(0, 211, 197, 255), stop:1 rgba(0, 82, 112, 255));
+    color: white;
+    border: 0px solid rgb(255, 127, 39);
+}
+
+
+
+
+
+QPushButton#Page1Button:checked{
+   background-color: transparent;
+}
+
+QPushButton#Page1Button:flat{
+    border: none;
+}
+
 
 
 
 
 QFrame{
-    border: 2px solid green;
-    border-radius: 4px;
-    padding: 2px;
-}
-
-
-
-
-QLabel{
-    text-align: center;
-    border: 2px solid red;
-    padding: 2px;
-
+    background-color: qlineargradient(spread:pad, x1:-1, y1:0, x2:1 y2:0, stop:0 rgba(0, 211, 197, 255), stop:1 rgba(0, 82, 112, 255));
 }
