@@ -109,8 +109,6 @@ void MainWindow::initResource()
     if(pair.second){
         if(QWidget* calendar = dynamic_cast<QWidget*>(new QCalendarWidget{})){
             pair.first->second.append(calendar);
-
-            qDebug() << "add calculator!" << "----------------";
         }else{
             assert(false);
         }
@@ -237,6 +235,7 @@ void MainWindow::layoutItems()noexcept
         for(; beg_2 != end_2; ++beg_2){
             (*beg_2)->setMinimumSize((m_TheWidth/5)*1, (m_TheHeight/10)*7/8);
             (*beg_2)->setFocusPolicy(Qt::NoFocus);
+            (*beg_2)->setCheckable(true);
             beg_1->first->addWidget(*beg_2);
         }
 
@@ -272,7 +271,6 @@ void MainWindow::layoutItems()noexcept
     beg_5->first->addWidget(*beg_6);
     (*beg_4)->setLayout(beg_5->first);
 
-    qDebug() << beg->second.size() << "------------------------";
 
     ++beg_4;
     ++beg_5;
@@ -310,26 +308,29 @@ void MainWindow::connectSignalSlot()noexcept
                          [this, index]
                          {
                             (this->m_CentralStackedWgt)->setCurrentIndex(index-3);
-                            emit changeMenuButtonChckState(index);
+                            emit currentSelectedButtonMenubar(index);
                          }
                          );
     }
 
 
+    index = 0;
     std::map<QStackedWidget*, QQueue<QFrame*>>::iterator beg = m_CentralRightWidgets.begin();
     std::map<QVBoxLayout*, QQueue<QPushButton*>>::iterator buttons_beg = m_CentralLeftWigsSubItems.begin();
     std::map<QVBoxLayout*, QQueue<QPushButton*>>::iterator buttons_end = m_CentralLeftWigsSubItems.end();
-    for(; buttons_beg != buttons_end /*&& beg != end*/; ++buttons_beg, ++beg){
+    for(; buttons_beg != buttons_end; ++buttons_beg, ++beg){
         std::size_t index2{0};
         for(auto button : buttons_beg->second){
             QObject::connect(button, &QPushButton::clicked,
                              [=]{
                                  beg->first->setCurrentIndex(index2);
+                                 emit currentSelectedButtonLeftCentral(index, index2);
                                 }
                             );
-
             ++index2;
         }
+
+        ++index;
     }
 
 
@@ -340,8 +341,8 @@ void MainWindow::connectSignalSlot()noexcept
                      [this]{this->close();}
                     );
 
-    QObject::connect(this, &MainWindow::changeMenuButtonChckState, this, &MainWindow::changeButtonCheckState);
-
+    QObject::connect(this, &MainWindow::currentSelectedButtonMenubar, this, &MainWindow::changeButtonCheckStateMenuBar);
+    QObject::connect(this, &MainWindow::currentSelectedButtonLeftCentral, this, &MainWindow::changeButtonCheckStateLeftCentral);
 }
 
 
@@ -359,10 +360,17 @@ void MainWindow::setObjectsName()noexcept
 
     m_TopAndBtmFrames.first->setObjectName(QString{"DefaultPage"});
     m_TopAndBtmFrames.second->setObjectName(QString{"DefaultPage"});
-
     for(auto frame : m_CentralLeftWidgets){
         frame->setObjectName(QString{"DefaultPage"});
     }
+
+
+    for(auto pair : m_CentralLeftWigsSubItems){
+        for(auto frame : pair.second){
+            frame->setObjectName(QString{"LeftCentralButton"});
+        }
+    }
+
 }
 
 
@@ -377,6 +385,8 @@ void MainWindow::setWidgetContent()noexcept
     (*beg_2)->setText(tr("calendar"));
     ++beg_2;
     (*beg_2)->setText(tr("calculator"));
+    ++beg_2;
+    (*beg_2)->setText(tr("other"));
 
 }
 
@@ -386,7 +396,7 @@ void MainWindow::setItemsIcon()noexcept
 }
 
 
-void MainWindow::changeButtonCheckState(std::size_t index)noexcept
+void MainWindow::changeButtonCheckStateMenuBar(std::size_t index)noexcept
 {
     if(index == 3){
         m_TopItems[4]->setChecked(false);
@@ -403,6 +413,31 @@ void MainWindow::changeButtonCheckState(std::size_t index)noexcept
         m_TopItems[3]->setChecked(false);
         m_TopItems[4]->setChecked(false);
     }
+}
+
+
+void MainWindow::changeButtonCheckStateLeftCentral(std::size_t index, std::size_t index2)noexcept
+{
+    std::map<QVBoxLayout*, QQueue<QPushButton*>>::iterator beg = m_CentralLeftWigsSubItems.begin();
+
+
+    //notice that:
+    //the iterator of std::map is BidirectionalIterator
+    for(std::size_t index3 = 0; index3 != index; ++index3){
+        ++beg;
+    }
+
+
+
+    std::size_t size{ beg->second.size() };
+    for(std::size_t index4 = 0; index4 != size; ++index4){
+        if(index4 == index2){
+            continue;
+        }
+
+        beg->second[index4]->setChecked(false);
+    }
+
 }
 
 

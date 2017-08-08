@@ -66,12 +66,14 @@ protected:
 
 
 signals:
-    void changeMenuButtonChckState(std::size_t index);
+    void currentSelectedButtonMenubar(std::size_t index);
+    void currentSelectedButtonLeftCentral(std::size_t index, std::size_t index2);
 
 
 
 private slots:
-    void changeButtonCheckState(std::size_t index)noexcept;
+    void changeButtonCheckStateMenuBar(std::size_t index)noexcept;
+    void changeButtonCheckStateLeftCentral(std::size_t index, std::size_t index2)noexcept;
 
 
 private:
