@@ -23,6 +23,7 @@ class QStackedWidget;
 class QStackedLayout;
 class QBoxLayout;
 class QToolButton;
+class Calculator;
 
 
 

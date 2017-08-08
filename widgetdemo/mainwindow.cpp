@@ -14,8 +14,12 @@
 #include <QToolButton>
 #include <QCalendarWidget>
 
+
+#include <cassert>
+
 #include "mainwindow.h"
 #include "utilities.h"
+#include "calculator.h"
 
 
 
@@ -97,13 +101,36 @@ void MainWindow::initResource()
     }
 
 
-    m_CentralRightSubWigs.insert(std::pair<QBoxLayout*, QQueue<QWidget*>>{new QBoxLayout{QBoxLayout::LeftToRight}, QQueue<QWidget*>{}});
-    std::map<QBoxLayout*, QQueue<QWidget*>>::iterator beg = m_CentralRightSubWigs.begin();
-//    std::map<QBoxLayout*, QQueue<QWidget*>>::iterator end = m_CentralRightSubWigs.end();
-    beg->second.append(new QCalendarWidget{});
+
+    //add items to per-widget of right-center's QStackedWidget;
+    auto pair = m_CentralRightSubWigs.insert(
+                std::pair<QBoxLayout*, QQueue<QWidget*>>{new QBoxLayout{QBoxLayout::LeftToRight}, QQueue<QWidget*>{}}
+                );
+    if(pair.second){
+        if(QWidget* calendar = dynamic_cast<QWidget*>(new QCalendarWidget{})){
+            pair.first->second.append(calendar);
+
+            qDebug() << "add calculator!" << "----------------";
+        }else{
+            assert(false);
+        }
+    }
+
+    pair = m_CentralRightSubWigs.insert(
+                std::pair<QBoxLayout*, QQueue<QWidget*>>{new QBoxLayout{QBoxLayout::LeftToRight}, QQueue<QWidget*>{}}
+                );
+    if(pair.second){
+        if(QWidget* calculator = dynamic_cast<QWidget*>(new Calculator{})){
+            pair.first->second.append(calculator);
+
+        }else{
+            assert(false);
+        }
+    }
 
 
 
+    //set mainlayout for main window.
     m_MainLayout = new QVBoxLayout{this};
 }
 
@@ -126,7 +153,6 @@ void MainWindow::layoutItems()noexcept
     for(; index != 3; ++index){
         m_TopItems[index]->setMinimumSize((m_TheWidth/10)*1/10, (m_TheHeight/10)*2/5*3/5);
         m_TopItems[index]->setFocusPolicy(Qt::NoFocus);
-        m_TopItems[index]->setCheckable(true);
         topHLayout1->addWidget(m_TopItems[index]);
     }
 
@@ -144,6 +170,7 @@ void MainWindow::layoutItems()noexcept
         topHLayout2->addWidget(m_TopItems[index]);
     }
     topHLayout2->addStretch();
+    m_TopItems[3]->setChecked(true);
 
 
     QVBoxLayout* topVLayout{std::get<0>(m_TopLayouts)};
@@ -235,13 +262,26 @@ void MainWindow::layoutItems()noexcept
 
     //subitem of right-center of subitems of QStacked's subitems.
     beg = m_CentralRightWidgets.begin();
-    std::map<QBoxLayout*, QQueue<QWidget*>>::iterator beg_4 = m_CentralRightSubWigs.begin();
-    QQueue<QFrame*>::iterator beg_5 = beg->second.begin();
-    QQueue<QWidget*>::iterator beg_6 = beg_4->second.begin();
-    beg_4->first->setAlignment(Qt::AlignCenter);
-    beg_4->first->addWidget(*beg_6);
-    (*beg_5)->setLayout(beg_4->first);
+    QQueue<QFrame*>::iterator beg_4 = beg->second.begin();
+    std::map<QBoxLayout*, QQueue<QWidget*>>::iterator beg_5 = m_CentralRightSubWigs.begin();
+    QQueue<QWidget*>::iterator beg_6 = beg_5->second.begin();
 
+    beg_5->first->setAlignment(Qt::AlignCenter);
+    beg_5->first->setSpacing(0);
+    beg_5->first->setMargin(0);
+    beg_5->first->addWidget(*beg_6);
+    (*beg_4)->setLayout(beg_5->first);
+
+    qDebug() << beg->second.size() << "------------------------";
+
+    ++beg_4;
+    ++beg_5;
+    beg_6 = beg_5->second.begin();
+    beg_5->first->setAlignment(Qt::AlignCenter);
+    beg_5->first->setSpacing(0);
+    beg_5->first->setMargin(0);
+    beg_5->first->addWidget(*beg_6);
+    (*beg_4)->setLayout(beg_5->first);
 
 
 
@@ -316,6 +356,13 @@ void MainWindow::setObjectsName()noexcept
     m_TopItems[3]->setObjectName(QString{"HomeButton"});
     m_TopItems[4]->setObjectName(QString{"Page1Button"});
     m_TopItems[5]->setObjectName(QString{"Page2Button"});
+
+    m_TopAndBtmFrames.first->setObjectName(QString{"DefaultPage"});
+    m_TopAndBtmFrames.second->setObjectName(QString{"DefaultPage"});
+
+    for(auto frame : m_CentralLeftWidgets){
+        frame->setObjectName(QString{"DefaultPage"});
+    }
 }
 
 
@@ -327,14 +374,15 @@ void MainWindow::setWidgetContent()noexcept
 
     std::map<QVBoxLayout*, QQueue<QPushButton*>>::iterator beg_1 = m_CentralLeftWigsSubItems.begin();
     QQueue<QPushButton*>::iterator beg_2 = beg_1->second.begin();
-
     (*beg_2)->setText(tr("calendar"));
+    ++beg_2;
+    (*beg_2)->setText(tr("calculator"));
 
 }
 
 void MainWindow::setItemsIcon()noexcept
 {
-    m_TopItems[2]->setIcon(QIcon{":/styles/img/close.png"});
+    m_TopItems[2]->setIcon(QIcon{":/styles/img/close.ico"});
 }
 
 

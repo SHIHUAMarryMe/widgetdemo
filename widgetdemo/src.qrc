@@ -4,6 +4,6 @@
         <file>img/home.png</file>
         <file>img/page2.png</file>
         <file>img/page1.png</file>
-        <file>img/close.png</file>
+        <file>img/close.ico</file>
     </qresource>
 </RCC>

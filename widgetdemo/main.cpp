@@ -3,6 +3,7 @@
 
 
 #include "mainwindow.h"
+#include "calculator.h"
 
 
 class CommonHelper
@@ -28,6 +29,7 @@ int main(int argc, char *argv[])
 
     MainWindow m{800, 600};
     m.show();
+
 
     return a.exec();
 }
