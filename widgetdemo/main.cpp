@@ -1,22 +1,11 @@
-#include <QApplication>
-#include <QFile>
+#include <iostream>
+#include <iomanip>
 
 
 #include "mainwindow.h"
 #include "calculator.h"
 
 
-class CommonHelper
-{
-public:
-    static void setStyle(const QString &style)noexcept
-    {
-        QFile qss(style);
-        qss.open(QFile::ReadOnly);
-        qApp->setStyleSheet(qss.readAll());
-        qss.close();
-    }
-};
 
 
 

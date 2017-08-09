@@ -5,5 +5,8 @@
         <file>img/page2.png</file>
         <file>img/page1.png</file>
         <file>img/close.ico</file>
+        <file>img/hook.png</file>
+        <file>style2.qss</file>
+        <file>img/skin.ico</file>
     </qresource>
 </RCC>

@@ -13,13 +13,22 @@
 #include <QBoxLayout>
 #include <QToolButton>
 #include <QCalendarWidget>
+#include <QAbstractButton>
+#include <QMenu>
 
 
 #include <cassert>
 
 #include "mainwindow.h"
-#include "utilities.h"
 #include "calculator.h"
+
+
+
+
+QString MainWindow::stylesNames[2]{
+                                   QString{":/styles/style.qss"},
+                                   QString{":/styles/style2.qss"}
+                                  };
 
 
 
@@ -36,10 +45,11 @@ MainWindow::MainWindow(std::size_t minimumWidth, std::size_t minimumHeight, QFra
 
     this->initResource();
     this->layoutItems();
+    this->setItemsIcon();
     this->connectSignalSlot();
     this->setObjectsName();
     this->setWidgetContent();
-    this->setItemsIcon();
+
 }
 
 
@@ -56,6 +66,11 @@ void MainWindow::initResource()
 
     index = 0;
     for(; index != 6; ++index){
+        if(index == 1){
+            m_TopItems.append(new QToolButton{});
+            continue;
+        }
+
         m_TopItems.append(new QPushButton{});
     }
 
@@ -133,7 +148,7 @@ void MainWindow::initResource()
 }
 
 
-void MainWindow::layoutItems()noexcept
+void MainWindow::layoutItems()
 {
 
     std::size_t index{0};
@@ -149,9 +164,23 @@ void MainWindow::layoutItems()noexcept
     topHLayout1->setAlignment(Qt::AlignRight /*| Qt::AlignTop*/);
     topHLayout1->addStretch();
     for(; index != 3; ++index){
-        m_TopItems[index]->setMinimumSize((m_TheWidth/10)*1/10, (m_TheHeight/10)*2/5*3/5);
-        m_TopItems[index]->setFocusPolicy(Qt::NoFocus);
-        topHLayout1->addWidget(m_TopItems[index]);
+
+        if(index == 1){
+            if(QToolButton* btn = dynamic_cast<QToolButton*>(m_TopItems[1])){
+                btn->setMinimumSize((m_TheWidth/10)*1/10, (m_TheHeight/10)*2/5*3/5);
+                btn->setFocusPolicy(Qt::NoFocus);
+                topHLayout1->addWidget(m_TopItems[index]);
+            }
+        }
+
+
+        if(QPushButton* btn = dynamic_cast<QPushButton*>(m_TopItems[index])){
+            btn->setMinimumSize((m_TheWidth/10)*1/10, (m_TheHeight/10)*2/5*3/5);
+            btn->setFocusPolicy(Qt::NoFocus);
+            topHLayout1->addWidget(btn);
+        }
+
+
     }
 
 
@@ -300,7 +329,7 @@ void MainWindow::layoutItems()noexcept
 }
 
 
-void MainWindow::connectSignalSlot()noexcept
+void MainWindow::connectSignalSlot()
 {
     std::size_t index{3};
     for(; index != 6; ++index){
@@ -337,12 +366,14 @@ void MainWindow::connectSignalSlot()noexcept
 
     //close window event.
     index = 2;
-    QObject::connect(m_TopItems[index], &QPushButton::clicked,
+    QObject::connect(dynamic_cast<QPushButton*>(m_TopItems[index]), &QPushButton::clicked,
                      [this]{this->close();}
                     );
 
     QObject::connect(this, &MainWindow::currentSelectedButtonMenubar, this, &MainWindow::changeButtonCheckStateMenuBar);
     QObject::connect(this, &MainWindow::currentSelectedButtonLeftCentral, this, &MainWindow::changeButtonCheckStateLeftCentral);
+
+    QObject::connect(m_SkinsMenu, &QMenu::triggered, this, &MainWindow::changeSkin);
 }
 
 
@@ -387,12 +418,37 @@ void MainWindow::setWidgetContent()noexcept
     (*beg_2)->setText(tr("calculator"));
     ++beg_2;
     (*beg_2)->setText(tr("other"));
-
 }
 
 void MainWindow::setItemsIcon()noexcept
 {
     m_TopItems[2]->setIcon(QIcon{":/styles/img/close.ico"});
+    QSize icoSize{m_TopItems[2]->iconSize()};
+
+
+    if(QToolButton* toolButton = dynamic_cast<QToolButton*>(m_TopItems[1])){
+        toolButton->setIconSize(icoSize);
+        toolButton->setIcon(QIcon{":/styles/img/skin.ico"});
+        toolButton->setArrowType(Qt::NoArrow);
+        toolButton->setPopupMode(QToolButton::InstantPopup);
+
+        m_SkinsMenu = new QMenu{};
+
+        QAction* action1{new QAction{QIcon{":/styles/img/hook.png"}, QString{"Blue"}, m_SkinsMenu}};
+        action1->setIconVisibleInMenu(true);
+        action1->setChecked(true);
+        action1->setCheckable(true);
+        m_SkinsMenu->addAction(action1);
+        m_Actions.append(action1);
+
+        QAction* action2{new QAction{QIcon{":/styles/img/hook.png"}, QString{"red"}, m_SkinsMenu}};
+        action2->setIconVisibleInMenu(false);
+        action2->setCheckable(true);
+        m_SkinsMenu->addAction(action2);
+        m_Actions.append(action2);
+        toolButton->setMenu(m_SkinsMenu);
+    }
+
 }
 
 
@@ -420,7 +476,6 @@ void MainWindow::changeButtonCheckStateLeftCentral(std::size_t index, std::size_
 {
     std::map<QVBoxLayout*, QQueue<QPushButton*>>::iterator beg = m_CentralLeftWigsSubItems.begin();
 
-
     //notice that:
     //the iterator of std::map is BidirectionalIterator
     for(std::size_t index3 = 0; index3 != index; ++index3){
@@ -437,7 +492,26 @@ void MainWindow::changeButtonCheckStateLeftCentral(std::size_t index, std::size_
 
         beg->second[index4]->setChecked(false);
     }
+}
 
+
+//this function for change the skin.
+void MainWindow::changeSkin(QAction* action)noexcept
+{
+    QQueue<QAction*>::iterator beg = m_Actions.begin();
+    QQueue<QAction*>::iterator end = m_Actions.end();
+    for(std::size_t index = 0; beg != end; ++beg, ++index){
+        if(action == *beg){
+            action->setChecked(true);
+            action->setIconVisibleInMenu(true);
+
+            CommonHelper::setStyle(QString{MainWindow::stylesNames[index]});
+            continue;
+        }
+
+        (*beg)->setChecked(false);
+        (*beg)->setIconVisibleInMenu(false);
+    }
 }
 
 

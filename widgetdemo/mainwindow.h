@@ -8,7 +8,10 @@
 #include <QQueue>
 #include <QFrame>
 #include <QPair>
-//#include <QMap>
+
+
+#include "utilities.h"
+
 
 
 class QVBoxLayout;
@@ -24,6 +27,8 @@ class QStackedLayout;
 class QBoxLayout;
 class QToolButton;
 class Calculator;
+class QAbstractButton;
+class QMenu;
 
 
 
@@ -74,12 +79,14 @@ signals:
 private slots:
     void changeButtonCheckStateMenuBar(std::size_t index)noexcept;
     void changeButtonCheckStateLeftCentral(std::size_t index, std::size_t index2)noexcept;
+    void changeSkin(QAction* action)noexcept;
 
 
 private:
     void initResource();
-    void layoutItems()noexcept;
-    void connectSignalSlot()noexcept;
+    void layoutItems();
+    void connectSignalSlot();
+
     void setObjectsName()noexcept;
     void setWidgetContent()noexcept;
     void setItemsIcon()noexcept;
@@ -91,8 +98,9 @@ private:
 
     QPair<QFrame*, QFrame*> m_TopAndBtmFrames{};
     QTuple<QVBoxLayout*, QHBoxLayout*, QHBoxLayout*> m_TopLayouts{};
-    QQueue<QPushButton*> m_TopItems{};
-
+    QQueue<QAbstractButton*> m_TopItems{};
+    QQueue<QAction*> m_Actions{};
+    QMenu* m_SkinsMenu{nullptr};
 
 
     QStackedWidget* m_CentralStackedWgt{nullptr};
@@ -115,6 +123,7 @@ private:
 
     CursorPosition m_CursorDir{CursorPosition::None};
     constexpr static std::size_t padding{2};
+    static QString stylesNames[2];
 };
 
 #endif // MAINWINDOW_H
