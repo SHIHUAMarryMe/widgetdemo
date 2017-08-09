@@ -110,25 +110,38 @@ QPushButton#Page2Button:flat{
 
 
 
+QPushButton#LeftCentralButton{
+    background-color: rgb(33, 50, 70);
+    border: none;
+    color: white;
+}
+
+QPushButton#LeftCentralButton:hover{
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(33, 50, 70, 255), stop:1 rgba(255, 255, 255, 255));
+    color: rgb(33, 50, 70);
+}
+
+QPushButton#LeftCentralButton:checked{
+    background-color: rgb(34, 44, 56);
+    color: white;
+}
+
+QPushButton#LeftCentralButton:pressed{
+    background-color: rgb(34, 44, 56);
+    color: white;
+}
+
+QPushButton#LeftCentralButton:disabled{
+    background-color: gray;
+}
+
+
+
 
 QFrame#DefaultPage{
     background-color: qlineargradient(spread:pad, x1:-1, y1:0, x2:1 y2:0, stop:0 rgba(0, 211, 197, 255), stop:1 rgba(0, 82, 112, 255));
 }
 
-
-
-QPushButton#LeftCentralButton{
-    background-color: qlineargradient(spread:pad, x1:-1, y1:0, x2:1 y2:0, stop:0 rgba(0, 211, 197, 255), stop:1 rgba(0, 82, 112, 255));
-    border: none;
-    color: white;
-}
-
-
-QPushButton#LeftCentralButton:hover{
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 82, 112, 255), stop:0.5 rgba(0, 211, 197, 255), stop:1 rgba(0, 82, 112, 255));
-    color: white;
-    border-left: 5px solid rgba(0, 211, 197, 255);
-}
 
 QFrame#DefaultPage{
     background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(33, 50, 70, 255), stop:0.5 rgba(255, 255, 255, 255), stop:1 rgba(33, 50, 70, 255));
