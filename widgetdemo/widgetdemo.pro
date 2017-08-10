@@ -18,12 +18,14 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     button.cpp \
-    calculator.cpp
+    calculator.cpp \
+    listmodel.cpp
 
 HEADERS  += mainwindow.h \
     utilities.h \
     button.h \
-    calculator.h
+    calculator.h \
+    listmodel.h
 
 DISTFILES +=
 
