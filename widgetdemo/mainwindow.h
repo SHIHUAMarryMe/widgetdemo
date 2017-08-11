@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-
+#include <memory>
 #include <utility>
 #include <tuple>
 #include <map>
@@ -9,7 +9,7 @@
 #include <QFrame>
 #include <QPair>
 
-
+#include "listmodel.h"
 #include "utilities.h"
 
 
@@ -87,6 +87,9 @@ private:
     void layoutItems();
     void connectSignalSlot();
 
+
+    void initListViewModel();
+
     void setObjectsName()noexcept;
     void setWidgetContent()noexcept;
     void setItemsIcon()noexcept;
@@ -112,6 +115,7 @@ private:
     std::map<QBoxLayout*, QQueue<QWidget*>> m_CentralRightSubWigs{};
 
 
+    std::unique_ptr<ListModel> m_ListModel{nullptr};
 
     QVBoxLayout* m_MainLayout{nullptr};
 

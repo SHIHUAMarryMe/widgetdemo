@@ -24,7 +24,6 @@
 
 
 
-
 QString MainWindow::stylesNames[2]{
                                    QString{":/styles/style.qss"},
                                    QString{":/styles/style2.qss"}
@@ -35,7 +34,8 @@ QString MainWindow::stylesNames[2]{
 MainWindow::MainWindow(std::size_t minimumWidth, std::size_t minimumHeight, QFrame *parent)
            :QFrame{parent},
             m_TheWidth{minimumWidth},
-            m_TheHeight{minimumHeight}
+            m_TheHeight{minimumHeight},
+            m_ListModel{new ListModel{}}
 {
     this->setMinimumSize(minimumWidth, minimumHeight);
     this->setWindowFlags(Qt::CustomizeWindowHint);
@@ -49,6 +49,8 @@ MainWindow::MainWindow(std::size_t minimumWidth, std::size_t minimumHeight, QFra
     this->connectSignalSlot();
     this->setObjectsName();
     this->setWidgetContent();
+
+    this->initListViewModel();
 }
 
 
@@ -129,17 +131,29 @@ void MainWindow::initResource()
     }
 
     pair = m_CentralRightSubWigs.insert(
-                std::pair<QBoxLayout*, QQueue<QWidget*>>{new QBoxLayout{QBoxLayout::LeftToRight}, QQueue<QWidget*>{}}
-                );
+                                        std::pair<QBoxLayout*, QQueue<QWidget*>>{new QBoxLayout{QBoxLayout::LeftToRight}, QQueue<QWidget*>{}}
+                                       );
     if(pair.second){
         if(QWidget* calculator = dynamic_cast<QWidget*>(new Calculator{})){
             pair.first->second.append(calculator);
 
         }else{
-            assert(false);
+            throw std::runtime_error{"failed to add a calculator widget!"};
         }
     }
 
+    //store a QListView.
+    pair = m_CentralRightSubWigs.insert(
+                                        std::pair<QBoxLayout*, QQueue<QWidget*>>{new QBoxLayout{QBoxLayout::LeftToRight}, QQueue<QWidget*>{}}
+                                       );
+    if(pair.second){
+        if(QWidget* view = dynamic_cast<QWidget*>(new QListView{})){
+            pair.first->second.append(view);
+
+        }else{
+            throw std::runtime_error{"failed to add a QListView!"};
+        }
+    }
 
 
     //set mainlayout for main window.
@@ -208,22 +222,6 @@ void MainWindow::layoutItems()
 
     index = 0;
     for(; index != 3; ++index){
-
-        //for test.
-//        if(index == 0){
-//            m_CentralWidgets[index]->setStyleSheet(QString{"background-color: red"});
-//        }
-
-//        if(index == 1){
-//            m_CentralWidgets[index]->setStyleSheet(QString{"background-color: yellow"});
-//        }
-
-//        if(index == 2){
-//            m_CentralWidgets[index]->setStyleSheet(QString{"background-color: blue"});
-//        }
-        //for test.
-
-
         m_CentralStackedWgt->addWidget(m_CentralWidgets[index]);
     }
 
@@ -309,6 +307,7 @@ void MainWindow::layoutItems()
     (*beg_4)->setLayout(beg_5->first);
 
 
+    //add listview to the widget of statkcedwidget.
     ++beg_4;
     ++beg_5;
     beg_6 = beg_5->second.begin();
@@ -427,6 +426,9 @@ void MainWindow::setWidgetContent()noexcept
     (*beg_2)->setText(tr("calculator"));
     ++beg_2;
     (*beg_2)->setText(tr("listview"));
+
+
+
 }
 
 void MainWindow::setItemsIcon()noexcept
@@ -520,6 +522,30 @@ void MainWindow::changeSkin(QAction* action)noexcept
 
         (*beg)->setChecked(false);
         (*beg)->setIconVisibleInMenu(false);
+    }
+}
+
+
+
+void MainWindow::initListViewModel()
+{
+    if(!m_ListModel){
+        throw std::runtime_error{"No initing ListModel."};
+    }
+
+    std::map<QBoxLayout*, QQueue<QWidget*>>::iterator beg = m_CentralRightSubWigs.begin();
+    QQueue<QWidget*>::iterator beg_2;
+    ++beg;
+    ++beg;
+    beg_2 = beg->second.begin();
+
+
+    if(QListView* listView = dynamic_cast<QListView*>(*beg_2)){
+        listView->setModel(m_ListModel.get());
+        m_ListModel->addPixmaps(QList<QPixmap>{QPixmap{":/styles/img/floder.png"}});
+
+    }else{
+        throw std::bad_cast{};
     }
 }
 
