@@ -117,13 +117,18 @@ QModelIndex ListModel::sibling(int row, int column, const QModelIndex &idx) cons
 
 void ListModel::sort(int column, Qt::SortOrder order)
 {
+
+    emit layoutAboutToBeChanged(QList<QPersistentModelIndexData>{}, QAbstractListModel::VerticalSortHint);
+
     std::function<bool (const QSharedPtr<QPixmap>&, const QSharedPtr<QPixmap>&)> sorter
                         {std::bind(Sort{}, std::placeholders::_1, std::placeholders::_2, order)};
 
     QQueue<QSharedPtr<QPixmap>>::iterator beg = m_Pixmaps.begin();
     QQueue<QSharedPtr<QPixmap>>::iterator last = m_Pixmaps.end();
-
     std::sort(beg, last, sorter);
+
+
+
 }
 
 Qt::DropActions ListModel::supportedDropActions()const
