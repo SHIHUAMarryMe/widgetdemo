@@ -22,7 +22,7 @@ public:
     template<typename Ty>
     using QSharedPtr = std::shared_ptr<Ty>;
 
-    ListModel(QObject* parent = nullptr);
+    explicit ListModel(QObject* parent = nullptr);
 
     ListModel(const ListModel&)=delete;
     ListModel& operator=(const ListModel&)=delete;
@@ -39,6 +39,32 @@ public:
     virtual Qt::DropActions	supportedDropActions() const;
 
 private:
+    struct Sort
+    {
+        bool operator()(const QSharedPtr<QPixmap>& lh, const QSharedPtr<QPixmap>& rh, Qt::SortOrder oder)const noexcept
+        {
+            if(order == Qt::AscendingOrder){
+
+                if(lh < rh){
+                    return true;
+                }
+
+                return false;
+            }
+
+
+            if(order == Qt::DescendingOrder){
+                if(rh > rh){
+                    return true;
+                }
+
+                return false;
+            }
+        }
+    };
+
+
+
     QQueue<QSharedPtr<QPixmap>> m_Pixmaps{};
 
 };
