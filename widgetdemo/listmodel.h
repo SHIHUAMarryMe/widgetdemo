@@ -5,8 +5,10 @@
 #include <QAbstractListModel>
 #include <QStringListModel>
 #include <QQueue>
+#include <QList>
 
 #include <memory>
+#include <type_traits>
 
 class QListView;
 class QPixmap;
@@ -28,20 +30,24 @@ public:
     ListModel& operator=(const ListModel&)=delete;
 
 
-    virtual QVariant	data(const QModelIndex &index, int role) const;
-    virtual Qt::ItemFlags	flags(const QModelIndex &index) const;
-    virtual bool	insertRows(int row, int count, const QModelIndex &parent = QModelIndex());
-    virtual bool	removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
-    virtual std::size_t	    rowCount(const QModelIndex &parent = QModelIndex()) const;
-    virtual bool	setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
-    virtual QModelIndex	sibling(int row, int column, const QModelIndex &idx) const;
-    virtual void	sort(int column, Qt::SortOrder order = Qt::AscendingOrder);
-    virtual Qt::DropActions	supportedDropActions() const;
+    virtual QVariant	data(const QModelIndex &index, int role) const override;
+    virtual Qt::ItemFlags	flags(const QModelIndex &index) const override;
+    virtual bool	insertRows(int row, int count, const QModelIndex &parent = QModelIndex())  override;
+    virtual bool	removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
+    virtual int	    rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    virtual bool	setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
+    virtual QModelIndex	sibling(int row, int column, const QModelIndex &idx) const override;
+    virtual void	sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
+    virtual Qt::DropActions	supportedDropActions() const override;
+
+
+    void addPixmaps(QList<QPixmap>&& list);
+    void addPixmaps(const QList<QPixmap>& list);
 
 private:
     struct Sort
     {
-        bool operator()(const QSharedPtr<QPixmap>& lh, const QSharedPtr<QPixmap>& rh, Qt::SortOrder oder)const noexcept
+        inline bool operator()(const QSharedPtr<QPixmap>& lh, const QSharedPtr<QPixmap>& rh, Qt::SortOrder order)const noexcept
         {
             if(order == Qt::AscendingOrder){
 
@@ -63,6 +69,11 @@ private:
         }
     };
 
+
+    template<typename Iter, typename = typename std::enable_if<
+                                       std::is_copy_constructible<Iter>::value
+                                    || std::is_copy_assignable<Iter>::value, void>::type>
+    void append(Iter begin, Iter last);
 
 
     QQueue<QSharedPtr<QPixmap>> m_Pixmaps{};

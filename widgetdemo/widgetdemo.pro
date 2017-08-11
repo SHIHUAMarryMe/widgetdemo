@@ -19,13 +19,15 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     button.cpp \
     calculator.cpp \
-    listmodel.cpp
+    listmodel.cpp \
+    itemdelegate.cpp
 
 HEADERS  += mainwindow.h \
     utilities.h \
     button.h \
     calculator.h \
-    listmodel.h
+    listmodel.h \
+    itemdelegate.h
 
 DISTFILES +=
 

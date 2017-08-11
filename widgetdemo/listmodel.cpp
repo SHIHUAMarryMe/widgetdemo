@@ -1,6 +1,7 @@
 
 #include <QVariant>
-
+#include <QPixmap>
+#include <QModelIndex>
 #include <algorithm>
 #include <functional>
 
@@ -25,7 +26,7 @@ QVariant ListModel::data(const QModelIndex &index, int role) const
 
 
     if(role == Qt::DisplayRole || role == Qt::DecorationRole){
-        QVariant var{m_Pixmaps[index.row()]}; //the QPixmap has a function operator QVariant.
+        QVariant var{ static_cast<QVariant>(*(m_Pixmaps[index.row()]))};
 
         return var;
     }
@@ -40,15 +41,17 @@ Qt::ItemFlags ListModel::flags(const QModelIndex &index) const
         return (this->QAbstractListModel::flags(index) | Qt::ItemIsDropEnabled);
     }
 
-    return (this->QAbstractListModel::flags(index) | Qt::ItemIsEditable | Qt::ItemIsSelectable
-                                                   | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+    return (this->QAbstractListModel::flags(index)
+            | Qt::ItemIsEditable | Qt::ItemIsSelectable
+            | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled
+           );
 }
 
 
 
 
 
-bool ListModel::insertrRows(int row, int count,  const QModelIndex& parent)
+bool insertRows(int row, int count, const QModelIndex &parent)
 {
     if(row < 0 || count < 1 || row > rowCount(parent)){
         return false;
@@ -80,7 +83,7 @@ bool ListModel::removeRows(int row, int count, const QModelIndex &parent)
 }
 
 
-std::size_t ListModel::rowCount(const QModelIndex &parent) const
+int ListModel::rowCount(const QModelIndex &parent) const
 {
     if(parent.isValid()){
         return 0;
@@ -92,7 +95,7 @@ std::size_t ListModel::rowCount(const QModelIndex &parent) const
 
 bool ListModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if(index.row() >= 0 && index.row < m_Pixmaps.size() &&
+    if(index.row() >= 0 && index.row() < m_Pixmaps.size() &&
        (Qt::EditRole == role || Qt::DisplayRole == role)){
         m_Pixmaps[index.row()] = std::make_shared<QPixmap>(value.value<QPixmap>());
         emit dataChanged(index, index, QVector<int>{role});
@@ -127,7 +130,7 @@ void ListModel::sort(int column, Qt::SortOrder order)
     QQueue<QSharedPtr<QPixmap>>::iterator last = m_Pixmaps.end();
     std::sort(beg, last, sorter);
 
-
+    emit layoutChanged(QList<QPersistentModelIndexData>{}, QAbstractListModel::VerticalSortHint);
 
 }
 
@@ -137,7 +140,37 @@ Qt::DropActions ListModel::supportedDropActions()const
 }
 
 
+void ListModel::addPixmaps(const QList<QPixmap>& list)
+{
+    if(list.size() == 0){
+        return;
+    }
+
+    QList<QPixmap>::const_iterator cbeg = list.constBegin();
+    QList<QPixmap>::const_iterator cend = list.constEnd();
+
+    this->append(cbeg, cend);
+}
 
 
+void ListModel::addPixmaps(QList<QPixmap> &&list)
+{
+    if(list.size() == 0){
+        return;
+    }
+
+    QList<QPixmap>::iterator beg = list.begin();
+    QList<QPixmap>::iterator end = list.end();
+
+    this->append(beg, end);
+}
+
+template<typename Iter, typename>
+void ListModel::append(Iter beg, Iter last)
+{
+    for(; beg != last; ++beg){
+        m_Pixmaps.append(std::make_shared<QPixmap>(*beg));
+    }
+}
 
 
