@@ -2,10 +2,10 @@
 #define LISTMODEL_H
 
 
-#include <QAbstractListModel>
-#include <QStringListModel>
 #include <QQueue>
 #include <QList>
+#include <QAbstractListModel>
+
 
 #include <memory>
 #include <type_traits>
@@ -13,6 +13,8 @@
 class QListView;
 class QPixmap;
 class QVariant;
+class QAbstractListModel;
+class QModelIndex;
 
 
 class ListModel: public QAbstractListModel
@@ -60,7 +62,7 @@ private:
 
 
             if(order == Qt::DescendingOrder){
-                if(rh > rh){
+                if(lh > rh){
                     return true;
                 }
 

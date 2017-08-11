@@ -2,6 +2,10 @@
 #include <QVariant>
 #include <QPixmap>
 #include <QModelIndex>
+#include <QAbstractListModel>
+#include <QAbstractItemModel>
+
+
 #include <algorithm>
 #include <functional>
 
@@ -12,10 +16,7 @@
 
 
 ListModel::ListModel(QObject *parent)
-          :QAbstractListModel{parent}
-{
-
-}
+          :QAbstractListModel{parent}{}
 
 
 QVariant ListModel::data(const QModelIndex &index, int role) const
@@ -48,10 +49,17 @@ Qt::ItemFlags ListModel::flags(const QModelIndex &index) const
 }
 
 
+int ListModel::rowCount(const QModelIndex &parent) const
+{
+    if(parent.isValid()){
+        return 0;
+    }
+
+    return m_Pixmaps.size();
+}
 
 
-
-bool insertRows(int row, int count, const QModelIndex &parent)
+bool ListModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     if(row < 0 || count < 1 || row > rowCount(parent)){
         return false;
@@ -83,15 +91,6 @@ bool ListModel::removeRows(int row, int count, const QModelIndex &parent)
 }
 
 
-int ListModel::rowCount(const QModelIndex &parent) const
-{
-    if(parent.isValid()){
-        return 0;
-    }
-
-    return m_Pixmaps.size();
-}
-
 
 bool ListModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
@@ -121,16 +120,15 @@ QModelIndex ListModel::sibling(int row, int column, const QModelIndex &idx) cons
 void ListModel::sort(int column, Qt::SortOrder order)
 {
 
-    emit layoutAboutToBeChanged(QList<QPersistentModelIndexData>{}, QAbstractListModel::VerticalSortHint);
+    emit QAbstractItemModel::layoutAboutToBeChanged(QList<QPersistentModelIndex>{}, QAbstractItemModel::VerticalSortHint);
 
     std::function<bool (const QSharedPtr<QPixmap>&, const QSharedPtr<QPixmap>&)> sorter
                         {std::bind(Sort{}, std::placeholders::_1, std::placeholders::_2, order)};
-
     QQueue<QSharedPtr<QPixmap>>::iterator beg = m_Pixmaps.begin();
     QQueue<QSharedPtr<QPixmap>>::iterator last = m_Pixmaps.end();
     std::sort(beg, last, sorter);
 
-    emit layoutChanged(QList<QPersistentModelIndexData>{}, QAbstractListModel::VerticalSortHint);
+    emit QAbstractItemModel::layoutChanged(QList<QPersistentModelIndex>{}, QAbstractItemModel::VerticalSortHint);
 
 }
 
