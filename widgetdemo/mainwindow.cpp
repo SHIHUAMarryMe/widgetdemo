@@ -49,7 +49,6 @@ MainWindow::MainWindow(std::size_t minimumWidth, std::size_t minimumHeight, QFra
     this->connectSignalSlot();
     this->setObjectsName();
     this->setWidgetContent();
-
 }
 
 
@@ -179,7 +178,6 @@ void MainWindow::layoutItems()
             btn->setFocusPolicy(Qt::NoFocus);
             topHLayout1->addWidget(btn);
         }
-
 
     }
 
@@ -311,6 +309,17 @@ void MainWindow::layoutItems()
     (*beg_4)->setLayout(beg_5->first);
 
 
+    ++beg_4;
+    ++beg_5;
+    beg_6 = beg_5->second.begin();
+    beg_5->first->setAlignment(Qt::AlignCenter);
+    beg_5->first->setSpacing(0);
+    beg_5->first->setMargin(0);
+    beg_5->first->addWidget(*beg_6);
+    (*beg_4)->setLayout(beg_5->first);
+
+
+
 
     m_CentralStackedWgt->setMinimumSize(m_TheWidth, (m_TheHeight/10)*7);
     m_CentralStackedWgt->setCurrentIndex(0);
@@ -417,7 +426,7 @@ void MainWindow::setWidgetContent()noexcept
     ++beg_2;
     (*beg_2)->setText(tr("calculator"));
     ++beg_2;
-    (*beg_2)->setText(tr("other"));
+    (*beg_2)->setText(tr("listview"));
 }
 
 void MainWindow::setItemsIcon()noexcept
