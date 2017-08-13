@@ -185,7 +185,13 @@ void MainWindow::layoutItems()
                 btn->setMinimumSize((m_TheWidth/10)*1/10, (m_TheHeight/10)*2/5*3/5);
                 btn->setFocusPolicy(Qt::NoFocus);
                 topHLayout1->addWidget(m_TopItems[index]);
+
+                continue;  //notice that!
+            }else{
+                LOG("===========");
+                throw std::bad_cast{};
             }
+
         }
 
 
@@ -193,6 +199,10 @@ void MainWindow::layoutItems()
             btn->setMinimumSize((m_TheWidth/10)*1/10, (m_TheHeight/10)*2/5*3/5);
             btn->setFocusPolicy(Qt::NoFocus);
             topHLayout1->addWidget(btn);
+
+        }else{
+            LOG("===========");
+            throw std::bad_cast{};
         }
 
     }
@@ -460,6 +470,9 @@ void MainWindow::setItemsIcon()noexcept
         m_SkinsMenu->addAction(action2);
         m_Actions.append(action2);
         toolButton->setMenu(m_SkinsMenu);
+    }else{
+        LOG("=====================");
+        throw std::bad_cast{};
     }
 
 }
@@ -559,6 +572,7 @@ void MainWindow::initListViewModel()
         m_ListModel->addPixmaps(list);
 
     }else{
+        LOG("==============");
         throw std::bad_cast{};
     }
 }
