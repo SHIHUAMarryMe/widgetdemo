@@ -24,6 +24,7 @@
 
 
 
+
 QString MainWindow::stylesNames[2]{
                                    QString{":/styles/style.qss"},
                                    QString{":/styles/style2.qss"}
@@ -35,7 +36,8 @@ MainWindow::MainWindow(std::size_t minimumWidth, std::size_t minimumHeight, QFra
            :QFrame{parent},
             m_TheWidth{minimumWidth},
             m_TheHeight{minimumHeight},
-            m_ListModel{new ListModel{}}
+            m_ListModel{new ListModel{}},
+            m_ItemDelegate{new PixmapItemDelegate{}}
 {
     this->setMinimumSize(minimumWidth, minimumHeight);
     this->setWindowFlags(Qt::CustomizeWindowHint);
@@ -529,6 +531,7 @@ void MainWindow::changeSkin(QAction* action)noexcept
 
 void MainWindow::initListViewModel()
 {
+
     if(!m_ListModel){
         throw std::runtime_error{"No initing ListModel."};
     }
@@ -541,8 +544,19 @@ void MainWindow::initListViewModel()
 
 
     if(QListView* listView = dynamic_cast<QListView*>(*beg_2)){
+
+        QAbstractItemDelegate* abstractDelegate{ listView->itemDelegate()};
+        delete abstractDelegate;
+
+        listView->setItemDelegate(m_ItemDelegate.get());
         listView->setModel(m_ListModel.get());
-        m_ListModel->addPixmaps(QList<QPixmap>{QPixmap{":/styles/img/floder.png"}});
+
+        QList<QPixmap> list;
+        for(std::size_t index = 0; index != 10; ++index){
+            list.append(QPixmap{":/styles/img/floder.png"});
+        }
+
+        m_ListModel->addPixmaps(list);
 
     }else{
         throw std::bad_cast{};

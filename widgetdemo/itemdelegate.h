@@ -22,6 +22,8 @@ public:
     PixmapItemDelegate(QObject* parent = nullptr);
     virtual ~PixmapItemDelegate()=default;
 
+
+    //you can not copy or assign
     PixmapItemDelegate(const PixmapItemDelegate&)=delete;
     PixmapItemDelegate& operator=(const PixmapItemDelegate&)=delete;
 

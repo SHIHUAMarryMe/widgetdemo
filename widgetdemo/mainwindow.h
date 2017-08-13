@@ -11,6 +11,7 @@
 
 #include "listmodel.h"
 #include "utilities.h"
+#include "itemdelegate.h"
 
 
 
@@ -114,10 +115,10 @@ private:
     std::map<QStackedWidget*, QQueue<QFrame*>> m_CentralRightWidgets{};
     std::map<QBoxLayout*, QQueue<QWidget*>> m_CentralRightSubWigs{};
 
+    QVBoxLayout* m_MainLayout{nullptr};
 
     std::unique_ptr<ListModel> m_ListModel{nullptr};
-
-    QVBoxLayout* m_MainLayout{nullptr};
+    std::unique_ptr<PixmapItemDelegate> m_ItemDelegate{nullptr};
 
 
     std::size_t m_TheWidth{0};

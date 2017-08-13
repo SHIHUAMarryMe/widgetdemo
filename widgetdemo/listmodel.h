@@ -73,8 +73,8 @@ private:
 
 
     template<typename Iter, typename = typename std::enable_if<
-                                       std::is_copy_constructible<Iter>::value
-                                    || std::is_copy_assignable<Iter>::value, void>::type>
+                                       std::is_copy_constructible<Iter>::value ||
+                                       std::is_copy_assignable<Iter>::value, void>::type>
     void append(Iter begin, Iter last);
 
 

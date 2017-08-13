@@ -18,10 +18,14 @@ void PixmapItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     QStyleOptionViewItem option_2{option};//copy the option.
 
 
+    //for fill Qt Style sheet.
     this->initStyleOption(&option_2, index);
 
     QPixmap backGround{index.data().value<QPixmap>()};
-    QRect backGroundRect{option.rect};
+    QRect backGroundRect{option.rect.topLeft(), backGround.size()};
+
+
+    qDebug() << backGroundRect;
 
     painter->drawPixmap(backGroundRect, backGround);
 }
