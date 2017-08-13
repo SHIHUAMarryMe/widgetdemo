@@ -125,23 +125,25 @@ void MainWindow::initResource()
                 std::pair<QBoxLayout*, QQueue<QWidget*>>{new QBoxLayout{QBoxLayout::LeftToRight}, QQueue<QWidget*>{}}
                 );
     if(pair.second){
-        if(QWidget* calendar = dynamic_cast<QWidget*>(new QCalendarWidget{})){
-            pair.first->second.append(calendar);
-        }else{
-            assert(false);
-        }
+        pair.first->second.append(new QCalendarWidget{});
+//        if(QWidget* calendar = dynamic_cast<QWidget*>(new QCalendarWidget{})){
+//            pair.first->second.append(calendar);
+//        }else{
+//            assert(false);
+//        }
     }
 
     pair = m_CentralRightSubWigs.insert(
                                         std::pair<QBoxLayout*, QQueue<QWidget*>>{new QBoxLayout{QBoxLayout::LeftToRight}, QQueue<QWidget*>{}}
                                        );
     if(pair.second){
-        if(QWidget* calculator = dynamic_cast<QWidget*>(new Calculator{})){
-            pair.first->second.append(calculator);
+        pair.first->second.append(new Calculator{});
+//        if(QWidget* calculator = dynamic_cast<QWidget*>(new Calculator{})){
+//            pair.first->second.append(calculator);
 
-        }else{
-            throw std::runtime_error{"failed to add a calculator widget!"};
-        }
+//        }else{
+//            throw std::runtime_error{"failed to add a calculator widget!"};
+//        }
     }
 
     //store a QListView.
@@ -149,12 +151,13 @@ void MainWindow::initResource()
                                         std::pair<QBoxLayout*, QQueue<QWidget*>>{new QBoxLayout{QBoxLayout::LeftToRight}, QQueue<QWidget*>{}}
                                        );
     if(pair.second){
-        if(QWidget* view = dynamic_cast<QWidget*>(new QListView{})){
-            pair.first->second.append(view);
+        pair.first->second.append(new QListView{});
+//        if(QWidget* view = dynamic_cast<QWidget*>(new QListView{})){
+//            pair.first->second.append(view);
 
-        }else{
-            throw std::runtime_error{"failed to add a QListView!"};
-        }
+//        }else{
+//            throw std::runtime_error{"failed to add a QListView!"};
+//        }
     }
 
 

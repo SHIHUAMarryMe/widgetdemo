@@ -62,6 +62,8 @@ void PixmapItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model
 
 void PixmapItemDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    qDebug() << option.rect << "xxxxxxxxxxxxxxxxxx";
+
     editor->QWidget::setGeometry(option.rect);
 }
 
