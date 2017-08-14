@@ -17,6 +17,10 @@
 
 
 
+class QVBoxLayout;
+class TitleBar;
+
+
 class MainWindow : public QFrame
 {
     Q_OBJECT
@@ -63,7 +67,16 @@ private:
     void checkDragPosition(const QPoint& globalPoint)noexcept;
 
 
+    void initUi();
+    void initUiPara()noexcept;
+    void layoutItem()noexcept;
+
+
 private:
+
+
+    TitleBar* m_TitleBar{nullptr};
+    QVBoxLayout* m_MainLayout{nullptr};
 
 
     std::size_t m_TheWidth{0};

@@ -6,6 +6,7 @@
 #include <chrono>
 #include <ratio>
 #include <ctime>
+#include <tuple>
 
 #include <QApplication>
 #include <QFile>
@@ -22,6 +23,19 @@
     time_str.resize(time_str.size()-1);\
     std::clog << "[" << time_str << __FILE__ << "]" <<__LINE__ << "  " << __VA_ARGS__ << std::endl;\
 }
+
+
+
+template<typename Ty1, typename Ty2, typename = typename std::enable_if<
+                                     std::is_copy_constructible<Ty1>::value &&
+                                     std::is_copy_constructible<Ty2>::value &&
+                                     std::is_copy_assignable<Ty1>::value &&
+                                     std::is_copy_assignable<Ty2>::value, void>::type>
+using QPair = std::pair<Ty1, Ty2>;
+
+
+template<typename... Types>
+using QTuple = std::tuple<Types...>;
 
 
 

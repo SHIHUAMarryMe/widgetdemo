@@ -1,13 +1,5 @@
 <RCC>
-    <qresource prefix="/styles">
-        <file>style.qss</file>
-        <file>img/home.png</file>
-        <file>img/page2.png</file>
-        <file>img/page1.png</file>
-        <file>img/close.ico</file>
-        <file>img/hook.png</file>
-        <file>style2.qss</file>
-        <file>img/skin.ico</file>
-        <file>img/floder.png</file>
+    <qresource prefix="/" lang="fr">
+        <file>img/appbar.close.png</file>
     </qresource>
 </RCC>

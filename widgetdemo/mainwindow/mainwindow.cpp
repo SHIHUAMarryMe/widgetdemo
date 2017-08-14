@@ -18,16 +18,37 @@
 
 #include "mainwindow.h"
 #include "utilities.h"
+#include "../titlebar/titlebar.h"
 
 
 MainWindow::MainWindow(std::size_t minimumWidth, std::size_t minimumHeight, QFrame *parent)
            :QFrame{parent},
+            m_TitleBar{new TitleBar{0 , 0}},
             m_TheWidth{minimumWidth},
             m_TheHeight{minimumHeight}
 {
     this->setMinimumSize(minimumWidth, minimumHeight);
     this->setWindowFlags(Qt::CustomizeWindowHint);
-//    this->setMouseTracking(true);
+    this->setMouseTracking(true);
+}
+
+
+void MainWindow::initUi()
+{
+    //
+}
+
+void MainWindow::initUiPara()noexcept
+{
+    m_TitleBar->setMinimumSize(m_TheWidth/15, m_TheHeight/20);
+}
+
+
+void MainWindow::layoutItem()noexcept
+{
+    m_MainLayout->addWidget(m_TitleBar);
+
+    this->setLayout(m_MainLayout);
 }
 
 

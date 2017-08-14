@@ -16,11 +16,17 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-    mainwindow/mainwindow.cpp
+    mainwindow/mainwindow.cpp \
+    titlebar/titlebar.cpp \
+    centralframe/navigationbar.cpp
 
 HEADERS  += \
     utilities.h \
-    mainwindow/mainwindow.h
+    mainwindow/mainwindow.h \
+    titlebar/titlebar.h \
+    centralframe/centralframe.h \
+    centralframe/navigationbar.h \
+    centralframe/centralcontentframe.h
 
 DISTFILES +=
 
