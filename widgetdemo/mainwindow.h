@@ -4,6 +4,7 @@
 #include <memory>
 #include <utility>
 #include <tuple>
+#include <deque>
 #include <map>
 #include <QQueue>
 #include <QFrame>
@@ -41,6 +42,9 @@ private:
 
     template<typename... Types>
     using QTuple = std::tuple<Types...>;
+
+    template<typename Type>
+    using Queue = std::deque<Type>;
 
     enum class CursorPosition{
         Up = 0,
@@ -113,7 +117,7 @@ private:
     QQueue<QFrame*> m_CentralLeftWidgets{};
     std::map<QVBoxLayout*, QQueue<QPushButton*>> m_CentralLeftWigsSubItems{};
     std::map<QStackedWidget*, QQueue<QFrame*>> m_CentralRightWidgets{};
-    std::map<QBoxLayout*, QQueue<QWidget*>> m_CentralRightSubWigs{};
+    std::map<QBoxLayout*, Queue<QWidget*>> m_CentralRightSubWigs{};
 
     QVBoxLayout* m_MainLayout{nullptr};
 

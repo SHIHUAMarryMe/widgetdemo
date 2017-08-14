@@ -10,6 +10,9 @@
 #include <memory>
 #include <type_traits>
 
+
+#include "utilities.h"
+
 class QListView;
 class QPixmap;
 class QVariant;

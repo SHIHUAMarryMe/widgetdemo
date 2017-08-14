@@ -34,10 +34,10 @@ QString MainWindow::stylesNames[2]{
 
 MainWindow::MainWindow(std::size_t minimumWidth, std::size_t minimumHeight, QFrame *parent)
            :QFrame{parent},
-            m_TheWidth{minimumWidth},
-            m_TheHeight{minimumHeight},
             m_ListModel{new ListModel{}},
-            m_ItemDelegate{new PixmapItemDelegate{}}
+            m_ItemDelegate{new PixmapItemDelegate{}},
+            m_TheWidth{minimumWidth},
+            m_TheHeight{minimumHeight}
 {
     this->setMinimumSize(minimumWidth, minimumHeight);
     this->setWindowFlags(Qt::CustomizeWindowHint);
@@ -48,11 +48,11 @@ MainWindow::MainWindow(std::size_t minimumWidth, std::size_t minimumHeight, QFra
     this->initResource();
     this->layoutItems();
     this->setItemsIcon();
-    this->connectSignalSlot();
     this->setObjectsName();
     this->setWidgetContent();
 
     this->initListViewModel();
+    this->connectSignalSlot();
 }
 
 
@@ -122,42 +122,34 @@ void MainWindow::initResource()
 
     //add items to per-widget of right-center's QStackedWidget;
     auto pair = m_CentralRightSubWigs.insert(
-                std::pair<QBoxLayout*, QQueue<QWidget*>>{new QBoxLayout{QBoxLayout::LeftToRight}, QQueue<QWidget*>{}}
+                std::pair<QBoxLayout*, Queue<QWidget*>>{new QBoxLayout{QBoxLayout::LeftToRight}, Queue<QWidget*>{}}
                 );
     if(pair.second){
-        pair.first->second.append(new QCalendarWidget{});
-//        if(QWidget* calendar = dynamic_cast<QWidget*>(new QCalendarWidget{})){
-//            pair.first->second.append(calendar);
-//        }else{
-//            assert(false);
-//        }
+        pair.first->second.push_back(new QCalendarWidget{});
+
+    }else{
+        throw std::runtime_error{"can not create a QCalendarWidget"};
     }
 
     pair = m_CentralRightSubWigs.insert(
-                                        std::pair<QBoxLayout*, QQueue<QWidget*>>{new QBoxLayout{QBoxLayout::LeftToRight}, QQueue<QWidget*>{}}
+                                        std::pair<QBoxLayout*, Queue<QWidget*>>{new QBoxLayout{QBoxLayout::LeftToRight}, Queue<QWidget*>{}}
                                        );
     if(pair.second){
-        pair.first->second.append(new Calculator{});
-//        if(QWidget* calculator = dynamic_cast<QWidget*>(new Calculator{})){
-//            pair.first->second.append(calculator);
+        pair.first->second.push_back(new Calculator{});
 
-//        }else{
-//            throw std::runtime_error{"failed to add a calculator widget!"};
-//        }
+    }else{
+        throw std::runtime_error{"can not create a Calculator!"};
     }
 
     //store a QListView.
     pair = m_CentralRightSubWigs.insert(
-                                        std::pair<QBoxLayout*, QQueue<QWidget*>>{new QBoxLayout{QBoxLayout::LeftToRight}, QQueue<QWidget*>{}}
+                                        std::pair<QBoxLayout*, Queue<QWidget*>>{new QBoxLayout{QBoxLayout::LeftToRight}, Queue<QWidget*>{}}
                                        );
     if(pair.second){
-        pair.first->second.append(new QListView{});
-//        if(QWidget* view = dynamic_cast<QWidget*>(new QListView{})){
-//            pair.first->second.append(view);
+        pair.first->second.push_back(new QListView{});
 
-//        }else{
-//            throw std::runtime_error{"failed to add a QListView!"};
-//        }
+    }else{
+        throw std::runtime_error{"Can not create a listView!"};
     }
 
 
@@ -302,8 +294,8 @@ void MainWindow::layoutItems()
     //subitem of right-center of subitems of QStacked's subitems.
     beg = m_CentralRightWidgets.begin();
     QQueue<QFrame*>::iterator beg_4 = beg->second.begin();
-    std::map<QBoxLayout*, QQueue<QWidget*>>::iterator beg_5 = m_CentralRightSubWigs.begin();
-    QQueue<QWidget*>::iterator beg_6 = beg_5->second.begin();
+    std::map<QBoxLayout*, Queue<QWidget*>>::iterator beg_5 = m_CentralRightSubWigs.begin();
+    Queue<QWidget*>::iterator beg_6 = beg_5->second.begin();
 
     beg_5->first->setAlignment(Qt::AlignCenter);
     beg_5->first->setSpacing(0);
@@ -552,14 +544,16 @@ void MainWindow::initListViewModel()
         throw std::runtime_error{"No initing ListModel."};
     }
 
-    std::map<QBoxLayout*, QQueue<QWidget*>>::iterator beg = m_CentralRightSubWigs.begin();
-    QQueue<QWidget*>::iterator beg_2;
+    qDebug() << m_CentralRightSubWigs.size();
+
+    std::map<QBoxLayout*, Queue<QWidget*>>::iterator beg = m_CentralRightSubWigs.begin();
+    Queue<QWidget*>::iterator beg_2;
     ++beg;
     ++beg;
+    qDebug() << beg->second.size();
     beg_2 = beg->second.begin();
 
-
-    if(QListView* listView = dynamic_cast<QListView*>(*beg_2)){
+    if(QListView* listView = dynamic_cast<QListView*>(beg->second[0])){
 
         QAbstractItemDelegate* abstractDelegate{ listView->itemDelegate()};
         delete abstractDelegate;
@@ -568,7 +562,7 @@ void MainWindow::initListViewModel()
         listView->setModel(m_ListModel.get());
 
         QList<QPixmap> list;
-        for(std::size_t index = 0; index != 10; ++index){
+        for(std::size_t index = 0; index != 100; ++index){
             list.append(QPixmap{":/styles/img/floder.png"});
         }
 

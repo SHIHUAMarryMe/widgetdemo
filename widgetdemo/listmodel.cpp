@@ -51,6 +51,8 @@ Qt::ItemFlags ListModel::flags(const QModelIndex &index) const
 
 int ListModel::rowCount(const QModelIndex &parent) const
 {
+    LOG("=============================== . . =================================");
+
     if(parent.isValid()){
         return 0;
     }
@@ -61,7 +63,7 @@ int ListModel::rowCount(const QModelIndex &parent) const
 
 bool ListModel::insertRows(int row, int count, const QModelIndex &parent)
 {
-    if(row < 0 || count < 1 || row > rowCount(parent)){
+    if(row < 0 || count < 1 /*|| row > rowCount(parent)*/){
         return false;
     }
 
@@ -76,8 +78,8 @@ bool ListModel::insertRows(int row, int count, const QModelIndex &parent)
 
 bool ListModel::removeRows(int row, int count, const QModelIndex &parent)
 {
-    if(count < 0 || row < 0 || row > rowCount(parent)
-            || count > rowCount(parent) || (row+count) > rowCount(parent)){
+    if(count < 0 || row < 0 /*|| row > rowCount(parent)
+            || count > rowCount(parent) || (row+count) > rowCount(parent)*/){
 
         return false;
     }
