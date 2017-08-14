@@ -1,9 +1,6 @@
-#include <iostream>
-#include <iomanip>
+#include <QApplication>
 
-
-#include "mainwindow.h"
-#include "calculator.h"
+#include "./mainwindow/mainwindow.h"
 
 
 

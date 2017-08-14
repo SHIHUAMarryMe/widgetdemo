@@ -16,18 +16,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
-    button.cpp \
-    calculator.cpp \
-    listmodel.cpp \
-    itemdelegate.cpp
+    mainwindow/mainwindow.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS  += \
     utilities.h \
-    button.h \
-    calculator.h \
-    listmodel.h \
-    itemdelegate.h
+    mainwindow/mainwindow.h
 
 DISTFILES +=
 
