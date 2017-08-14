@@ -3,12 +3,10 @@
 
 #include <QFrame>
 #include <QQueue>
+#include <QBoxLayout>
 
 #include "utilities.h"
 
-
-
-class QVBoxLayout;
 
 
 class CentralWidget : public QFrame
@@ -22,7 +20,6 @@ public:
     CentralWidget(const CentralWidget&)=delete;
     CentralWidget& operator=(const CentralWidget&)=delete;
 
-
 private:
     void initUi();
     void initUiPara()noexcept;
@@ -30,7 +27,8 @@ private:
 
 private:
 
-    QVBoxLayout* m_MainLayout{nullptr};
+
+    QBoxLayout* m_MainLayout{nullptr};
 };
 
 
