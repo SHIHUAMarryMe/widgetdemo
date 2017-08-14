@@ -18,7 +18,9 @@ TEMPLATE = app
 SOURCES += main.cpp\
     mainwindow/mainwindow.cpp \
     titlebar/titlebar.cpp \
-    centralframe/navigationbar.cpp
+    centralframe/navigationbar.cpp \
+    centralframe/centralframe.cpp \
+    centralframe/centralcontentframe.cpp
 
 HEADERS  += \
     utilities.h \

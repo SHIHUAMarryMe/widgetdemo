@@ -7,7 +7,7 @@
 
 #include "utilities.h"
 
-
+class QStackWidget;
 
 class CentralWidget : public QFrame
 {
@@ -28,6 +28,7 @@ private:
 private:
 
 
+    QStackWidget* m_StackWidget{nullptr};
     QBoxLayout* m_MainLayout{nullptr};
 };
 
