@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     titlebar/titlebar.cpp \
     centralframe/navigationbar.cpp \
     centralframe/centralframe.cpp \
-    centralframe/centralcontentframe.cpp
+    centralframe/centralcontentframe.cpp \
+    statusbar/statusbar.cpp
 
 HEADERS  += \
     utilities.h \
@@ -28,7 +29,8 @@ HEADERS  += \
     titlebar/titlebar.h \
     centralframe/centralframe.h \
     centralframe/navigationbar.h \
-    centralframe/centralcontentframe.h
+    centralframe/centralcontentframe.h \
+    statusbar/statusbar.h
 
 DISTFILES +=
 

@@ -17,8 +17,9 @@
 
 
 #include "mainwindow.h"
-#include "utilities.h"
 #include "../titlebar/titlebar.h"
+#include "../centralframe/centralframe.h"
+#include "../statusbar/statusbar.h"
 
 
 MainWindow::MainWindow(std::size_t minimumWidth, std::size_t minimumHeight, QFrame *parent)
@@ -40,13 +41,17 @@ void MainWindow::initUi()
 
 void MainWindow::initUiPara()noexcept
 {
-    m_TitleBar->setMinimumSize(m_TheWidth/15, m_TheHeight/20);
+    m_TitleBar->setMinimumSize(m_TheWidth, m_TheHeight/20);
+    m_CentralFrame->setMinimumSize(m_TheWidth, m_TheHeight/20*17);
+    m_StatusBar->setMinimumSize(m_TheWidth, m_TheHeight/20*2);
 }
 
 
 void MainWindow::layoutItem()noexcept
 {
     m_MainLayout->addWidget(m_TitleBar);
+    m_MainLayout->addWidget(m_CentralFrame);
+    m_MainLayout->addWidget(m_StatusBar);
 
     this->setLayout(m_MainLayout);
 }

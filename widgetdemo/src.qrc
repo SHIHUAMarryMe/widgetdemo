@@ -2,4 +2,7 @@
     <qresource prefix="/" lang="fr">
         <file>img/appbar.close.png</file>
     </qresource>
+    <qresource prefix="/">
+        <file>style/style1.qss</file>
+    </qresource>
 </RCC>

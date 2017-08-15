@@ -34,5 +34,4 @@ private:
 };
 
 
-
 #endif // NAVIGATIONBAR_H

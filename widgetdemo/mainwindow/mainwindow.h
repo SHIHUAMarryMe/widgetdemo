@@ -18,6 +18,8 @@
 
 class QVBoxLayout;
 class TitleBar;
+class CentralFrame;
+class StatusBar;
 
 
 class MainWindow : public QFrame
@@ -69,6 +71,8 @@ private:
 
 
     TitleBar* m_TitleBar{nullptr};
+    CentralFrame* m_CentralFrame{nullptr};
+    StatusBar* m_StatusBar{nullptr};
     QVBoxLayout* m_MainLayout{nullptr};
 
 

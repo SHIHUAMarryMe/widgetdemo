@@ -8,6 +8,7 @@
 #include <ctime>
 #include <tuple>
 #include <deque>
+#include <map>
 
 #include <QApplication>
 #include <QFile>
@@ -44,7 +45,8 @@ using QTuple = std::tuple<Types...>;
 template<typename Type>
 using Queue = std::deque<Type>;
 
-
+template<typename KeyType, typename ValueType, typename Compare = std::less<KeyType>>
+using Map = std::map<KeyType, ValueType, Compare>;
 
 class CommonHelper
 {

@@ -8,28 +8,35 @@
 #include "utilities.h"
 
 class QStackWidget;
+class NavigationBar;
 
-class CentralWidget : public QFrame
+class CentralFrame : public QFrame
 {
     Q_OBJECT
 
 public:
-    explicit CentralWidget(QFrame* parent = nullptr);
-    virtual ~CentralWidget()=default;
+    explicit CentralFrame(QFrame* parent = nullptr);
+    virtual ~CentralFrame()=default;
 
-    CentralWidget(const CentralWidget&)=delete;
-    CentralWidget& operator=(const CentralWidget&)=delete;
+    CentralFrame(const CentralFrame&)=delete;
+    CentralFrame& operator=(const CentralFrame&)=delete;
+
+    void setMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept;
 
 private:
+//    using QFrame::setMinimumSize;//!!!!!!!!!!!
+
     void initUi();
     void initUiPara()noexcept;
     void layoutItem()noexcept;
 
 private:
 
-
+    NavigationBar* m_NavigationBar{nullptr};
+    Queue<QFrame*> m_WidgetsForStacked{};
+    Map<QBoxLayout*, Queue<QFrame*>> m_WidgetsForLayout{};
     QStackWidget* m_StackWidget{nullptr};
-    QBoxLayout* m_MainLayout{nullptr};
+    QVBoxLayout* m_MainLayout{nullptr};
 };
 
 
