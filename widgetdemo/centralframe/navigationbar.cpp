@@ -16,6 +16,7 @@ NavigationBar::NavigationBar(QFrame *parent)
     this->initUiPara();
     this->layoutItem();
     this->initConnect();
+    this->setItemObjectName();
 }
 
 
@@ -67,6 +68,17 @@ void NavigationBar::initConnect()noexcept
     std::size_t index{0};
     for(; beg != end; ++beg, ++index){
         QObject::connect(*beg, &QToolButton::clicked,
-                         [this, index]{ emit onStackWidgetIndexChanged(index); });
+                         [this, index]{ emit onStackWidgetIndexChanged(index); }
+                        );
     }
+}
+
+
+void NavigationBar::setItemObjectName()noexcept
+{
+    for(auto toolButton : m_NavigationBtns){
+        toolButton->setObjectName(QString{"NavigationButton"});
+    }
+
+//    this->setObjectName(QString{"NavigationBar"});
 }

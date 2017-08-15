@@ -22,6 +22,7 @@ TitleBar::TitleBar(QFrame* parent)
     this->setUiPara();
     this->layoutItem();
     this->initConnect();
+    this->setItemObjectName();
 }
 
 
@@ -69,7 +70,7 @@ void TitleBar::initUi()
 
 void TitleBar::setUiPara()noexcept
 {
-    //
+    m_Buttons[2]->setIcon(QIcon{":/img/appbar.close.png"});
 }
 
 
@@ -78,10 +79,11 @@ void TitleBar::layoutItem()noexcept
     m_MainLayout->setAlignment(Qt::AlignCenter);
     m_MainLayout->setSpacing(0);
     m_MainLayout->setMargin(0);
+
+
     m_MainLayout->addWidget(m_Labels.first);
     m_MainLayout->addWidget(m_Labels.second);
     m_MainLayout->addStretch(0);
-
     auto beg = m_Buttons.begin();
     auto last = m_Buttons.end();
     for(; beg != last; ++beg){
@@ -103,6 +105,21 @@ void TitleBar::initConnect()noexcept
                          [this, index]{ emit onClicked(index); }
                          );
     }
+}
+
+
+void TitleBar::setItemObjectName()noexcept
+{
+    m_Labels.first->setObjectName(QString{"TitleBarLabel"});
+    m_Labels.second->setObjectName(QString{"TitleBarLabel"});
+
+    m_Buttons[0]->setObjectName(QString{"TitleButton"});
+    m_Buttons[1]->setObjectName(QString{"TitleButton"});
+
+
+    m_Buttons[2]->setObjectName(QString{"TitleCloseButton"});
+
+//    this->setObjectName(QString{"TitleBar"});
 }
 
 

@@ -4,6 +4,9 @@
 
 
 StatusBar::StatusBar(QFrame *parent)
-          :QFrame{parent}{}
+          :QFrame{parent}
+{
+//    this->setObjectName(QString{"StatusBar"});
+}
 
 

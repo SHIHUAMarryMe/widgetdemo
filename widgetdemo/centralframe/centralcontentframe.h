@@ -38,8 +38,9 @@ private:
     void initUi();
     void initUiPara()noexcept;
     void layoutItem()noexcept;
-
     void initConnect()noexcept;
+
+    void setItemObjectName()noexcept;
 
 private:
     QFrame* m_LeftFrame{nullptr};

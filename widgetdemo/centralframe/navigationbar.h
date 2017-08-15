@@ -35,6 +35,7 @@ private:
     void layoutItem()noexcept;
     void initConnect()noexcept;
 
+    void setItemObjectName()noexcept;
 
 private:
     Queue<QToolButton*> m_NavigationBtns{};

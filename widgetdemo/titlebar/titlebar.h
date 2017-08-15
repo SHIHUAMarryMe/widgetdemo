@@ -47,10 +47,11 @@ private:
     void layoutItem()noexcept;
     void initConnect()noexcept;
 
+    void setItemObjectName()noexcept;//for qss.
+
 private:
     Pair<QLabel*, QLabel*> m_Labels{};
     Queue<QToolButton*> m_Buttons{};
-
     QHBoxLayout* m_MainLayout{nullptr};
 };
 
