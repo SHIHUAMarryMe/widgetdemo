@@ -1,5 +1,7 @@
 
 #include <QStackedWidget>
+#include <QVBoxLayout>
+#include <QBoxLayout>
 
 #include "centralframe.h"
 #include "navigationbar.h"
@@ -31,10 +33,10 @@ void CentralFrame::initUi()
     index = 0;
     for(; index != 4; ++index){
         auto pair = m_WidgetsForLayout.insert(
-                                    Pair<QBoxLayout*, Queue<QFrame*>{new QBoxLayout{QBoxLayout::Direction::LeftToRight}, Queue<QFrame*>{}}
+                                    Pair<QBoxLayout*, Queue<QFrame*>>{new QBoxLayout{QBoxLayout::Direction::LeftToRight}, Queue<QFrame*>{}}
                                              );
 
-        if(pair.second){
+        if(!pair.second){
             LOG("=======================");
             throw std::runtime_error{"Insert error!"};
         }
@@ -87,6 +89,5 @@ void CentralFrame::layoutItem()noexcept
 void CentralFrame::setMinimumSize(const std::size_t &widthMM, const std::size_t &heightMM)noexcept
 {
     this->QFrame::setMinimumSize(widthMM, heightMM);
-    m_TitleBar->setMinimumSize(widthMM, heightMM/5);
     m_StackWidget->setMinimumSize(widthMM, heightMM/5*4);
 }

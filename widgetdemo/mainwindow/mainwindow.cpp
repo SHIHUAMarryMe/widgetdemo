@@ -25,12 +25,20 @@
 MainWindow::MainWindow(std::size_t minimumWidth, std::size_t minimumHeight, QFrame *parent)
            :QFrame{parent},
             m_TitleBar{new TitleBar{0 , 0}},
+            m_CentralFrame{new CentralFrame{}},
+            m_StatusBar{new StatusBar{}},
+            m_MainLayout{new QVBoxLayout{}},
             m_TheWidth{minimumWidth},
             m_TheHeight{minimumHeight}
 {
     this->setMinimumSize(minimumWidth, minimumHeight);
     this->setWindowFlags(Qt::CustomizeWindowHint);
     this->setMouseTracking(true);
+
+
+    this->initUi();
+    this->initUiPara();
+    this->layoutItem();
 }
 
 
@@ -62,7 +70,7 @@ void MainWindow::checkDragPosition(const QPoint& globalPoint)noexcept
 {
 
 
-    LOG("Check drag position=========================");
+//    LOG("Check drag position=========================");
 
     QRect rect{this->rect()};
     QPoint topLeftPoint{this->mapToGlobal(rect.topLeft())};
@@ -76,7 +84,7 @@ void MainWindow::checkDragPosition(const QPoint& globalPoint)noexcept
     if(topLeftPoint.x() <= currentX && topLeftPoint.x() + MainWindow::padding >= currentX
             && bottomRightPoint.y() + MainWindow::padding >= currentY && bottomRightPoint.y() <= currentY){
 
-        LOG("LeftTop=====================");
+//        LOG("LeftTop=====================");
 
         m_CursorDir = CursorPosition::LeftTop;
         this->setCursor(QCursor(Qt::SizeFDiagCursor));
@@ -88,7 +96,7 @@ void MainWindow::checkDragPosition(const QPoint& globalPoint)noexcept
              && bottomRightPoint.y() >= currentY && bottomRightPoint.y() - MainWindow::padding <= currentY){
 
 
-        LOG("RightBottom=======================");
+//        LOG("RightBottom=======================");
         m_CursorDir = CursorPosition::RightBottom;
         this->setCursor(QCursor{Qt::SizeFDiagCursor});
 
@@ -98,7 +106,7 @@ void MainWindow::checkDragPosition(const QPoint& globalPoint)noexcept
     }else if(topLeftPoint.x() <= currentX && topLeftPoint.x() + MainWindow::padding >= currentX
              && bottomRightPoint.y() >= currentY && bottomRightPoint.y() - MainWindow::padding <= currentY){
 
-        LOG("LeftBottom=========================");
+//        LOG("LeftBottom=========================");
         m_CursorDir = CursorPosition::LeftBottom;
         this->setCursor(QCursor(Qt::SizeBDiagCursor));
 
@@ -107,7 +115,7 @@ void MainWindow::checkDragPosition(const QPoint& globalPoint)noexcept
     }else if(topLeftPoint.x() + m_TheWidth >= currentX && topLeftPoint.x() + m_TheWidth - MainWindow::padding <= currentX
              && topLeftPoint.y() <= currentY && topLeftPoint.y() + MainWindow::padding >= currentY){
 
-        LOG("RightTop==========================");
+//        LOG("RightTop==========================");
         m_CursorDir = CursorPosition::RightTop;
         this->setCursor(QCursor(Qt::SizeFDiagCursor));
 
@@ -117,7 +125,7 @@ void MainWindow::checkDragPosition(const QPoint& globalPoint)noexcept
     }else if(topLeftPoint.x() + MainWindow::padding < currentX < topLeftPoint.x() + m_TheWidth - MainWindow::padding
              && topLeftPoint.y() <= currentY && topLeftPoint.y() + MainWindow::padding >= currentY){
 
-        LOG("Up================================");
+//        LOG("Up================================");
         m_CursorDir = CursorPosition::Up;
         this->setCursor(QCursor{Qt::SizeVerCursor});
 
@@ -127,7 +135,7 @@ void MainWindow::checkDragPosition(const QPoint& globalPoint)noexcept
     }else if(bottomRightPoint.x() - m_TheWidth + MainWindow::padding <= currentX && bottomRightPoint.x() - MainWindow::padding >= currentX
              && bottomRightPoint.y() >= currentY && bottomRightPoint.y() - MainWindow::padding <= currentY){
 
-        LOG("Down=============================");
+//        LOG("Down=============================");
         m_CursorDir = CursorPosition::Down;
         this->setCursor(QCursor{Qt::SizeVerCursor});
 
@@ -137,7 +145,7 @@ void MainWindow::checkDragPosition(const QPoint& globalPoint)noexcept
     }else if(topLeftPoint.x() <= currentX && topLeftPoint.x() + MainWindow::padding >= currentX
              && bottomRightPoint.y() - MainWindow::padding > currentY && topLeftPoint.y() + MainWindow::padding <= currentY){
 
-        LOG("Left============================");
+//        LOG("Left============================");
         m_CursorDir = CursorPosition::Left;
         this->setCursor(QCursor(Qt::SizeHorCursor));
 
@@ -147,7 +155,7 @@ void MainWindow::checkDragPosition(const QPoint& globalPoint)noexcept
     }else if(bottomRightPoint.x() >= currentX && bottomRightPoint.x() - MainWindow::padding <= currentX
              && bottomRightPoint.y() - MainWindow::padding > currentY && topLeftPoint.y() + MainWindow::padding <= currentY){
 
-        LOG("Right==========================");
+//        LOG("Right==========================");
         m_CursorDir = CursorPosition::Right;
         this->setCursor(QCursor(Qt::SizeHorCursor));
 
@@ -156,7 +164,7 @@ void MainWindow::checkDragPosition(const QPoint& globalPoint)noexcept
      //no direction
     }else{
 
-        LOG("No direction==========================");
+//        LOG("No direction==========================");
         m_CursorDir = CursorPosition::None;
         this->setCursor(QCursor{Qt::ArrowCursor});
     }
@@ -172,13 +180,13 @@ void MainWindow::mousePressEvent(QMouseEvent* event)
         event->accept();
         m_IsPressed = true;
 
-        LOG("mousePress============");
+//        LOG("mousePress============");
 
         if(m_CursorDir != CursorPosition::None){
             this->mouseGrabber();
 
         }else{
-            LOG("get the dragPoint=============");
+//            LOG("get the dragPoint=============");
             m_DragPoint = event->globalPos() - this->frameGeometry().topLeft();
         }
 
@@ -200,7 +208,7 @@ void MainWindow::mousePressEvent(QMouseEvent* event)
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event)
 {
-    LOG("mouseMove===========");
+//    LOG("mouseMove===========");
 
     QPoint globalPoint{event->globalPos()};
     QRect rect{this->rect()};
@@ -213,7 +221,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 
     }else{
 
-        LOG("Just move no pressing==========================");
+//        LOG("Just move no pressing==========================");
 
         if(m_CursorDir != CursorPosition::None){
             QRect rMove{tl, br};

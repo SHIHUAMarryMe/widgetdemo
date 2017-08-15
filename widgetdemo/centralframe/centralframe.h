@@ -2,13 +2,13 @@
 #define CENTRALFRAME_H
 
 #include <QFrame>
-#include <QQueue>
-#include <QBoxLayout>
 
 #include "utilities.h"
 
-class QStackWidget;
+class QStackedWidget;
 class NavigationBar;
+class QVBoxLayout;
+class QBoxLayout;
 
 class CentralFrame : public QFrame
 {
@@ -29,13 +29,12 @@ private:
     void initUi();
     void initUiPara()noexcept;
     void layoutItem()noexcept;
-
 private:
 
     NavigationBar* m_NavigationBar{nullptr};
     Queue<QFrame*> m_WidgetsForStacked{};
     Map<QBoxLayout*, Queue<QFrame*>> m_WidgetsForLayout{};
-    QStackWidget* m_StackWidget{nullptr};
+    QStackedWidget* m_StackWidget{nullptr};
     QVBoxLayout* m_MainLayout{nullptr};
 };
 
