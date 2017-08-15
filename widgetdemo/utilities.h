@@ -40,9 +40,6 @@ using Pair = std::pair<Ty1, Ty2>;
 template<typename... Types>
 using QTuple = std::tuple<Types...>;
 
-template<typename... Types>
-using QTuple = std::tuple<Types...>;
-
 template<typename Type>
 using Queue = std::deque<Type>;
 
