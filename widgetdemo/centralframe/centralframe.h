@@ -21,10 +21,10 @@ public:
     CentralFrame(const CentralFrame&)=delete;
     CentralFrame& operator=(const CentralFrame&)=delete;
 
-    void setMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept;
+    void setMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM);
 
 private:
-//    using QFrame::setMinimumSize;//!!!!!!!!!!!
+    using QFrame::setMinimumSize;//!!!!!!!!!!!
 
     void initUi();
     void initUiPara()noexcept;

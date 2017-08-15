@@ -9,6 +9,7 @@
 #include <tuple>
 #include <deque>
 #include <map>
+#include <typeinfo>
 
 #include <QApplication>
 #include <QFile>

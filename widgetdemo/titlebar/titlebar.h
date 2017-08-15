@@ -25,7 +25,7 @@ class TitleBar : public QFrame
 public:
 
 
-    explicit TitleBar(const std::size_t& width, const std::size_t& height, QFrame *parent = nullptr);
+    explicit TitleBar(QFrame *parent = nullptr);
     virtual ~TitleBar() = default;
 
     TitleBar(const TitleBar&)=delete;
@@ -33,7 +33,13 @@ public:
 
 
     void setTitle(const QString& str)noexcept;
+    void setLogo(const QString& str)noexcept;
+    void setLogo(const QIcon& icon)noexcept;
+    void setMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept;
+
 private:
+    using QFrame::setMinimumSize;
+
     void initUi();
     void setUiPara()noexcept;
     void layoutItem()noexcept;

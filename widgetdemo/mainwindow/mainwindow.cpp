@@ -24,7 +24,7 @@
 
 MainWindow::MainWindow(std::size_t minimumWidth, std::size_t minimumHeight, QFrame *parent)
            :QFrame{parent},
-            m_TitleBar{new TitleBar{0 , 0}},
+            m_TitleBar{new TitleBar{}},
             m_CentralFrame{new CentralFrame{}},
             m_StatusBar{new StatusBar{}},
             m_MainLayout{new QVBoxLayout{}},
@@ -42,6 +42,19 @@ MainWindow::MainWindow(std::size_t minimumWidth, std::size_t minimumHeight, QFra
 }
 
 
+void MainWindow::setMinimumSize(const std::size_t &widthMM, const std::size_t &heightMM)noexcept
+{
+
+    m_TheWidth = widthMM;
+    m_TheHeight = heightMM;
+
+    this->QFrame::setMinimumSize(widthMM, heightMM);
+    m_TitleBar->setMinimumSize(m_TheWidth, m_TheHeight/30);
+    m_CentralFrame->setMinimumSize(m_TheWidth, m_TheHeight/30*27);
+    m_StatusBar->setMinimumSize(m_TheWidth, m_TheHeight/30*2);
+}
+
+
 void MainWindow::initUi()
 {
     //
@@ -49,14 +62,13 @@ void MainWindow::initUi()
 
 void MainWindow::initUiPara()noexcept
 {
-    m_TitleBar->setMinimumSize(m_TheWidth, m_TheHeight/20);
-    m_CentralFrame->setMinimumSize(m_TheWidth, m_TheHeight/20*17);
-    m_StatusBar->setMinimumSize(m_TheWidth, m_TheHeight/20*2);
 }
 
 
 void MainWindow::layoutItem()noexcept
 {
+    m_MainLayout->setSpacing(0);
+    m_MainLayout->setMargin(0);
     m_MainLayout->addWidget(m_TitleBar);
     m_MainLayout->addWidget(m_CentralFrame);
     m_MainLayout->addWidget(m_StatusBar);

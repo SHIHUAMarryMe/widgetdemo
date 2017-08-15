@@ -12,6 +12,7 @@
 class QPushButton;
 class QVBoxLayout;
 class QHBoxLayout;
+class QStackedWidget;
 
 
 class CentralCententFrame : public QFrame
@@ -34,11 +35,14 @@ private:
 private:
     QFrame* m_LeftFrame{nullptr};
     Queue<QPushButton*> m_Buttons{};
-    QFrame* m_RightFrame{nullptr};
+
+
+//    QFrame* m_RightFrame{nullptr};
+    QStackedWidget* m_RightFrame{nullptr};
+    Queue<QFrame*> m_WidgetForStack{};
 
     QVBoxLayout* m_ButtonLayout{nullptr};
     QHBoxLayout* m_MainLayout{nullptr};
-
 };
 
 

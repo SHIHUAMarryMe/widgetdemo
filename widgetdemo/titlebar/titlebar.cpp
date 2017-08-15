@@ -12,14 +12,11 @@
 
 
 
-TitleBar::TitleBar(const std::size_t &width, const std::size_t &height, QFrame* parent)
+TitleBar::TitleBar(QFrame* parent)
          :QFrame{parent},
            m_Labels{std::make_pair(new QLabel{}, new QLabel{})},
            m_MainLayout{new QHBoxLayout{}}
 {
-    this->setMinimumSize(width, height);
-
-
     this->initUi();
     this->setUiPara();
     this->layoutItem();
@@ -29,6 +26,32 @@ TitleBar::TitleBar(const std::size_t &width, const std::size_t &height, QFrame* 
 void TitleBar::setTitle(const QString &str)noexcept
 {
     m_Labels.first->setText(str);
+}
+
+void TitleBar::setLogo(const QIcon &icon)noexcept
+{
+}
+
+void TitleBar::setLogo(const QString &str)noexcept
+{
+}
+
+
+void TitleBar::setMinimumSize(const std::size_t &widthMM, const std::size_t &heightMM)noexcept
+{
+    this->QFrame::setMinimumSize(widthMM, heightMM);
+
+    Queue<QToolButton*>::iterator beg = m_Buttons.begin();
+    Queue<QToolButton*>::iterator last = m_Buttons.end();
+    for(; beg != last; ++beg){
+        (*beg)->setCheckable(true);
+        (*beg)->setMinimumSize(widthMM/30, heightMM);
+        (*beg)->setFocusPolicy(Qt::NoFocus);
+        (*beg)->setArrowType(Qt::NoArrow);
+    }
+
+    m_Labels.first->setMinimumSize(widthMM/30, heightMM);
+    m_Labels.second->setMinimumSize(widthMM/30, heightMM);
 }
 
 
@@ -43,32 +66,20 @@ void TitleBar::initUi()
 
 void TitleBar::setUiPara()noexcept
 {
-    std::size_t height{ this->height()};
-    std::size_t width{this->width()};
-
-    Queue<QToolButton*>::iterator beg = m_Buttons.begin();
-    Queue<QToolButton*>::iterator last = m_Buttons.end();
-    for(; beg != last; ++beg){
-        (*beg)->setCheckable(true);
-        (*beg)->setFixedHeight((height)/3*2);
-        (*beg)->setFixedWidth(width/15);
-        (*beg)->setFocusPolicy(Qt::NoFocus);
-        (*beg)->setArrowType(Qt::NoArrow);
-    }
 }
 
 
 void TitleBar::layoutItem()noexcept
 {
+    m_MainLayout->setAlignment(Qt::AlignCenter);
     m_MainLayout->setSpacing(0);
     m_MainLayout->setMargin(0);
     m_MainLayout->addWidget(m_Labels.first);
     m_MainLayout->addWidget(m_Labels.second);
-    m_MainLayout->addStretch();
+    m_MainLayout->addStretch(0);
 
     auto beg = m_Buttons.begin();
     auto last = m_Buttons.end();
-
     for(; beg != last; ++beg){
         m_MainLayout->addWidget(*beg);
     }
@@ -76,5 +87,8 @@ void TitleBar::layoutItem()noexcept
 
     this->setLayout(m_MainLayout);
 }
+
+
+
 
 

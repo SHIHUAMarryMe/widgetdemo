@@ -17,6 +17,17 @@ NavigationBar::NavigationBar(QFrame *parent)
     this->layoutItem();
 }
 
+
+void NavigationBar::setMinimumSize(const std::size_t &widthMM, const std::size_t &heightMM)noexcept
+{
+    this->QFrame::setMinimumSize(widthMM, heightMM);
+    for(auto button : m_NavigationBtns){
+        button->setMinimumSize(widthMM/10, heightMM/3*2);
+    }
+}
+
+
+
 void NavigationBar::initUi()
 {
     std::size_t index{0};
@@ -27,11 +38,7 @@ void NavigationBar::initUi()
 
 void NavigationBar::initUiPara()noexcept
 {
-    std::size_t width{this->widthMM()};
-    std::size_t height{this->heightMM()};
-
     for(auto button : m_NavigationBtns){
-        button->setMinimumSize(width/10, height);
         button->setFocusPolicy(Qt::NoFocus);
         button->setArrowType(Qt::NoArrow); //取消向下的箭头.
     }
@@ -39,10 +46,10 @@ void NavigationBar::initUiPara()noexcept
 
 void NavigationBar::layoutItem()noexcept
 {
-
+    m_MainLayout->addStretch();
+    m_MainLayout->setAlignment(Qt::AlignBottom);
     m_MainLayout->setMargin(0);
     m_MainLayout->setSpacing(0);
-    m_MainLayout->addStretch();
     for(auto button : m_NavigationBtns){
         m_MainLayout->addWidget(button);
     }

@@ -62,16 +62,18 @@ void CentralFrame::initUiPara()noexcept
 
 void CentralFrame::layoutItem()noexcept
 {
-    auto beg = m_WidgetsForLayout.begin();
-    auto end = m_WidgetsForLayout.end();
+    Map<QBoxLayout*, Queue<QFrame*>>::iterator beg = m_WidgetsForLayout.begin();
+    Map<QBoxLayout*, Queue<QFrame*>>::iterator end = m_WidgetsForLayout.end();
 
     std::size_t index{0};
     for(; beg != end; ++beg, ++index){
 
-        auto beg_1 = beg->second.begin();
-        auto end_1 = beg->second.end();
+        Queue<QFrame*>::iterator beg_1 = beg->second.begin();
+        Queue<QFrame*>::iterator end_1 = beg->second.end();
 
         for(; beg_1 != end_1; ++beg_1){
+            beg->first->setSpacing(0);
+            beg->first->setMargin(0);
             beg->first->addWidget(*beg_1);
         }
 
@@ -79,6 +81,9 @@ void CentralFrame::layoutItem()noexcept
         m_StackWidget->addWidget(m_WidgetsForStacked[index]);
     }
 
+
+    m_MainLayout->setSpacing(0);
+    m_MainLayout->setMargin(0);
     m_MainLayout->addWidget(m_NavigationBar);
     m_MainLayout->addWidget(m_StackWidget);
 
@@ -86,8 +91,21 @@ void CentralFrame::layoutItem()noexcept
 }
 
 
-void CentralFrame::setMinimumSize(const std::size_t &widthMM, const std::size_t &heightMM)noexcept
+void CentralFrame::setMinimumSize(const std::size_t &widthMM, const std::size_t &heightMM)
 {
     this->QFrame::setMinimumSize(widthMM, heightMM);
+
+    m_NavigationBar->setMinimumSize(widthMM, heightMM/5*1);
     m_StackWidget->setMinimumSize(widthMM, heightMM/5*4);
+
+    auto beg = m_WidgetsForLayout.begin();
+    auto beg_1 = beg->second.begin();
+
+    if(CentralCententFrame* frame = dynamic_cast<CentralCententFrame*>(*beg_1)){
+        frame->setMinimumSize(widthMM, heightMM/5*4);
+    }else{
+        LOG("==========================");
+        throw std::bad_cast{};
+    }
+
 }

@@ -51,6 +51,8 @@ public:
     MainWindow& operator=(MainWindow&&)=delete;
 
 
+    void setMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept;
+
 protected:
     virtual void mousePressEvent(QMouseEvent* event)override;
     virtual void mouseMoveEvent(QMouseEvent* event)override;
@@ -59,8 +61,9 @@ protected:
 
 
 private:
-    void checkDragPosition(const QPoint& globalPoint)noexcept;
+    using QFrame::setMinimumSize;
 
+    void checkDragPosition(const QPoint& globalPoint)noexcept;
 
     void initUi();
     void initUiPara()noexcept;
