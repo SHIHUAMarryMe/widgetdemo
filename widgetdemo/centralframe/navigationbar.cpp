@@ -21,7 +21,7 @@ void NavigationBar::initUi()
 {
     std::size_t index{0};
     for(; index != 4; ++index){
-        m_NavigationBtns.append(new QPushButton{});
+        m_NavigationBtns.push_back(new QToolButton{});
     }
 }
 

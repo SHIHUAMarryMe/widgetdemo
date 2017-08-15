@@ -36,7 +36,7 @@ void TitleBar::initUi()
 {
     std::size_t index{0};
     for(; index != 3; ++index){
-        m_Buttons.append(new QPushButton{});
+        m_Buttons.push_back(new QToolButton{});
     }
 }
 
@@ -46,8 +46,8 @@ void TitleBar::setUiPara()noexcept
     std::size_t height{ this->height()};
     std::size_t width{this->width()};
 
-    QQueue<QToolButton*>::iterator beg = m_Buttons.begin();
-    QQueue<QToolButton*>::iterator last = m_Buttons.end();
+    Queue<QToolButton*>::iterator beg = m_Buttons.begin();
+    Queue<QToolButton*>::iterator last = m_Buttons.end();
     for(; beg != last; ++beg){
         (*beg)->setCheckable(true);
         (*beg)->setFixedHeight((height)/3*2);

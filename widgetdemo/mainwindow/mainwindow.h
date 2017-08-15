@@ -8,7 +8,6 @@
 #include <map>
 #include <QQueue>
 #include <QFrame>
-#include <QPair>
 
 
 
@@ -26,12 +25,6 @@ class MainWindow : public QFrame
     Q_OBJECT
 
 private:
-
-    template<typename... Types>
-    using QTuple = std::tuple<Types...>;
-
-    template<typename Type>
-    using Queue = std::deque<Type>;
 
     enum class CursorPosition{
         Up = 0,

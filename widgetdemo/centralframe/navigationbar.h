@@ -3,10 +3,12 @@
 
 
 #include <QFrame>
-#include <QQueue>
 
 #include "utilities.h"
 
+
+class QHBoxLayout;
+class QToolButton;
 
 class NavigationBar : public QFrame
 {
@@ -27,7 +29,7 @@ private:
 
 
 private:
-    QQueue<QPushButton*> m_NavigationBtns{};
+    Queue<QToolButton*> m_NavigationBtns{};
     QHBoxLayout* m_MainLayout{nullptr};
 };
 

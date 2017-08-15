@@ -40,8 +40,8 @@ private:
 
 
 private:
-    QPair<QLabel*, QLabel*> m_Labels{};
-    QQueue<QToolButton*> m_Buttons{};
+    Pair<QLabel*, QLabel*> m_Labels{};
+    Queue<QToolButton*> m_Buttons{};
 
     QHBoxLayout* m_MainLayout{nullptr};
 };

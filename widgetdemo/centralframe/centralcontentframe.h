@@ -7,6 +7,9 @@
 #include <QQueue>
 
 
+#include "utilities.h"
+
+
 class QPushButton;
 class QVBoxLayout;
 class QHBoxLayout;
@@ -17,20 +20,25 @@ class CentralCententFrame : public QFrame
     Q_OBJECT
 
 public:
-    explicit CentralCententFrame(QFrame* parent);
+    explicit CentralCententFrame(QFrame* parent = nullptr);
     CentralCententFrame(const CentralCententFrame&)=delete;
     CentralCententFrame& operator=(const CentralCententFrame&)=delete;
 
 
+    void setMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept;
+
 private:
     void initUi();
     void initUiPara()noexcept;
-    void layoutItem();
+    void layoutItem()noexcept;
 
 private:
     QFrame* m_LeftFrame{nullptr};
-    QQueue<QPushButton*> m_Buttons{};
+    Queue<QPushButton*> m_Buttons{};
     QFrame* m_RightFrame{nullptr};
+
+    QVBoxLayout* m_ButtonLayout{nullptr};
+    QHBoxLayout* m_MainLayout{nullptr};
 
 };
 
