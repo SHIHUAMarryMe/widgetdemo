@@ -1,4 +1,4 @@
 
 QFrame{
-    border: 5px solid red;
+    border: 2px solid red;
 }
