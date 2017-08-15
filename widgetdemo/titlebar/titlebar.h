@@ -15,7 +15,7 @@ class QPushButton;
 class QLabel;
 class QIcon;
 class QToolButton;
-
+class QLabel;
 
 
 class TitleBar : public QFrame
@@ -32,10 +32,12 @@ public:
     TitleBar& operator=(const TitleBar&)=delete;
 
 
-    void setTitle(const QString& str)noexcept;
-    void setLogo(const QString& str)noexcept;
-    void setLogo(const QIcon& icon)noexcept;
     void setMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept;
+    void setTitle(const QString& str)noexcept;
+    void setLogo(const QString& url)noexcept;
+
+signals:
+    void onClicked(std::size_t index);
 
 private:
     using QFrame::setMinimumSize;
@@ -43,7 +45,7 @@ private:
     void initUi();
     void setUiPara()noexcept;
     void layoutItem()noexcept;
-
+    void initConnect()noexcept;
 
 private:
     Pair<QLabel*, QLabel*> m_Labels{};

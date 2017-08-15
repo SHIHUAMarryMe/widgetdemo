@@ -1,3 +1,6 @@
+#include <QObject>
+#include <QString>
+
 
 
 #include "./mainwindow/mainwindow.h"
@@ -13,6 +16,8 @@ int main(int argc, char *argv[])
 
 
     MainWindow m{800, 600};
+    m.setTitle(QString{"QFrame"});
+    m.setLogo(QString{":/img/appbar.smiley.tounge.png"});
     m.show();
 
 

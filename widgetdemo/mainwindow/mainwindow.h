@@ -52,6 +52,8 @@ public:
 
 
     void setMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept;
+    void setTitle(const QString& str)noexcept;
+    void setLogo(const QString& url)noexcept;
 
 protected:
     virtual void mousePressEvent(QMouseEvent* event)override;
@@ -61,14 +63,14 @@ protected:
 
 
 private:
-    using QFrame::setMinimumSize;
+    using QFrame::setMinimumSize;//notice that!!!
 
     void checkDragPosition(const QPoint& globalPoint)noexcept;
 
     void initUi();
     void initUiPara()noexcept;
     void layoutItem()noexcept;
-
+    void initConnect()noexcept;
 
 private:
 

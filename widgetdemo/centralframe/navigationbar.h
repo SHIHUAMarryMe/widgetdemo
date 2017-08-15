@@ -22,12 +22,18 @@ public:
     NavigationBar& operator=(const NavigationBar&)=delete;
 
     void setMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept;
+
+
+signals:
+    void onStackWidgetIndexChanged(std::size_t index);
+
 private:
     using QFrame::setMinimumSize;
 
     void initUi();
     void initUiPara()noexcept;
     void layoutItem()noexcept;
+    void initConnect()noexcept;
 
 
 private:

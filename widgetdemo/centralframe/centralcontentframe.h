@@ -27,10 +27,19 @@ public:
 
     void setMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept;
 
+signals:
+    void currentButtonIndex(std::size_t index);
+
+
+private slots:
+    void onCurrentButtonIndexChanged(std::size_t index)noexcept;
+
 private:
     void initUi();
     void initUiPara()noexcept;
     void layoutItem()noexcept;
+
+    void initConnect()noexcept;
 
 private:
     QFrame* m_LeftFrame{nullptr};

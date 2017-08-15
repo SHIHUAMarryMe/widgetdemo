@@ -15,6 +15,7 @@ NavigationBar::NavigationBar(QFrame *parent)
     this->initUi();
     this->initUiPara();
     this->layoutItem();
+    this->initConnect();
 }
 
 
@@ -56,4 +57,16 @@ void NavigationBar::layoutItem()noexcept
     m_MainLayout->addStretch();
 
     this->setLayout(m_MainLayout);
+}
+
+void NavigationBar::initConnect()noexcept
+{
+    Queue<QToolButton*>::iterator beg = m_NavigationBtns.begin();
+    Queue<QToolButton*>::iterator end = m_NavigationBtns.end();
+
+    std::size_t index{0};
+    for(; beg != end; ++beg, ++index){
+        QObject::connect(*beg, &QToolButton::clicked,
+                         [this, index]{ emit onStackWidgetIndexChanged(index); });
+    }
 }

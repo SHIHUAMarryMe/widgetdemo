@@ -1,11 +1,12 @@
 
 
 #include <QIcon>
-#include <QLabel>
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QToolButton>
-
+#include <QLabel>
+#include <QPixmap>
+#include <QDebug>
 
 #include "titlebar.h"
 
@@ -20,20 +21,22 @@ TitleBar::TitleBar(QFrame* parent)
     this->initUi();
     this->setUiPara();
     this->layoutItem();
+    this->initConnect();
 }
 
 
-void TitleBar::setTitle(const QString &str)noexcept
+void TitleBar::setTitle(const QString& str)noexcept
 {
     m_Labels.first->setText(str);
 }
 
-void TitleBar::setLogo(const QIcon &icon)noexcept
+void TitleBar::setLogo(const QString& url)noexcept
 {
-}
+    QPixmap backgroundPic{url};
+    QSize picSize{m_Labels.second->minimumSize()};
 
-void TitleBar::setLogo(const QString &str)noexcept
-{
+    backgroundPic = backgroundPic.scaled(picSize,  Qt::KeepAspectRatio);
+    m_Labels.second->setPixmap(backgroundPic);
 }
 
 
@@ -66,6 +69,7 @@ void TitleBar::initUi()
 
 void TitleBar::setUiPara()noexcept
 {
+    //
 }
 
 
@@ -84,8 +88,21 @@ void TitleBar::layoutItem()noexcept
         m_MainLayout->addWidget(*beg);
     }
 
-
     this->setLayout(m_MainLayout);
+}
+
+
+void TitleBar::initConnect()noexcept
+{
+    Queue<QToolButton*>::iterator beg = m_Buttons.begin();
+    Queue<QToolButton*>::iterator end = m_Buttons.end();
+
+    std::size_t index{0};
+    for(; beg != end; ++beg, ++index){
+        QObject::connect(*beg, &QToolButton::clicked,
+                         [this, index]{ emit onClicked(index); }
+                         );
+    }
 }
 
 

@@ -4,7 +4,7 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QStackedWidget>
-
+#include <QDebug>
 
 #include "centralcontentframe.h"
 
@@ -20,6 +20,7 @@ CentralCententFrame::CentralCententFrame(QFrame *parent)
     this->initUi();
     this->initUiPara();
     this->layoutItem();
+    this->initConnect();
 }
 
 
@@ -65,11 +66,6 @@ void CentralCententFrame::initUiPara()noexcept
         (*beg)->setCheckable(true);
     }
 
-
-
-    //show the top widget;
-    m_RightFrame->setCurrentIndex(0);
-
 }
 
 
@@ -101,4 +97,28 @@ void CentralCententFrame::layoutItem()noexcept
 
 
     this->setLayout(m_MainLayout);
+}
+
+
+void CentralCententFrame::initConnect()noexcept
+{
+    Queue<QPushButton*>::iterator beg = m_Buttons.begin();
+    Queue<QPushButton*>::iterator end = m_Buttons.end();
+
+    std::size_t index{0};
+    for(; beg != end; ++beg, ++index){
+        QObject::connect(*beg, &QPushButton::clicked,
+                         [this, index]{ emit currentButtonIndex(index); }
+                         );
+    }
+
+
+    QObject::connect(this, &CentralCententFrame::currentButtonIndex, this, &CentralCententFrame::onCurrentButtonIndexChanged);
+}
+
+
+void CentralCententFrame::onCurrentButtonIndexChanged(std::size_t index)noexcept
+{
+    LOG(index);
+    m_RightFrame->setCurrentIndex(index);
 }

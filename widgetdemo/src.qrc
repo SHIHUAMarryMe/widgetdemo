@@ -1,6 +1,7 @@
 <RCC>
-    <qresource prefix="/" lang="fr">
+    <qresource prefix="/" lang="f">
         <file>img/appbar.close.png</file>
+        <file>img/appbar.smiley.tounge.png</file>
     </qresource>
     <qresource prefix="/">
         <file>style/style1.qss</file>

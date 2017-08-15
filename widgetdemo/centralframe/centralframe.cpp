@@ -16,6 +16,7 @@ CentralFrame::CentralFrame(QFrame *parent)
     this->initUi();
     this->initUiPara();
     this->layoutItem();
+    this->initConnect();
 }
 
 
@@ -108,4 +109,15 @@ void CentralFrame::setMinimumSize(const std::size_t &widthMM, const std::size_t 
         throw std::bad_cast{};
     }
 
+}
+
+void CentralFrame::initConnect()noexcept
+{
+    QObject::connect(m_NavigationBar, &NavigationBar::onStackWidgetIndexChanged,
+                     [this](std::size_t index)
+                     {
+                        m_StackWidget->setCurrentIndex(index);
+                     }
+
+                     );
 }

@@ -39,6 +39,7 @@ MainWindow::MainWindow(std::size_t minimumWidth, std::size_t minimumHeight, QFra
     this->initUi();
     this->initUiPara();
     this->layoutItem();
+    this->initConnect();
 }
 
 
@@ -55,13 +56,25 @@ void MainWindow::setMinimumSize(const std::size_t &widthMM, const std::size_t &h
 }
 
 
+void MainWindow::setTitle(const QString &str)noexcept
+{
+    m_TitleBar->setTitle(str);
+}
+
+void MainWindow::setLogo(const QString &url)noexcept
+{
+    m_TitleBar->setLogo(url);
+}
+
+
 void MainWindow::initUi()
 {
-    //
+    //nothing
 }
 
 void MainWindow::initUiPara()noexcept
 {
+    //nothing
 }
 
 
@@ -74,6 +87,17 @@ void MainWindow::layoutItem()noexcept
     m_MainLayout->addWidget(m_StatusBar);
 
     this->setLayout(m_MainLayout);
+}
+
+
+void MainWindow::initConnect()noexcept
+{
+    QObject::connect(m_TitleBar, &TitleBar::onClicked,
+                     [this](std::size_t index){
+                        if(index == 2){
+                            this->close();
+                        }
+                    });
 }
 
 

@@ -24,11 +24,12 @@ public:
     void setMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM);
 
 private:
-    using QFrame::setMinimumSize;//!!!!!!!!!!!
+    using QFrame::setMinimumSize;//notice that!
 
     void initUi();
     void initUiPara()noexcept;
     void layoutItem()noexcept;
+    void initConnect()noexcept;
 private:
 
     NavigationBar* m_NavigationBar{nullptr};
