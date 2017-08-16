@@ -42,6 +42,22 @@ void CentralContentFrame::setFixedSize(const std::size_t &widthFixed, const std:
 }
 
 
+//void CentralContentFrame::setTheMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept
+//{
+
+//    this->setMinimumSize(widthMM, heightMM);
+
+//    Queue<QPushButton*>::iterator beg = m_Buttons.begin();
+//    Queue<QPushButton*>::iterator last = m_Buttons.end();
+//    for(; beg != last; ++beg){
+//        (*beg)->setMinimumSize(widthMM/6, heightMM/7);
+//    }
+
+//    m_LeftFrame->setMinimumSize(widthMM/6, heightMM);
+//    m_RightFrame->setMinimumSize(widthMM/6*5, heightMM);
+//}
+
+
 
 void CentralContentFrame::initUi()
 {
@@ -60,34 +76,22 @@ void CentralContentFrame::initUi()
 void CentralContentFrame::initUiPara()noexcept
 {
 
+    m_LeftFrame->setFixedWidth(100);
     Queue<QPushButton*>::iterator beg = m_Buttons.begin();
     Queue<QPushButton*>::iterator last = m_Buttons.end();
     for(; beg != last; ++beg){
+        (*beg)->setFixedSize(100, 50);
         (*beg)->setFocusPolicy(Qt::NoFocus);
         (*beg)->setCheckable(true);
     }
 
     m_Buttons[0]->setText(tr("FirstPage"));
     m_Buttons[1]->setText(tr("SecondPage"));
-    m_Buttons[2]->setText(tr("Thirdpage"));
-
+    m_Buttons[2]->setText(tr("ThirdPage"));
 }
 
 
-void CentralContentFrame::setTheMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept
-{
 
-    this->setMinimumSize(widthMM, heightMM);
-
-    Queue<QPushButton*>::iterator beg = m_Buttons.begin();
-    Queue<QPushButton*>::iterator last = m_Buttons.end();
-    for(; beg != last; ++beg){
-        (*beg)->setMinimumSize(widthMM/6, heightMM/7);
-    }
-
-    m_LeftFrame->setMinimumSize(widthMM/6, heightMM);
-    m_RightFrame->setMinimumSize(widthMM/6*5, heightMM);
-}
 
 
 void CentralContentFrame::layoutItem()noexcept

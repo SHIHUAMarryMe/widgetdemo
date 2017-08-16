@@ -41,7 +41,7 @@ MainWindow::MainWindow(std::size_t width, std::size_t height, QFrame *parent)
     this->initConnect();
 
 
-    this->setTheMinimumSize(width, height);
+//    this->setTheMinimumSize(width, height);
 }
 
 
@@ -57,13 +57,13 @@ void MainWindow::setTheFixedSize(const std::size_t &widthFixed, const std::size_
     m_StatusBar->setFixedSize(m_TheWidth, m_TheHeight/30*2);
 }
 
-void MainWindow::setTheMinimumSize(const std::size_t &widthMM, const std::size_t &heightMM)noexcept
-{
-    this->QFrame::setMinimumSize(widthMM, heightMM);
-    m_TitleBar->setMinimumSize(widthMM, heightMM/30);
-    m_CentralFrame->setMinimumSize(widthMM, heightMM/30*27);
-    m_StatusBar->setMinimumSize(widthMM, heightMM/30*2);
-}
+//void MainWindow::setTheMinimumSize(const std::size_t &widthMM, const std::size_t &heightMM)noexcept
+//{
+//    this->QFrame::setMinimumSize(widthMM, heightMM);
+//    m_TitleBar->setMinimumSize(widthMM, heightMM/30);
+//    m_CentralFrame->setMinimumSize(widthMM, heightMM/30*27);
+//    m_StatusBar->setMinimumSize(widthMM, heightMM/30*2);
+//}
 
 
 void MainWindow::setTitle(const QString &str)noexcept

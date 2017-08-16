@@ -31,13 +31,13 @@ void NavigationBar::setFixedSize(const std::size_t &widthFixed, const std::size_
 }
 
 
-void NavigationBar::setTheMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept
-{
-    this->QFrame::setMinimumSize(widthMM, heightMM);
-    for(auto button : m_NavigationBtns){
-        button->setFixedSize(widthMM/10, heightMM/2);
-    }
-}
+//void NavigationBar::setTheMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept
+//{
+//    this->QFrame::setMinimumSize(widthMM, heightMM);
+//    for(auto button : m_NavigationBtns){
+//        button->setFixedSize(widthMM/10, heightMM/2);
+//    }
+//}
 
 
 
@@ -51,14 +51,14 @@ void NavigationBar::initUi()
 
 void NavigationBar::initUiPara()noexcept
 {
-    const std::size_t widthMM{this->widthMM()};
-    const std::size_t heightMM{this->heightMM()};
+
+    this->setFixedHeight(110);
 
     for(auto button : m_NavigationBtns){
         button->setFocusPolicy(Qt::NoFocus);
         button->setCheckable(true);
         button->setFlat(true);
-        button->setMinimumSize(widthMM/10, heightMM/2);
+        button->setFixedHeight(90);
     }
 
     m_NavigationBtns[0]->setChecked(true);

@@ -15,8 +15,8 @@ int main(int argc, char *argv[])
 //    CommonHelper::setStyle(":/style/style1.qss");
 
 
-    MainWindow m{1000, 700};
-//    m.setTheFixedSize(1000, 700);
+    MainWindow m{0, 0};
+    m.setMinimumSize(1000, 800);
     m.setTitle(QString{"QFrame"});
     m.setLogo(QString{":/img/appbar.smiley.tounge.png"});
     m.show();

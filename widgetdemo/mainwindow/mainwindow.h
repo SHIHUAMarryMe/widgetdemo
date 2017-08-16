@@ -52,7 +52,7 @@ public:
 
 
     void setTheFixedSize(const std::size_t& widthFixed, const std::size_t& heightFixed)noexcept;
-    void setTheMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept;
+//    void setTheMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept;
     void setTitle(const QString& str)noexcept;
     void setLogo(const QString& url)noexcept;
 
