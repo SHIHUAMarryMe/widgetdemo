@@ -1,8 +1,12 @@
 
-
-QToolButton#NavigationButton{
+QPushButton#NavigationButton{
     background-image: url(:/img/appbar.home.png);
     background-repeat:no-repeat;
     background-position: center bottom;
+    background-color: red;
     color: white;
+    text-align: center bottom;
+    padding: 0px;
+    border: 0px;
+    margin: 0px;
 }

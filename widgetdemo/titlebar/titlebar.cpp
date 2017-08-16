@@ -34,7 +34,7 @@ void TitleBar::setTitle(const QString& str)noexcept
 void TitleBar::setLogo(const QString& url)noexcept
 {
     QPixmap backgroundPic{url};
-    QSize picSize{m_Labels.second->minimumSize()};
+    QSize picSize{m_Labels.second->size()};
 
     backgroundPic = backgroundPic.scaled(picSize,  Qt::KeepAspectRatio);
     m_Labels.second->setPixmap(backgroundPic);
@@ -54,8 +54,8 @@ void TitleBar::setFixedSize(const std::size_t &widthFixed, const std::size_t &he
         (*beg)->setArrowType(Qt::NoArrow);
     }
 
-    m_Labels.first->setFixedSize(widthFixed/30, heightFixed);
-    m_Labels.second->setFixedSize(widthFixed/30, heightFixed);
+    m_Labels.first->setFixedSize(widthFixed/15, heightFixed);
+    m_Labels.second->setFixedSize(widthFixed/20, heightFixed);
 }
 
 

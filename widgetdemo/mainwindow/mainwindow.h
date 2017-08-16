@@ -51,10 +51,9 @@ public:
     MainWindow& operator=(MainWindow&&)=delete;
 
 
-    void setFixedSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept;
+    void setTheFixedSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept;
     void setTitle(const QString& str)noexcept;
     void setLogo(const QString& url)noexcept;
-    void setNavigationIcons(const QList<QString>& urls);
 
 protected:
     virtual void mousePressEvent(QMouseEvent* event)override;
@@ -64,7 +63,6 @@ protected:
 
 
 private:
-    using QFrame::setFixedSize;//notice that!!!
 
     void checkDragPosition(const QPoint& globalPoint)noexcept;
 

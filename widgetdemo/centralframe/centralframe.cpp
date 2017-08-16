@@ -140,7 +140,4 @@ void CentralFrame::setItemObjectName()noexcept
 }
 
 
-void CentralFrame::setNavigationIcons(const QList<QString>& urls)
-{
-    m_NavigationBar->setNavigationButtonIcon(urls);
-}
+

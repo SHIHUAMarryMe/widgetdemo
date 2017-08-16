@@ -42,12 +42,14 @@ void NavigationBar::initUi()
 
 void NavigationBar::initUiPara()noexcept
 {
+    for(auto button : m_NavigationBtns){
+        button->setFocusPolicy(Qt::NoFocus);
+        button->setCheckable(true);
+        button->setFlat(true);
+    }
 
-//    for(auto button : m_NavigationBtns){
-//        button->setFocusPolicy(Qt::NoFocus);
-//        button->setArrowType(Qt::NoArrow); //取消向下的箭头.
-//        button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-//    }
+    m_NavigationBtns[0]->setChecked(true);
+    m_NavigationBtns[0]->setText(tr("Home"));
 }
 
 void NavigationBar::layoutItem()noexcept
@@ -60,7 +62,6 @@ void NavigationBar::layoutItem()noexcept
         m_MainLayout->addWidget(button);
     }
     m_MainLayout->addStretch();
-
     this->setLayout(m_MainLayout);
 }
 
@@ -87,24 +88,3 @@ void NavigationBar::setItemObjectName()noexcept
 //    this->setObjectName(QString{"NavigationBar"});
 }
 
-
-void NavigationBar::setNavigationButtonIcon(const QList<QString> &urls)
-{
-//    QSize iconSize{m_NavigationBtns[0]->iconSize()};
-//    iconSize.rheight() *= 3;
-//    iconSize.rwidth() *= 4;
-//    qDebug() << iconSize;
-
-    assert(urls.size() == m_NavigationBtns.size());
-
-//    Queue<QToolButton*>::iterator beg = m_NavigationBtns.begin();
-//    Queue<QToolButton*>::iterator end = m_NavigationBtns.end();
-//    std::size_t index{0};
-//    for(; beg != end; ++beg){
-//        (*beg)->setIconSize(iconSize);
-//        (*beg)->setIcon(QIcon{urls[index]});
-//        ++index;
-//    }
-
-    m_NavigationBtns[0]->setText(tr("Home"));
-}

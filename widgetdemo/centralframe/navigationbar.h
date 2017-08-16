@@ -4,13 +4,13 @@
 
 #include <QFrame>
 #include <QList>
-#include <QPushButton>
 
 #include "utilities.h"
 
 
 class QHBoxLayout;
 class QToolButton;
+class QPushButton;
 
 class NavigationBar : public QFrame
 {
@@ -24,8 +24,6 @@ public:
     NavigationBar& operator=(const NavigationBar&)=delete;
 
     void setFixedSize(const std::size_t& widthFixed, const std::size_t& heightFixed)noexcept;
-    void setNavigationButtonIcon(const QList<QString>& urls);
-
 
 signals:
     void onStackWidgetIndexChanged(std::size_t index);

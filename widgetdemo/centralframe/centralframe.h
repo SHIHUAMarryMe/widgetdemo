@@ -23,7 +23,6 @@ public:
     CentralFrame& operator=(const CentralFrame&)=delete;
 
     void setFixedSize(const std::size_t& widthFixed, const std::size_t& heightFixed);
-    void setNavigationIcons(const QList<QString>& urls);
 
 private:
     using QFrame::setFixedSize;//notice that!

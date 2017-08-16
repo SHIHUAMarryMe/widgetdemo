@@ -43,7 +43,7 @@ MainWindow::MainWindow(std::size_t fixedWidth, std::size_t fixedHeight, QFrame *
 }
 
 
-void MainWindow::setFixedSize(const std::size_t &widthFixed, const std::size_t &heightFixed)noexcept
+void MainWindow::setTheFixedSize(const std::size_t &widthFixed, const std::size_t &heightFixed)noexcept
 {
 
     m_TheWidth = widthFixed;
@@ -100,11 +100,6 @@ void MainWindow::initConnect()noexcept
                     });
 }
 
-
-void MainWindow::setNavigationIcons(const QList<QString> &urls)
-{
-    m_CentralFrame->setNavigationIcons(urls);
-}
 
 
 
