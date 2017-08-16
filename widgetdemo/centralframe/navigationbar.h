@@ -3,6 +3,8 @@
 
 
 #include <QFrame>
+#include <QList>
+#include <QPushButton>
 
 #include "utilities.h"
 
@@ -21,14 +23,15 @@ public:
     NavigationBar(const NavigationBar&)=delete;
     NavigationBar& operator=(const NavigationBar&)=delete;
 
-    void setMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept;
+    void setFixedSize(const std::size_t& widthFixed, const std::size_t& heightFixed)noexcept;
+    void setNavigationButtonIcon(const QList<QString>& urls);
 
 
 signals:
     void onStackWidgetIndexChanged(std::size_t index);
 
 private:
-    using QFrame::setMinimumSize;
+    using QFrame::setFixedSize;
 
     void initUi();
     void initUiPara()noexcept;
@@ -38,7 +41,7 @@ private:
     void setItemObjectName()noexcept;
 
 private:
-    Queue<QToolButton*> m_NavigationBtns{};
+    Queue<QPushButton*> m_NavigationBtns{};
     QHBoxLayout* m_MainLayout{nullptr};
 };
 

@@ -32,7 +32,7 @@ public:
     TitleBar& operator=(const TitleBar&)=delete;
 
 
-    void setMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept;
+    void setFixedSize(const std::size_t& widthFixed, const std::size_t& heightFixed)noexcept;
     void setTitle(const QString& str)noexcept;
     void setLogo(const QString& url)noexcept;
 
@@ -40,7 +40,7 @@ signals:
     void onClicked(std::size_t index);
 
 private:
-    using QFrame::setMinimumSize;
+    using QFrame::setFixedSize;
 
     void initUi();
     void setUiPara()noexcept;

@@ -2,6 +2,7 @@
 #define CENTRALFRAME_H
 
 #include <QFrame>
+#include <QList>
 
 #include "utilities.h"
 
@@ -21,15 +22,17 @@ public:
     CentralFrame(const CentralFrame&)=delete;
     CentralFrame& operator=(const CentralFrame&)=delete;
 
-    void setMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM);
+    void setFixedSize(const std::size_t& widthFixed, const std::size_t& heightFixed);
+    void setNavigationIcons(const QList<QString>& urls);
 
 private:
-    using QFrame::setMinimumSize;//notice that!
+    using QFrame::setFixedSize;//notice that!
 
     void initUi();
     void initUiPara()noexcept;
     void layoutItem()noexcept;
     void initConnect()noexcept;
+    void setItemObjectName()noexcept;
 private:
 
     NavigationBar* m_NavigationBar{nullptr};

@@ -18,6 +18,12 @@ int main(int argc, char *argv[])
     MainWindow m{800, 600};
     m.setTitle(QString{"QFrame"});
     m.setLogo(QString{":/img/appbar.smiley.tounge.png"});
+//    m.setNavigationIcons(QList<QString>{
+//                             QString{":/img/appbar.home.png"},
+//                             QString{":/img/appbar.message.smiley.png"},
+//                             QString{":/img/appbar.tree.leaf.three.png"},
+//                             QString{":/img/appbar.graph.line.png"}
+//                         });
     m.show();
 
 

@@ -24,19 +24,19 @@ CentralContentFrame::CentralContentFrame(QFrame *parent)
 }
 
 
-void CentralContentFrame::setMinimumSize(const std::size_t &widthMM, const std::size_t &heightMM)noexcept
+void CentralContentFrame::setFixedSize(const std::size_t &widthFixed, const std::size_t &heightFixed)noexcept
 {
-    this->QFrame::setMaximumSize(widthMM, heightMM);//notice that: must do this!
+    this->QFrame::setFixedSize(widthFixed, heightFixed);//notice that: must do this!
 
-    m_LeftFrame->setMinimumSize(widthMM/6, heightMM);
-    m_RightFrame->setMinimumSize(widthMM/6*5, heightMM);
+    m_LeftFrame->setFixedSize(widthFixed/6, heightFixed);
+    m_RightFrame->setFixedSize(widthFixed/6*5, heightFixed);
 
 
     Queue<QPushButton*>::iterator beg = m_Buttons.begin();
     Queue<QPushButton*>::iterator last = m_Buttons.end();
 
     for(; beg != last; ++beg){
-        (*beg)->setMinimumSize(widthMM/6, heightMM/7);
+        (*beg)->setFixedSize(widthFixed/6, heightFixed/7);
     }
 }
 

@@ -1,4 +1,8 @@
 
-QFrame{
-    border: 0px solid red;
+
+QToolButton#NavigationButton{
+    background-image: url(:/img/appbar.home.png);
+    background-repeat:no-repeat;
+    background-position: center bottom;
+    color: white;
 }

@@ -3,6 +3,8 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QToolButton>
+#include <QDebug>
+#include <cassert>
 
 #include "navigationbar.h"
 
@@ -20,11 +22,11 @@ NavigationBar::NavigationBar(QFrame *parent)
 }
 
 
-void NavigationBar::setMinimumSize(const std::size_t &widthMM, const std::size_t &heightMM)noexcept
+void NavigationBar::setFixedSize(const std::size_t &widthFixed, const std::size_t &heightFixed)noexcept
 {
-    this->QFrame::setMinimumSize(widthMM, heightMM);
+    this->QFrame::setFixedSize(widthFixed, heightFixed);
     for(auto button : m_NavigationBtns){
-        button->setMinimumSize(widthMM/10, heightMM/3*2);
+        button->setFixedSize(widthFixed/10, heightFixed/3*2);
     }
 }
 
@@ -34,16 +36,18 @@ void NavigationBar::initUi()
 {
     std::size_t index{0};
     for(; index != 4; ++index){
-        m_NavigationBtns.push_back(new QToolButton{});
+        m_NavigationBtns.push_back(new QPushButton{});
     }
 }
 
 void NavigationBar::initUiPara()noexcept
 {
-    for(auto button : m_NavigationBtns){
-        button->setFocusPolicy(Qt::NoFocus);
-        button->setArrowType(Qt::NoArrow); //取消向下的箭头.
-    }
+
+//    for(auto button : m_NavigationBtns){
+//        button->setFocusPolicy(Qt::NoFocus);
+//        button->setArrowType(Qt::NoArrow); //取消向下的箭头.
+//        button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+//    }
 }
 
 void NavigationBar::layoutItem()noexcept
@@ -62,12 +66,12 @@ void NavigationBar::layoutItem()noexcept
 
 void NavigationBar::initConnect()noexcept
 {
-    Queue<QToolButton*>::iterator beg = m_NavigationBtns.begin();
-    Queue<QToolButton*>::iterator end = m_NavigationBtns.end();
+    Queue<QPushButton*>::iterator beg = m_NavigationBtns.begin();
+    Queue<QPushButton*>::iterator end = m_NavigationBtns.end();
 
     std::size_t index{0};
     for(; beg != end; ++beg, ++index){
-        QObject::connect(*beg, &QToolButton::clicked,
+        QObject::connect(*beg, &QPushButton::clicked,
                          [this, index]{ emit onStackWidgetIndexChanged(index); }
                         );
     }
@@ -81,4 +85,26 @@ void NavigationBar::setItemObjectName()noexcept
     }
 
 //    this->setObjectName(QString{"NavigationBar"});
+}
+
+
+void NavigationBar::setNavigationButtonIcon(const QList<QString> &urls)
+{
+//    QSize iconSize{m_NavigationBtns[0]->iconSize()};
+//    iconSize.rheight() *= 3;
+//    iconSize.rwidth() *= 4;
+//    qDebug() << iconSize;
+
+    assert(urls.size() == m_NavigationBtns.size());
+
+//    Queue<QToolButton*>::iterator beg = m_NavigationBtns.begin();
+//    Queue<QToolButton*>::iterator end = m_NavigationBtns.end();
+//    std::size_t index{0};
+//    for(; beg != end; ++beg){
+//        (*beg)->setIconSize(iconSize);
+//        (*beg)->setIcon(QIcon{urls[index]});
+//        ++index;
+//    }
+
+    m_NavigationBtns[0]->setText(tr("Home"));
 }

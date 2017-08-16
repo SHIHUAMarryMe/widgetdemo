@@ -17,6 +17,7 @@ CentralFrame::CentralFrame(QFrame *parent)
     this->initUiPara();
     this->layoutItem();
     this->initConnect();
+    this->setItemObjectName();
 }
 
 
@@ -92,18 +93,18 @@ void CentralFrame::layoutItem()noexcept
 }
 
 
-void CentralFrame::setMinimumSize(const std::size_t &widthMM, const std::size_t &heightMM)
+void CentralFrame::setFixedSize(const std::size_t &widthFixed, const std::size_t &heightFixed)
 {
-    this->QFrame::setMinimumSize(widthMM, heightMM);
+    this->QFrame::setFixedSize(widthFixed, heightFixed);
 
-    m_NavigationBar->setMinimumSize(widthMM, heightMM/5*1);
-    m_StackWidget->setMinimumSize(widthMM, heightMM/5*4);
+    m_NavigationBar->setFixedSize(widthFixed, heightFixed/5*1);
+    m_StackWidget->setFixedSize(widthFixed, heightFixed/5*4);
 
     auto beg = m_WidgetsForLayout.begin();
     auto beg_1 = beg->second.begin();
 
     if(CentralContentFrame* frame = dynamic_cast<CentralContentFrame*>(*beg_1)){
-        frame->setMinimumSize(widthMM, heightMM/5*4);
+        frame->setFixedSize(widthFixed, heightFixed/5*4);
     }else{
         LOG("==========================");
         throw std::bad_cast{};
@@ -118,6 +119,28 @@ void CentralFrame::initConnect()noexcept
                      {
                         m_StackWidget->setCurrentIndex(index);
                      }
+                    );
+}
 
-                     );
+void CentralFrame::setItemObjectName()noexcept
+{
+    Map<QBoxLayout*, Queue<QFrame*>>::iterator beg = m_WidgetsForLayout.begin();
+    Map<QBoxLayout*, Queue<QFrame*>>::iterator end = m_WidgetsForLayout.end();
+
+    ++beg;
+    for(; beg != end; ++beg){
+
+        Queue<QFrame*>::iterator beg_1 = beg->second.begin();
+        Queue<QFrame*>::iterator end_1 = beg->second.end();
+
+        for(; beg_1 != end_1; ++beg_1){
+            (*beg_1)->setObjectName(QString{"ContentFrame"});
+        }
+    }
+}
+
+
+void CentralFrame::setNavigationIcons(const QList<QString>& urls)
+{
+    m_NavigationBar->setNavigationButtonIcon(urls);
 }

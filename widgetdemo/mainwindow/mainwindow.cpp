@@ -22,16 +22,16 @@
 #include "../statusbar/statusbar.h"
 
 
-MainWindow::MainWindow(std::size_t minimumWidth, std::size_t minimumHeight, QFrame *parent)
+MainWindow::MainWindow(std::size_t fixedWidth, std::size_t fixedHeight, QFrame *parent)
            :QFrame{parent},
             m_TitleBar{new TitleBar{}},
             m_CentralFrame{new CentralFrame{}},
             m_StatusBar{new StatusBar{}},
             m_MainLayout{new QVBoxLayout{}},
-            m_TheWidth{minimumWidth},
-            m_TheHeight{minimumHeight}
+            m_TheWidth{fixedWidth},
+            m_TheHeight{fixedHeight}
 {
-    this->setMinimumSize(minimumWidth, minimumHeight);
+    this->setFixedSize(fixedWidth, fixedHeight);
     this->setWindowFlags(Qt::CustomizeWindowHint);
     this->setMouseTracking(true);
 
@@ -43,16 +43,16 @@ MainWindow::MainWindow(std::size_t minimumWidth, std::size_t minimumHeight, QFra
 }
 
 
-void MainWindow::setMinimumSize(const std::size_t &widthMM, const std::size_t &heightMM)noexcept
+void MainWindow::setFixedSize(const std::size_t &widthFixed, const std::size_t &heightFixed)noexcept
 {
 
-    m_TheWidth = widthMM;
-    m_TheHeight = heightMM;
+    m_TheWidth = widthFixed;
+    m_TheHeight = heightFixed;
 
-    this->QFrame::setMinimumSize(widthMM, heightMM);
-    m_TitleBar->setMinimumSize(m_TheWidth, m_TheHeight/30);
-    m_CentralFrame->setMinimumSize(m_TheWidth, m_TheHeight/30*27);
-    m_StatusBar->setMinimumSize(m_TheWidth, m_TheHeight/30*2);
+    this->QFrame::setFixedSize(widthFixed, heightFixed);
+    m_TitleBar->setFixedSize(m_TheWidth, m_TheHeight/30);
+    m_CentralFrame->setFixedSize(m_TheWidth, m_TheHeight/30*27);
+    m_StatusBar->setFixedSize(m_TheWidth, m_TheHeight/30*2);
 }
 
 
@@ -98,6 +98,12 @@ void MainWindow::initConnect()noexcept
                             this->close();
                         }
                     });
+}
+
+
+void MainWindow::setNavigationIcons(const QList<QString> &urls)
+{
+    m_CentralFrame->setNavigationIcons(urls);
 }
 
 

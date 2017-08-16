@@ -25,7 +25,7 @@ public:
     CentralContentFrame& operator=(const CentralContentFrame&)=delete;
 
 
-    void setMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept;
+    void setFixedSize(const std::size_t& widthFixed, const std::size_t& heightFixed)noexcept;
 
 signals:
     void currentButtonIndex(std::size_t index);

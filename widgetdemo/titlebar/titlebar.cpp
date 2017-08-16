@@ -41,21 +41,21 @@ void TitleBar::setLogo(const QString& url)noexcept
 }
 
 
-void TitleBar::setMinimumSize(const std::size_t &widthMM, const std::size_t &heightMM)noexcept
+void TitleBar::setFixedSize(const std::size_t &widthFixed, const std::size_t &heightFixed)noexcept
 {
-    this->QFrame::setMinimumSize(widthMM, heightMM);
+    this->QFrame::setFixedSize(widthFixed, heightFixed);
 
     Queue<QToolButton*>::iterator beg = m_Buttons.begin();
     Queue<QToolButton*>::iterator last = m_Buttons.end();
     for(; beg != last; ++beg){
         (*beg)->setCheckable(true);
-        (*beg)->setMinimumSize(widthMM/30, heightMM);
+        (*beg)->setFixedSize(widthFixed/30, heightFixed);
         (*beg)->setFocusPolicy(Qt::NoFocus);
         (*beg)->setArrowType(Qt::NoArrow);
     }
 
-    m_Labels.first->setMinimumSize(widthMM/30, heightMM);
-    m_Labels.second->setMinimumSize(widthMM/30, heightMM);
+    m_Labels.first->setFixedSize(widthFixed/30, heightFixed);
+    m_Labels.second->setFixedSize(widthFixed/30, heightFixed);
 }
 
 

@@ -41,7 +41,7 @@ private:
     };
 
 public:
-    MainWindow(std::size_t minimumWidth, std::size_t minimumHeight, QFrame* parent = nullptr);
+    MainWindow(std::size_t fixedWidth, std::size_t fixedHeight, QFrame* parent = nullptr);
 
     virtual ~MainWindow()=default;
     MainWindow(const MainWindow&)=delete;
@@ -51,9 +51,10 @@ public:
     MainWindow& operator=(MainWindow&&)=delete;
 
 
-    void setMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept;
+    void setFixedSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept;
     void setTitle(const QString& str)noexcept;
     void setLogo(const QString& url)noexcept;
+    void setNavigationIcons(const QList<QString>& urls);
 
 protected:
     virtual void mousePressEvent(QMouseEvent* event)override;
@@ -63,7 +64,7 @@ protected:
 
 
 private:
-    using QFrame::setMinimumSize;//notice that!!!
+    using QFrame::setFixedSize;//notice that!!!
 
     void checkDragPosition(const QPoint& globalPoint)noexcept;
 
