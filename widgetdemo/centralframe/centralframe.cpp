@@ -45,7 +45,7 @@ void CentralFrame::initUi()
 
     auto beg = m_WidgetsForLayout.begin();
     auto end = m_WidgetsForLayout.end();
-    beg->second.push_back(new CentralCententFrame{});
+    beg->second.push_back(new CentralContentFrame{});
     ++beg;
     for(; beg != end; ++beg){
         beg->second.push_back(new QFrame{});
@@ -102,7 +102,7 @@ void CentralFrame::setMinimumSize(const std::size_t &widthMM, const std::size_t 
     auto beg = m_WidgetsForLayout.begin();
     auto beg_1 = beg->second.begin();
 
-    if(CentralCententFrame* frame = dynamic_cast<CentralCententFrame*>(*beg_1)){
+    if(CentralContentFrame* frame = dynamic_cast<CentralContentFrame*>(*beg_1)){
         frame->setMinimumSize(widthMM, heightMM/5*4);
     }else{
         LOG("==========================");

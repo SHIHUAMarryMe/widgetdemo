@@ -15,14 +15,14 @@ class QHBoxLayout;
 class QStackedWidget;
 
 
-class CentralCententFrame : public QFrame
+class CentralContentFrame : public QFrame
 {
     Q_OBJECT
 
 public:
-    explicit CentralCententFrame(QFrame* parent = nullptr);
-    CentralCententFrame(const CentralCententFrame&)=delete;
-    CentralCententFrame& operator=(const CentralCententFrame&)=delete;
+    explicit CentralContentFrame(QFrame* parent = nullptr);
+    CentralContentFrame(const CentralContentFrame&)=delete;
+    CentralContentFrame& operator=(const CentralContentFrame&)=delete;
 
 
     void setMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept;

@@ -10,7 +10,7 @@
 
 
 
-CentralCententFrame::CentralCententFrame(QFrame *parent)
+CentralContentFrame::CentralContentFrame(QFrame *parent)
                     :QFrame{parent},
                      m_LeftFrame{new QFrame{}},
                      m_RightFrame{new QStackedWidget{}},
@@ -24,7 +24,7 @@ CentralCententFrame::CentralCententFrame(QFrame *parent)
 }
 
 
-void CentralCententFrame::setMinimumSize(const std::size_t &widthMM, const std::size_t &heightMM)noexcept
+void CentralContentFrame::setMinimumSize(const std::size_t &widthMM, const std::size_t &heightMM)noexcept
 {
     this->QFrame::setMaximumSize(widthMM, heightMM);//notice that: must do this!
 
@@ -42,7 +42,7 @@ void CentralCententFrame::setMinimumSize(const std::size_t &widthMM, const std::
 
 
 
-void CentralCententFrame::initUi()
+void CentralContentFrame::initUi()
 {
    std::size_t index{0};
    for(; index != 3; ++index){
@@ -56,7 +56,7 @@ void CentralCententFrame::initUi()
 }
 
 
-void CentralCententFrame::initUiPara()noexcept
+void CentralContentFrame::initUiPara()noexcept
 {
     //can set text to QPushButton
     Queue<QPushButton*>::iterator beg = m_Buttons.begin();
@@ -69,7 +69,7 @@ void CentralCententFrame::initUiPara()noexcept
 }
 
 
-void CentralCententFrame::layoutItem()noexcept
+void CentralContentFrame::layoutItem()noexcept
 {
     Queue<QPushButton*>::iterator beg = m_Buttons.begin();
     Queue<QPushButton*>::iterator last = m_Buttons.end();
@@ -100,7 +100,7 @@ void CentralCententFrame::layoutItem()noexcept
 }
 
 
-void CentralCententFrame::initConnect()noexcept
+void CentralContentFrame::initConnect()noexcept
 {
     Queue<QPushButton*>::iterator beg = m_Buttons.begin();
     Queue<QPushButton*>::iterator end = m_Buttons.end();
@@ -113,12 +113,20 @@ void CentralCententFrame::initConnect()noexcept
     }
 
 
-    QObject::connect(this, &CentralCententFrame::currentButtonIndex, this, &CentralCententFrame::onCurrentButtonIndexChanged);
+    QObject::connect(this, &CentralContentFrame::currentButtonIndex, this, &CentralContentFrame::onCurrentButtonIndexChanged);
 }
 
 
-void CentralCententFrame::onCurrentButtonIndexChanged(std::size_t index)noexcept
+void CentralContentFrame::onCurrentButtonIndexChanged(std::size_t index)noexcept
 {
     LOG(index);
     m_RightFrame->setCurrentIndex(index);
+}
+
+
+void CentralContentFrame::setItemObjectName()noexcept
+{
+    for(auto contentButton : m_Buttons){
+        contentButton->setObjectName(QString{"ContentButton"});
+    }
 }

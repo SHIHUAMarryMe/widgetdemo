@@ -1,8 +1,11 @@
 <RCC>
-    <qresource prefix="/" lang="f">
+    <qresource lang="f" prefix="/">
         <file>img/appbar.close.png</file>
         <file>img/appbar.smiley.tounge.png</file>
         <file>img/appbar.home.png</file>
+        <file>img/appbar.graph.line.png</file>
+        <file>img/appbar.message.smiley.png</file>
+        <file>img/appbar.tree.leaf.three.png</file>
     </qresource>
     <qresource prefix="/">
         <file>style/style1.qss</file>
