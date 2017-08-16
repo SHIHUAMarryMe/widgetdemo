@@ -76,11 +76,11 @@ void CentralContentFrame::initUi()
 void CentralContentFrame::initUiPara()noexcept
 {
 
-    m_LeftFrame->setFixedWidth(100);
+    m_LeftFrame->setFixedWidth(150);
     Queue<QPushButton*>::iterator beg = m_Buttons.begin();
     Queue<QPushButton*>::iterator last = m_Buttons.end();
     for(; beg != last; ++beg){
-        (*beg)->setFixedSize(100, 50);
+        (*beg)->setFixedSize(150, 50);
         (*beg)->setFocusPolicy(Qt::NoFocus);
         (*beg)->setCheckable(true);
     }

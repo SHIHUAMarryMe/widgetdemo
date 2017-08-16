@@ -32,7 +32,7 @@ MainWindow::MainWindow(std::size_t width, std::size_t height, QFrame *parent)
             m_TheHeight{height}
 {
     this->setWindowFlags(Qt::CustomizeWindowHint);
-    this->setMouseTracking(true);
+//    this->setMouseTracking(true);
 
 
     this->initUi();
@@ -91,7 +91,7 @@ void MainWindow::initUiPara()noexcept
 void MainWindow::layoutItem()noexcept
 {
     m_MainLayout->setSpacing(0);
-    m_MainLayout->setMargin(0);
+    m_MainLayout->setMargin(2);
     m_MainLayout->addWidget(m_TitleBar);
     m_MainLayout->addWidget(m_CentralFrame);
     m_MainLayout->addWidget(m_StatusBar);
@@ -218,44 +218,44 @@ void MainWindow::checkDragPosition(const QPoint& globalPoint)noexcept
 }
 
 
-void MainWindow::mousePressEvent(QMouseEvent* event)
-{
-    switch(event->button())
-    {
-    case Qt::LeftButton:
-    {
-        event->accept();
-        m_IsPressed = true;
+//void MainWindow::mousePressEvent(QMouseEvent* event)
+//{
+//    switch(event->button())
+//    {
+//    case Qt::LeftButton:
+//    {
+//        event->accept();
+//        m_IsPressed = true;
 
-//        LOG("mousePress============");
+////        LOG("mousePress============");
 
-        if(m_CursorDir != CursorPosition::None){
-            this->mouseGrabber();
+//        if(m_CursorDir != CursorPosition::None){
+//            this->mouseGrabber();
 
-        }else{
-//            LOG("get the dragPoint=============");
-            m_DragPoint = event->globalPos() - this->frameGeometry().topLeft();
-        }
+//        }else{
+////            LOG("get the dragPoint=============");
+//            m_DragPoint = event->globalPos() - this->frameGeometry().topLeft();
+//        }
 
-        break;
-    }
-    case Qt::RightButton:
-    {
-        this->QWidget::mousePressEvent(event);
-        break;
-    }
-    default:
-    {
-        this->QWidget::mousePressEvent(event);
-        break;
-    }
-    }
-}
+//        break;
+//    }
+//    case Qt::RightButton:
+//    {
+//        this->QWidget::mousePressEvent(event);
+//        break;
+//    }
+//    default:
+//    {
+//        this->QWidget::mousePressEvent(event);
+//        break;
+//    }
+//    }
+//}
 
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event)
 {
-//    LOG("mouseMove===========");
+    LOG("mouseMove===========");
 
     QPoint globalPoint{event->globalPos()};
     QRect rect{this->rect()};
@@ -345,7 +345,6 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 
 
             this->setGeometry(rMove);
-
 
         }else{
             this->move(event->globalPos() - m_DragPoint);

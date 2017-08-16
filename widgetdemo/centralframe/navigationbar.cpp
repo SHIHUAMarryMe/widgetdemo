@@ -52,13 +52,13 @@ void NavigationBar::initUi()
 void NavigationBar::initUiPara()noexcept
 {
 
-    this->setFixedHeight(110);
+    this->setFixedHeight(100);
 
     for(auto button : m_NavigationBtns){
         button->setFocusPolicy(Qt::NoFocus);
         button->setCheckable(true);
         button->setFlat(true);
-        button->setFixedHeight(90);
+        button->setFixedSize(80, 70);
     }
 
     m_NavigationBtns[0]->setChecked(true);
