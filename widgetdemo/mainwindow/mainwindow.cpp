@@ -32,7 +32,6 @@ MainWindow::MainWindow(std::size_t width, std::size_t height, QFrame *parent)
             m_TheHeight{height}
 {
     this->setWindowFlags(Qt::CustomizeWindowHint);
-//    this->setMouseTracking(true);
 
 
     this->initUi();
@@ -128,7 +127,7 @@ void MainWindow::checkDragPosition(const QPoint& globalPoint)noexcept
 
 
     //左上角.
-    if(topLeftPoint.x() <= currentX && topLeftPoint.x() + MainWindow::padding >= currentX
+/*    if(topLeftPoint.x() <= currentX && topLeftPoint.x() + MainWindow::padding >= currentX
             && bottomRightPoint.y() + MainWindow::padding >= currentY && bottomRightPoint.y() <= currentY){
 
 //        LOG("LeftTop=====================");
@@ -139,7 +138,7 @@ void MainWindow::checkDragPosition(const QPoint& globalPoint)noexcept
         return;
 
     //右下角.
-    }else if(bottomRightPoint.x() >= currentX && bottomRightPoint.x() - MainWindow::padding <= currentX
+    }else */if(bottomRightPoint.x() >= currentX && bottomRightPoint.x() - MainWindow::padding <= currentX
              && bottomRightPoint.y() >= currentY && bottomRightPoint.y() - MainWindow::padding <= currentY){
 
 
@@ -150,7 +149,7 @@ void MainWindow::checkDragPosition(const QPoint& globalPoint)noexcept
         return;
 
      //左下角
-    }else if(topLeftPoint.x() <= currentX && topLeftPoint.x() + MainWindow::padding >= currentX
+    }/*else if(topLeftPoint.x() <= currentX && topLeftPoint.x() + MainWindow::padding >= currentX
              && bottomRightPoint.y() >= currentY && bottomRightPoint.y() - MainWindow::padding <= currentY){
 
 //        LOG("LeftBottom=========================");
@@ -189,7 +188,7 @@ void MainWindow::checkDragPosition(const QPoint& globalPoint)noexcept
         return;
 
      //左
-    }else if(topLeftPoint.x() <= currentX && topLeftPoint.x() + MainWindow::padding >= currentX
+    }else*/ if(topLeftPoint.x() <= currentX && topLeftPoint.x() + MainWindow::padding >= currentX
              && bottomRightPoint.y() - MainWindow::padding > currentY && topLeftPoint.y() + MainWindow::padding <= currentY){
 
 //        LOG("Left============================");
@@ -207,19 +206,26 @@ void MainWindow::checkDragPosition(const QPoint& globalPoint)noexcept
         this->setCursor(QCursor(Qt::SizeHorCursor));
 
         return;
-
-     //no direction
-    }else{
-
-//        LOG("No direction==========================");
-        m_CursorDir = CursorPosition::None;
-        this->setCursor(QCursor{Qt::ArrowCursor});
     }
+
+    m_CursorDir = CursorPosition::None;
+    this->setCursor(QCursor{Qt::ArrowCursor});
 }
 
 
-//void MainWindow::mousePressEvent(QMouseEvent* event)
-//{
+void MainWindow::mousePressEvent(QMouseEvent* event)
+{
+    const QRect titleBarRect{m_TitleBar->rect()};
+    const QPoint currentPoint{event->pos()};
+
+
+    if(titleBarRect.contains(currentPoint) && m_IsPressed == false
+                                           && event->button() == Qt::LeftButton){
+        qDebug() << "success!";
+
+    }
+
+
 //    switch(event->button())
 //    {
 //    case Qt::LeftButton:
@@ -230,7 +236,7 @@ void MainWindow::checkDragPosition(const QPoint& globalPoint)noexcept
 ////        LOG("mousePress============");
 
 //        if(m_CursorDir != CursorPosition::None){
-//            this->mouseGrabber();
+
 
 //        }else{
 ////            LOG("get the dragPoint=============");
@@ -239,18 +245,13 @@ void MainWindow::checkDragPosition(const QPoint& globalPoint)noexcept
 
 //        break;
 //    }
-//    case Qt::RightButton:
-//    {
-//        this->QWidget::mousePressEvent(event);
-//        break;
-//    }
 //    default:
 //    {
 //        this->QWidget::mousePressEvent(event);
 //        break;
 //    }
 //    }
-//}
+}
 
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event)

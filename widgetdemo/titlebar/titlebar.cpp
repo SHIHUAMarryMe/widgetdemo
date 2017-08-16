@@ -18,6 +18,9 @@ TitleBar::TitleBar(QFrame* parent)
            m_Labels{std::make_pair(new QLabel{}, new QLabel{})},
            m_MainLayout{new QHBoxLayout{}}
 {
+
+    this->setMouseTracking(true);
+
     this->initUi();
     this->setUiPara();
     this->layoutItem();
