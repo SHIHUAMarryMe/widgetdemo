@@ -6,6 +6,8 @@
         <file>img/appbar.graph.line.png</file>
         <file>img/appbar.message.smiley.png</file>
         <file>img/appbar.tree.leaf.three.png</file>
+        <file>img/appbar.fullscreen.box.png</file>
+        <file>img/appbar.minus.png</file>
     </qresource>
     <qresource prefix="/">
         <file>style/style1.qss</file>

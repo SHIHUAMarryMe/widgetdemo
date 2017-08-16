@@ -26,7 +26,16 @@ void NavigationBar::setFixedSize(const std::size_t &widthFixed, const std::size_
 {
     this->QFrame::setFixedSize(widthFixed, heightFixed);
     for(auto button : m_NavigationBtns){
-        button->setFixedSize(widthFixed/10, heightFixed/3*2);
+        button->setFixedSize(widthFixed/10, heightFixed/2);
+    }
+}
+
+
+void NavigationBar::setTheMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept
+{
+    this->QFrame::setMinimumSize(widthMM, heightMM);
+    for(auto button : m_NavigationBtns){
+        button->setFixedSize(widthMM/10, heightMM/2);
     }
 }
 
@@ -42,14 +51,22 @@ void NavigationBar::initUi()
 
 void NavigationBar::initUiPara()noexcept
 {
+    const std::size_t widthMM{this->widthMM()};
+    const std::size_t heightMM{this->heightMM()};
+
     for(auto button : m_NavigationBtns){
         button->setFocusPolicy(Qt::NoFocus);
         button->setCheckable(true);
         button->setFlat(true);
+        button->setMinimumSize(widthMM/10, heightMM/2);
     }
 
     m_NavigationBtns[0]->setChecked(true);
+
     m_NavigationBtns[0]->setText(tr("Home"));
+    m_NavigationBtns[1]->setText(tr("Message"));
+    m_NavigationBtns[2]->setText(tr("Leaf"));
+    m_NavigationBtns[3]->setText(tr("Chart"));
 }
 
 void NavigationBar::layoutItem()noexcept
@@ -81,9 +98,10 @@ void NavigationBar::initConnect()noexcept
 
 void NavigationBar::setItemObjectName()noexcept
 {
-    for(auto toolButton : m_NavigationBtns){
-        toolButton->setObjectName(QString{"NavigationButton"});
-    }
+    m_NavigationBtns[0]->setObjectName(QString{"NavigationBtn1"});
+    m_NavigationBtns[1]->setObjectName(QString{"NavigationBtn2"});
+    m_NavigationBtns[2]->setObjectName(QString{"NavigationBtn3"});
+    m_NavigationBtns[3]->setObjectName(QString{"NavigationBtn4"});
 
 //    this->setObjectName(QString{"NavigationBar"});
 }

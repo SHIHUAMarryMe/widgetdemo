@@ -54,11 +54,48 @@ void CentralFrame::initUi()
 
 }
 
+void CentralFrame::setFixedSize(const std::size_t &widthFixed, const std::size_t &heightFixed)
+{
+    this->QFrame::setFixedSize(widthFixed, heightFixed);
+
+    m_NavigationBar->setFixedSize(widthFixed, heightFixed/5*1);
+    m_StackWidget->setFixedSize(widthFixed, heightFixed/5*4);
+
+    auto beg = m_WidgetsForLayout.begin();
+    auto beg_1 = beg->second.begin();
+
+    if(CentralContentFrame* frame = dynamic_cast<CentralContentFrame*>(*beg_1)){
+        frame->setFixedSize(widthFixed, heightFixed/5*4);
+    }else{
+        LOG("==========================");
+        throw std::bad_cast{};
+    }
+
+}
+
 
 void CentralFrame::initUiPara()noexcept
 {
+    //
+}
 
 
+void CentralFrame::setTheMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept
+{
+    this->setMinimumSize(widthMM, heightMM);
+
+    m_NavigationBar->setMinimumSize(widthMM, heightMM/5);
+    m_StackWidget->setMinimumSize(widthMM, heightMM/5*4);
+
+    auto beg = m_WidgetsForLayout.begin();
+    auto beg_1 = beg->second.begin();
+
+    if(CentralContentFrame* frame = dynamic_cast<CentralContentFrame*>(*beg_1)){
+        frame->setMinimumSize(widthMM, heightMM/5*4);
+    }else{
+        LOG("==========================");
+        throw std::bad_cast{};
+    }
 }
 
 
@@ -93,24 +130,7 @@ void CentralFrame::layoutItem()noexcept
 }
 
 
-void CentralFrame::setFixedSize(const std::size_t &widthFixed, const std::size_t &heightFixed)
-{
-    this->QFrame::setFixedSize(widthFixed, heightFixed);
 
-    m_NavigationBar->setFixedSize(widthFixed, heightFixed/5*1);
-    m_StackWidget->setFixedSize(widthFixed, heightFixed/5*4);
-
-    auto beg = m_WidgetsForLayout.begin();
-    auto beg_1 = beg->second.begin();
-
-    if(CentralContentFrame* frame = dynamic_cast<CentralContentFrame*>(*beg_1)){
-        frame->setFixedSize(widthFixed, heightFixed/5*4);
-    }else{
-        LOG("==========================");
-        throw std::bad_cast{};
-    }
-
-}
 
 void CentralFrame::initConnect()noexcept
 {

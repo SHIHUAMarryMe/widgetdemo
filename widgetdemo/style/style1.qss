@@ -1,12 +1,185 @@
+QLabel#TitleBarLabel{
+    background-color: transparent;
+}
 
-QPushButton#NavigationButton{
+
+
+/*Title-bar button*/
+QToolButton#TitleCloseButton{
+    background-color: transparent;
+    color: white;
+}
+
+QToolButton#TitleCloseButton:hover{
+    background-color: red;
+    border: 1px;
+}
+
+
+QToolButton#TitleButton{
+    background-color: transparent;
+}
+
+QToolButton#TitleButton:hover{
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 82, 112, 255), stop:0.5 rgba(0, 211, 197, 255), stop:1 rgba(0, 82, 112, 255));
+    border: 0px solid rgb(255, 127, 39);
+    padding: 0px;
+    margin: 0px;
+}
+
+
+
+QPushButton#NavigationBtn1{
     background-image: url(:/img/appbar.home.png);
     background-repeat:no-repeat;
     background-position: center bottom;
-    background-color: red;
+    background-color: transparent;
     color: white;
     text-align: center bottom;
-    padding: 0px;
-    border: 0px;
-    margin: 0px;
+    padding-bottom: 1px;
 }
+
+QPushButton#NavigationBtn1:hover{
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 82, 112, 255), stop:0.5 rgba(0, 211, 197, 255), stop:1 rgba(0, 82, 112, 255));
+    color: white;
+    border: 0px solid rgb(255, 127, 39);
+}
+
+
+QPushButton#NavigationBtn1:checked{
+    background-color: rgb(0, 82, 112);
+    color: white;
+    border: 0px solid rgb(255, 127, 39);
+}
+
+QPushButton#NavigationBtn1:flat{
+    border: none;
+}
+
+
+
+QPushButton#NavigationBtn2{
+    background-image: url(:/img/appbar.message.smiley.png);
+    background-repeat:no-repeat;
+    background-position: center bottom;
+    background-color: transparent;
+    color: white;
+    text-align: center bottom;
+    padding-bottom: 0px;
+}
+
+QPushButton#NavigationBtn2:hover{
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 82, 112, 255), stop:0.5 rgba(0, 211, 197, 255), stop:1 rgba(0, 82, 112, 255));
+    color: white;
+    border: 0px solid rgb(255, 127, 39);
+}
+
+QPushButton#NavigationBtn2:checked{
+    background-color: rgb(0, 82, 112);
+    color: white;
+    border: 0px solid rgb(255, 127, 39);
+}
+
+QPushButton#NavigationBtn2:flat{
+    border: none;
+}
+
+
+
+QPushButton#NavigationBtn3{
+    background-image: url(:/img/appbar.tree.leaf.three.png);
+    background-repeat:no-repeat;
+    background-position: center bottom;
+    background-color: transparent;
+    color: white;
+    text-align: center bottom;
+    padding-bottom: 0px;
+}
+
+QPushButton#NavigationBtn3:hover{
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 82, 112, 255), stop:0.5 rgba(0, 211, 197, 255), stop:1 rgba(0, 82, 112, 255));
+    color: white;
+    border: 0px solid rgb(255, 127, 39);
+}
+
+QPushButton#NavigationBtn3:checked{
+    background-color: rgb(0, 82, 112);
+    color: white;
+    border: 0px solid rgb(255, 127, 39);
+}
+
+QPushButton#NavigationBtn3:flat{
+    border: none;
+}
+
+
+QPushButton#NavigationBtn4{
+    background-image: url(:/img/appbar.graph.line.png);
+    background-repeat:no-repeat;
+    background-position: center bottom;
+    background-color: transparent;
+    color: white;
+    text-align: center bottom;
+    padding-bottom: 0px;
+}
+
+QPushButton#NavigationBtn4:hover{
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 82, 112, 255), stop:0.5 rgba(0, 211, 197, 255), stop:1 rgba(0, 82, 112, 255));
+    color: white;
+    border: 0px solid rgb(255, 127, 39);
+}
+
+QPushButton#NavigationBtn4:checked{
+    background-color: rgb(0, 82, 112);
+    color: white;
+    border: 0px solid rgb(255, 127, 39);
+}
+
+QPushButton#NavigationBtn4:flat{
+    border: none;
+}
+
+
+
+
+
+QPushButton#ContentButton{
+    background-color: qlineargradient(spread:pad, x1:-1, y1:0, x2:1 y2:0, stop:0 rgba(0, 211, 197, 255), stop:1 rgba(0, 82, 112, 255));
+    border: none;
+    color: white;
+}
+
+QPushButton#ContentButton:hover{
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 82, 112, 255), stop:0.5 rgba(0, 211, 197, 255), stop:1 rgba(0, 82, 112, 255));
+    color: white;
+    border-left: 5px solid rgba(0, 211, 197, 255);
+}
+
+QPushButton#ContentButton:checked{
+    background-color: rgb(0, 82, 112);
+    color: white;
+    border-left: 5px solid rgba(0, 211, 197, 255);
+}
+
+
+QPushButton#ContentButton:pressed{
+    background-color: rgb(0, 82, 112);
+    color: white;
+}
+
+QPushButton#ContentButton:disabled{
+    background-color: gray;
+}
+
+
+
+
+
+QFrame{
+    background-color: qlineargradient(spread:pad, x1:-1, y1:0, x2:1 y2:0, stop:0 rgba(0, 211, 197, 255), stop:1 rgba(0, 82, 112, 255));
+}
+
+
+
+
+

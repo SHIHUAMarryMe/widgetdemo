@@ -12,11 +12,11 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    CommonHelper::setStyle(":/style/style1.qss");
+//    CommonHelper::setStyle(":/style/style1.qss");
 
 
-    MainWindow m{0, 0};
-    m.setTheFixedSize(800, 600);
+    MainWindow m{1000, 700};
+//    m.setTheFixedSize(1000, 700);
     m.setTitle(QString{"QFrame"});
     m.setLogo(QString{":/img/appbar.smiley.tounge.png"});
     m.show();

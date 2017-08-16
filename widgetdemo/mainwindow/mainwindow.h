@@ -41,7 +41,7 @@ private:
     };
 
 public:
-    MainWindow(std::size_t fixedWidth, std::size_t fixedHeight, QFrame* parent = nullptr);
+    MainWindow(std::size_t width, std::size_t height, QFrame* parent = nullptr);
 
     virtual ~MainWindow()=default;
     MainWindow(const MainWindow&)=delete;
@@ -51,7 +51,8 @@ public:
     MainWindow& operator=(MainWindow&&)=delete;
 
 
-    void setTheFixedSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept;
+    void setTheFixedSize(const std::size_t& widthFixed, const std::size_t& heightFixed)noexcept;
+    void setTheMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept;
     void setTitle(const QString& str)noexcept;
     void setLogo(const QString& url)noexcept;
 

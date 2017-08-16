@@ -21,6 +21,7 @@ CentralContentFrame::CentralContentFrame(QFrame *parent)
     this->initUiPara();
     this->layoutItem();
     this->initConnect();
+    this->setItemObjectName();
 }
 
 
@@ -58,7 +59,7 @@ void CentralContentFrame::initUi()
 
 void CentralContentFrame::initUiPara()noexcept
 {
-    //can set text to QPushButton
+
     Queue<QPushButton*>::iterator beg = m_Buttons.begin();
     Queue<QPushButton*>::iterator last = m_Buttons.end();
     for(; beg != last; ++beg){
@@ -66,6 +67,26 @@ void CentralContentFrame::initUiPara()noexcept
         (*beg)->setCheckable(true);
     }
 
+    m_Buttons[0]->setText(tr("FirstPage"));
+    m_Buttons[1]->setText(tr("SecondPage"));
+    m_Buttons[2]->setText(tr("Thirdpage"));
+
+}
+
+
+void CentralContentFrame::setTheMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept
+{
+
+    this->setMinimumSize(widthMM, heightMM);
+
+    Queue<QPushButton*>::iterator beg = m_Buttons.begin();
+    Queue<QPushButton*>::iterator last = m_Buttons.end();
+    for(; beg != last; ++beg){
+        (*beg)->setMinimumSize(widthMM/6, heightMM/7);
+    }
+
+    m_LeftFrame->setMinimumSize(widthMM/6, heightMM);
+    m_RightFrame->setMinimumSize(widthMM/6*5, heightMM);
 }
 
 

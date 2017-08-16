@@ -36,6 +36,8 @@ public:
     void setTitle(const QString& str)noexcept;
     void setLogo(const QString& url)noexcept;
 
+
+    void setTheMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept;
 signals:
     void onClicked(std::size_t index);
 

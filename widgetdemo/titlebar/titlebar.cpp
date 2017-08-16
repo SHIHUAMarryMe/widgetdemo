@@ -33,11 +33,11 @@ void TitleBar::setTitle(const QString& str)noexcept
 
 void TitleBar::setLogo(const QString& url)noexcept
 {
-    QPixmap backgroundPic{url};
-    QSize picSize{m_Labels.second->size()};
+//    QPixmap backgroundPic{url};
+//    QSize picSize{m_Labels.second->size()};
 
-    backgroundPic = backgroundPic.scaled(picSize,  Qt::KeepAspectRatio);
-    m_Labels.second->setPixmap(backgroundPic);
+//    backgroundPic = backgroundPic.scaled(picSize,  Qt::KeepAspectRatio);
+//    m_Labels.second->setPixmap(backgroundPic);
 }
 
 
@@ -48,14 +48,11 @@ void TitleBar::setFixedSize(const std::size_t &widthFixed, const std::size_t &he
     Queue<QToolButton*>::iterator beg = m_Buttons.begin();
     Queue<QToolButton*>::iterator last = m_Buttons.end();
     for(; beg != last; ++beg){
-        (*beg)->setCheckable(true);
         (*beg)->setFixedSize(widthFixed/30, heightFixed);
-        (*beg)->setFocusPolicy(Qt::NoFocus);
-        (*beg)->setArrowType(Qt::NoArrow);
     }
 
-    m_Labels.first->setFixedSize(widthFixed/15, heightFixed);
-    m_Labels.second->setFixedSize(widthFixed/20, heightFixed);
+//    m_Labels.first->setFixedSize(widthFixed/15, heightFixed);
+//    m_Labels.second->setFixedSize(widthFixed/20, heightFixed);
 }
 
 
@@ -70,12 +67,43 @@ void TitleBar::initUi()
 
 void TitleBar::setUiPara()noexcept
 {
+
+    for(auto button : m_Buttons){
+        button->setCheckable(true);
+        button->setFocusPolicy(Qt::NoFocus);
+        button->setArrowType(Qt::NoArrow);
+    }
+
+
+    m_Labels.second->setPixmap(QPixmap{":/img/appbar.smiley.tounge.png"});
+
+    m_Buttons[0]->setIcon(QIcon{":/img/appbar.minus.png"});
+    m_Buttons[1]->setIcon(QIcon{":/img/appbar.fullscreen.box.png"});
     m_Buttons[2]->setIcon(QIcon{":/img/appbar.close.png"});
+}
+
+
+void TitleBar::setTheMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept
+{
+    this->setMinimumSize(widthMM, heightMM);
+
+    for(auto button : m_Buttons){
+        button->setCheckable(true);
+        button->setFocusPolicy(Qt::NoFocus);
+        button->setArrowType(Qt::NoArrow);
+        button->setMinimumSize(widthMM/30, heightMM);
+    }
+
+//    m_Labels.first->setMinimumSize(widthMM/20, heightMM);
+//    m_Labels.second->setMinimumSize(widthMM/20, heightMM);
 }
 
 
 void TitleBar::layoutItem()noexcept
 {
+
+    QSize size{this->size()};
+
     m_MainLayout->setAlignment(Qt::AlignCenter);
     m_MainLayout->setSpacing(0);
     m_MainLayout->setMargin(0);
@@ -115,7 +143,6 @@ void TitleBar::setItemObjectName()noexcept
 
     m_Buttons[0]->setObjectName(QString{"TitleButton"});
     m_Buttons[1]->setObjectName(QString{"TitleButton"});
-
 
     m_Buttons[2]->setObjectName(QString{"TitleCloseButton"});
 

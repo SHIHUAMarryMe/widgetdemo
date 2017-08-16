@@ -26,6 +26,7 @@ public:
 
 
     void setFixedSize(const std::size_t& widthFixed, const std::size_t& heightFixed)noexcept;
+    void setTheMinimumSize(const std::size_t& widthMM, const std::size_t& heightMM)noexcept;
 
 signals:
     void currentButtonIndex(std::size_t index);
